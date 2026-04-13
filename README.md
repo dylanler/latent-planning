@@ -211,6 +211,16 @@ The most defensible conclusion is therefore:
 - deterministic support code is currently part of what makes the capability appear
 - recursive decomposition is the most promising direction in this repo, but it is also the most expensive path in latency and model calls
 
+## Broader Suite
+
+The repo now also includes a first broader transfer test across three task families:
+
+- prose retrieval
+- ledger aggregation
+- code-like localization
+
+That broader run lives in [broad_evidence_report.md](/Users/dylan/learning-projects/latent-planning/docs/broad_evidence_report.md), and the explicit roadmap for what would count as a genuinely broader proof lives in [broad_hypothesis_plan.md](/Users/dylan/learning-projects/latent-planning/docs/broad_hypothesis_plan.md).
+
 ## Next Steps
 
 - Add a learned or adaptive routing policy so recursion does not always pay the full search cost.

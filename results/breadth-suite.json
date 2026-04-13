@@ -1,0 +1,605 @@
+{
+  "label": "breadth-suite",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "families": [
+    {
+      "family": "records",
+      "display_name": "Prose records",
+      "task_type": "retrieval in prose",
+      "answer_mode": "sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 3,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 9446.333333333334,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 0.4997047504099707,
+        "mean_model_calls": 1
+      },
+      "no_validator": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 1.106272347116222,
+        "mean_model_calls": 4
+      },
+      "managed": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 0.9864949168016514,
+        "mean_model_calls": 4
+      },
+      "recursive": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 1.9222993180155754,
+        "mean_model_calls": 9.333333333333334
+      },
+      "runs": [
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9457,
+          "expected_answer": "GV5-JK6-AX7-AX7",
+          "baseline": {
+            "answer": "TARGET1-GV5-release-amber-locked",
+            "exact_match": false,
+            "latency_seconds": 0.5625662920065224,
+            "model_calls": 1,
+            "raw_output": "ANSWER=TARGET1-GV5-release-amber-locked",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "GV5-JK6-AX7-AX7",
+            "exact_match": true,
+            "latency_seconds": 1.1094535416923463,
+            "model_calls": 4,
+            "raw_output": "MATCH order=1 token=GV5\n---\nMATCH order=2 token=JK6\n---\nMATCH order=3 token=AX7\n---\nMATCH order=4 token=AX7",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "GV5-JK6-AX7-AX7",
+            "exact_match": true,
+            "latency_seconds": 1.0068253753706813,
+            "model_calls": 4,
+            "raw_output": "DIST1_0,TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "GV5-JK6-AX7-AX7",
+            "exact_match": true,
+            "latency_seconds": 1.6547218328341842,
+            "model_calls": 8,
+            "raw_output": "3\n[Depth 1 Group 3]\nTARGET1\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9439,
+          "expected_answer": "CM9-LP0-HW1-GV5",
+          "baseline": {
+            "answer": "TARGET1-CM9",
+            "exact_match": false,
+            "latency_seconds": 0.46739125018939376,
+            "model_calls": 1,
+            "raw_output": "ANSWER=TARGET1-CM9",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "CM9-LP0-HW1-GV5",
+            "exact_match": true,
+            "latency_seconds": 1.0952272079885006,
+            "model_calls": 4,
+            "raw_output": "MATCH order=1 token=CM9\n---\nMATCH order=2 token=LP0\n---\nMATCH order=3 token=HW1\n---\nMATCH order=4 token=GV5",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "CM9-LP0-HW1-GV5",
+            "exact_match": true,
+            "latency_seconds": 0.9832019186578691,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "CM9-LP0-HW1-GV5",
+            "exact_match": true,
+            "latency_seconds": 2.4606941640377045,
+            "model_calls": 12,
+            "raw_output": "1\n[Depth 1 Group 1]\nTARGET1\n---\nTARGET2\n[Depth 1 Group 1]\nTARGET2\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\nTARGET3\n[Depth 1 Group 1]\nTARGET3\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9443,
+          "expected_answer": "AX7-HW1-CM9-DQ4",
+          "baseline": {
+            "answer": "AX7-QR7",
+            "exact_match": false,
+            "latency_seconds": 0.46915670903399587,
+            "model_calls": 1,
+            "raw_output": "ANSWER=AX7-QR7",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "AX7-HW1-CM9-DQ4",
+            "exact_match": true,
+            "latency_seconds": 1.114136291667819,
+            "model_calls": 4,
+            "raw_output": "MATCH order=1 token=AX7\n---\nMATCH order=2 token=HW1\n---\nMATCH order=3 token=CM9\n---\nMATCH order=4 token=DQ4",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "AX7-HW1-CM9-DQ4",
+            "exact_match": true,
+            "latency_seconds": 0.9694574563764036,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "AX7-HW1-CM9-DQ4",
+            "exact_match": true,
+            "latency_seconds": 1.6514819571748376,
+            "model_calls": 8,
+            "raw_output": "1\n[Depth 1 Group 1]\nTARGET1\n---\n3\n[Depth 1 Group 3]\nTARGET2\n---\nGroup 2\n[Depth 1 Group 2]\nTARGET3\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "ledger",
+      "display_name": "Ledger aggregation",
+      "task_type": "retrieval plus arithmetic",
+      "answer_mode": "total_and_sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 3,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 9075.333333333334,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 0.5708469866464535,
+        "mean_model_calls": 1
+      },
+      "no_validator": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 1.2299747640887897,
+        "mean_model_calls": 4
+      },
+      "managed": {
+        "accuracy": 0.6666666666666666,
+        "mean_latency_seconds": 1.0031312361049156,
+        "mean_model_calls": 4
+      },
+      "recursive": {
+        "accuracy": 0.6666666666666666,
+        "mean_latency_seconds": 1.6537133059464395,
+        "mean_model_calls": 8
+      },
+      "runs": [
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9181,
+          "expected_answer": "157|LP0-HW1-QR7-BZ3",
+          "baseline": {
+            "answer": "2|DIST1_0-ORCHID-Q4-amber-hedge-1",
+            "exact_match": false,
+            "latency_seconds": 0.7049086666665971,
+            "model_calls": 1,
+            "raw_output": "ANSWER=2|DIST1_0-ORCHID-Q4-amber-hedge-1\nANSWER=1|TARGET1-ORCHID-Q4-amber-prime-1",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "152|HW1-ST8-BZ3-QR7",
+            "exact_match": false,
+            "latency_seconds": 1.2218957915902138,
+            "model_calls": 4,
+            "raw_output": "MATCH order=4 token=ST8 amount=48\n---\nMATCH order=2 token=HW1 amount=35\n---\nMATCH order=7 token=QR7 amount=35\n---\nMATCH order=4 token=BZ3 amount=34",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "157|LP0-HW1-QR7-BZ3",
+            "exact_match": true,
+            "latency_seconds": 1.0265802070498466,
+            "model_calls": 4,
+            "raw_output": "DIST1_0\nTARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "157|LP0-HW1-QR7-BZ3",
+            "exact_match": true,
+            "latency_seconds": 1.6631053336896002,
+            "model_calls": 8,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\nGroup 3\n[Depth 1 Group 3]\nTARGET3\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9003,
+          "expected_answer": "218|FT2-LP0-BZ3-ST8",
+          "baseline": {
+            "answer": "2|TARGET1-FT2",
+            "exact_match": false,
+            "latency_seconds": 0.5030744592659175,
+            "model_calls": 1,
+            "raw_output": "ANSWER=2|TARGET1-FT2",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "218|FT2-BZ3-ST8-LP0",
+            "exact_match": false,
+            "latency_seconds": 1.2246957081370056,
+            "model_calls": 4,
+            "raw_output": "MATCH order=1 token=FT2 amount=23\n---\nMATCH order=7 token=LP0 amount=68\n---\nMATCH order=3 token=BZ3 amount=92\n---\nMATCH order=4 token=ST8 amount=35",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "218|FT2-LP0-BZ3-ST8",
+            "exact_match": true,
+            "latency_seconds": 0.9869252927601337,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "92|BZ3",
+            "exact_match": false,
+            "latency_seconds": 1.6190360840409994,
+            "model_calls": 8,
+            "raw_output": "Group 3\n[Depth 1 Group 3]\nNONE\n---\n3\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\n3\n[Depth 1 Group 3]\nNONE",
+            "candidate_item_ids": [
+              "TARGET3"
+            ]
+          }
+        },
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9042,
+          "expected_answer": "189|GV5-FT2-AX7-ER8",
+          "baseline": {
+            "answer": "1|TARGET1-GV5",
+            "exact_match": false,
+            "latency_seconds": 0.504557834006846,
+            "model_calls": 1,
+            "raw_output": "ANSWER=1|TARGET1-GV5",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "189|GV5-ER8-AX7-FT2",
+            "exact_match": false,
+            "latency_seconds": 1.2433327925391495,
+            "model_calls": 4,
+            "raw_output": "MATCH order=4 token=GV5 amount=44\n---\nMATCH order=7 token=FT2 amount=67\n---\nMATCH order=5 token=AX7 amount=36\n---\nMATCH order=4 token=ER8 amount=42",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "122|GV5-AX7-ER8",
+            "exact_match": false,
+            "latency_seconds": 0.9958882085047662,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nDIST2_0\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "189|GV5-FT2-AX7-ER8",
+            "exact_match": true,
+            "latency_seconds": 1.6789985001087189,
+            "model_calls": 8,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\nGroup 3\n[Depth 1 Group 3]\nTARGET2\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\n1\n[Depth 1 Group 1]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "code",
+      "display_name": "Code localization",
+      "task_type": "code-like localization",
+      "answer_mode": "sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 3,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 15128,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 0.5688743058902522,
+        "mean_model_calls": 1
+      },
+      "no_validator": {
+        "accuracy": 0.6666666666666666,
+        "mean_latency_seconds": 1.2064568054241438,
+        "mean_model_calls": 4
+      },
+      "managed": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 1.0731771243736148,
+        "mean_model_calls": 4
+      },
+      "recursive": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 1.9609295132880409,
+        "mean_model_calls": 9.333333333333334
+      },
+      "runs": [
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 15117,
+          "expected_answer": "GV5-MN4-AX7-JK6",
+          "baseline": {
+            "answer": "TARGET1-GV5",
+            "exact_match": false,
+            "latency_seconds": 0.5688646249473095,
+            "model_calls": 1,
+            "raw_output": "ANSWER=TARGET1-GV5",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "GV5-MN4-AX7-JK6",
+            "exact_match": true,
+            "latency_seconds": 1.2078477921895683,
+            "model_calls": 4,
+            "raw_output": "MATCH order=1 token=GV5\n---\nMATCH order=2 token=MN4\n---\nMATCH order=3 token=AX7\n---\nMATCH order=4 token=JK6",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "GV5-MN4-AX7-JK6",
+            "exact_match": true,
+            "latency_seconds": 1.0856498321518302,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "GV5-MN4-AX7-JK6",
+            "exact_match": true,
+            "latency_seconds": 2.1552837500348687,
+            "model_calls": 10,
+            "raw_output": "1\n[Depth 1 Group 1]\nTARGET1\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\nTARGET3\n[Depth 1 Group 1]\nTARGET3\n[Depth 1 Group 2]\nDIST3_2\n[Depth 1 Group 3]\nNONE\n---\nGroup 3\n[Depth 1 Group 3]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 15127,
+          "expected_answer": "FT2-MN4-JK6-ER8",
+          "baseline": {
+            "answer": "TARGET1-FT2",
+            "exact_match": false,
+            "latency_seconds": 0.5685187089256942,
+            "model_calls": 1,
+            "raw_output": "ANSWER=TARGET1-FT2",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "FT2-MN4-JK6-ER8",
+            "exact_match": true,
+            "latency_seconds": 1.2159322500228882,
+            "model_calls": 4,
+            "raw_output": "MATCH order=1 token=FT2\n---\nMATCH order=2 token=MN4\n---\nMATCH order=3 token=JK6\n---\nMATCH order=4 token=ER8",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "FT2-MN4-JK6-ER8",
+            "exact_match": true,
+            "latency_seconds": 1.0691499160602689,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "FT2-MN4-JK6-ER8",
+            "exact_match": true,
+            "latency_seconds": 2.052278123330325,
+            "model_calls": 10,
+            "raw_output": "1\n[Depth 1 Group 1]\nTARGET1\n---\n3\n[Depth 1 Group 3]\nTARGET2\n---\nTARGET3\n[Depth 1 Group 1]\nTARGET3\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 15140,
+          "expected_answer": "ER8-CM9-ST8-HW1",
+          "baseline": {
+            "answer": "TARGET1-ER8",
+            "exact_match": false,
+            "latency_seconds": 0.5692395837977529,
+            "model_calls": 1,
+            "raw_output": "ANSWER=TARGET1-ER8",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "CM9-ST8-HW1-HW1",
+            "exact_match": false,
+            "latency_seconds": 1.1955903740599751,
+            "model_calls": 4,
+            "raw_output": "MATCH order=6 token=HW1\n---\nMATCH order=2 token=CM9\n---\nMATCH order=3 token=ST8\n---\nMATCH order=4 token=HW1",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "ER8-CM9-ST8-HW1",
+            "exact_match": true,
+            "latency_seconds": 1.0647316249087453,
+            "model_calls": 4,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "ER8-CM9-ST8-HW1",
+            "exact_match": true,
+            "latency_seconds": 1.6752266664989293,
+            "model_calls": 8,
+            "raw_output": "1\n[Depth 1 Group 1]\nTARGET1\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "baseline_accuracy_mean": 0.0,
+    "no_validator_accuracy_mean": 0.5555555555555556,
+    "managed_accuracy_mean": 0.8888888888888888,
+    "recursive_accuracy_mean": 0.8888888888888888
+  }
+}
