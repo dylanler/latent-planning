@@ -58,6 +58,7 @@ class Task:
     seed: int
     sections: int
     distractors_per_section: int
+    note_repeats: int
     criteria: tuple[str, str, str]
     section_texts: list[str]
     records_by_id: dict[str, Record]
@@ -125,7 +126,11 @@ def discover_local_model_snapshot(model_repo: str) -> Path | None:
     return snapshots[0] if snapshots else None
 
 
-def generate_task(seed: int, *, sections: int, distractors_per_section: int) -> Task:
+def expand_note(rng: random.Random, note_repeats: int) -> str:
+    return " ".join(rng.choice(NOTES) for _ in range(note_repeats))
+
+
+def generate_task(seed: int, *, sections: int, distractors_per_section: int, note_repeats: int) -> Task:
     rng = random.Random(seed)
     section_texts: list[str] = []
     records_by_id: dict[str, Record] = {}
@@ -142,7 +147,7 @@ def generate_task(seed: int, *, sections: int, distractors_per_section: int) -> 
             marker=criteria[2],
             phase=section_index,
             seal=rng.choice(SEALS),
-            note=rng.choice(NOTES),
+            note=expand_note(rng, note_repeats),
             section_index=section_index,
         )
         expected_record_ids.append(target.record_id)
@@ -163,7 +168,7 @@ def generate_task(seed: int, *, sections: int, distractors_per_section: int) -> 
                 marker=marker,
                 phase=rng.randint(1, sections + distractors_per_section),
                 seal=rng.choice(SEALS),
-                note=rng.choice(NOTES),
+                note=expand_note(rng, note_repeats),
                 section_index=section_index,
             )
             records.append(record)
@@ -179,6 +184,7 @@ def generate_task(seed: int, *, sections: int, distractors_per_section: int) -> 
         seed=seed,
         sections=sections,
         distractors_per_section=distractors_per_section,
+        note_repeats=note_repeats,
         criteria=criteria,
         section_texts=section_texts,
         records_by_id=records_by_id,
@@ -292,9 +298,11 @@ def summarize_condition(results: list[ConditionResult]) -> dict[str, float]:
 def run_pilot(
     *,
     model_path_or_repo: str,
+    label: str | None,
     sections: int,
     distractors_per_section: list[int],
     seeds: list[int],
+    note_repeats: int,
     output_path: Path,
     baseline_max_tokens: int,
     chunk_max_tokens: int,
@@ -306,16 +314,25 @@ def run_pilot(
 
     for distractor_count in distractors_per_section:
         for seed in seeds:
-            task = generate_task(seed, sections=sections, distractors_per_section=distractor_count)
+            task = generate_task(
+                seed,
+                sections=sections,
+                distractors_per_section=distractor_count,
+                note_repeats=note_repeats,
+            )
             baseline = run_baseline(task, model, max_tokens=baseline_max_tokens)
             managed = run_managed(task, model, max_tokens=chunk_max_tokens)
             baseline_results.append(baseline)
             managed_results.append(managed)
             runs.append(
                 {
+                    "label": label,
                     "seed": seed,
                     "sections": sections,
                     "distractors_per_section": distractor_count,
+                    "note_repeats": note_repeats,
+                    "report_characters": len(task.full_report),
+                    "mean_section_characters": statistics.mean(len(section) for section in task.section_texts),
                     "expected_answer": task.expected_answer,
                     "expected_record_ids": task.expected_record_ids,
                     "baseline": asdict(baseline),
@@ -324,6 +341,7 @@ def run_pilot(
             )
 
     summary = {
+        "label": label,
         "model_path_or_repo": model_path_or_repo,
         "criteria": {
             "project": DEFAULT_CRITERIA[0],
@@ -333,6 +351,7 @@ def run_pilot(
         "sections": sections,
         "distractors_per_section": distractors_per_section,
         "seeds": seeds,
+        "note_repeats": note_repeats,
         "baseline": summarize_condition(baseline_results),
         "managed": summarize_condition(managed_results),
         "runs": runs,

@@ -1,0 +1,931 @@
+{
+  "label": "distractor-sweep",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "criteria": {
+    "project": "ORCHID",
+    "stage": "release",
+    "marker": "amber"
+  },
+  "sections": 8,
+  "distractors_per_section": [
+    4,
+    8,
+    12,
+    16
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "note_repeats": 1,
+  "baseline": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 2.070746077108197,
+    "mean_model_calls": 1
+  },
+  "managed": {
+    "accuracy": 0.75,
+    "mean_latency_seconds": 3.734096026467159,
+    "mean_model_calls": 8
+  },
+  "runs": [
+    {
+      "label": "distractor-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 4,
+      "note_repeats": 1,
+      "report_characters": 6640,
+      "mean_section_characters": 828.25,
+      "expected_answer": "GV5-FT2-FT2-CM9-BZ3-HW1-ST8-CM9",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-GV5",
+        "exact_match": false,
+        "latency_seconds": 0.5493985000066459,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-GV5",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-FT2-FT2-CM9-BZ3-HW1-ST8-CM9",
+        "exact_match": true,
+        "latency_seconds": 2.127383123151958,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 4,
+      "note_repeats": 1,
+      "report_characters": 6665,
+      "mean_section_characters": 831.375,
+      "expected_answer": "CM9-JK6-LP0-MN4-LP0-FT2-AX7-BZ3",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 0.8125510830432177,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-JK6-LP0-MN4-LP0-FT2-AX7-BZ3",
+        "exact_match": true,
+        "latency_seconds": 2.8137022904120386,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 4,
+      "note_repeats": 1,
+      "report_characters": 6639,
+      "mean_section_characters": 828.125,
+      "expected_answer": "AX7-JK6-HW1-DQ4-QR7-BZ3-JK6-JK6",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 1.5430946252308786,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-JK6-HW1-DQ4-QR7-BZ3-JK6-JK6",
+        "exact_match": true,
+        "latency_seconds": 2.7659744159318507,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 4,
+      "note_repeats": 1,
+      "report_characters": 6639,
+      "mean_section_characters": 828.125,
+      "expected_answer": "DQ4-ER8-LP0-AX7-JK6-QR7-MN4-GV5",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-T2",
+        "exact_match": false,
+        "latency_seconds": 1.270669125020504,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-T2",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-ER8-LP0-AX7-JK6-QR7-MN4-GV5",
+        "exact_match": true,
+        "latency_seconds": 2.406534167006612,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 4,
+      "note_repeats": 1,
+      "report_characters": 6658,
+      "mean_section_characters": 830.5,
+      "expected_answer": "DQ4-ER8-ST8-ER8-FT2-ST8-AX7-ER8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 1.089721499942243,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-ER8-ST8-ER8-FT2-ST8-AX7-ER8",
+        "exact_match": true,
+        "latency_seconds": 2.6090522087179124,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 8,
+      "note_repeats": 1,
+      "report_characters": 11872,
+      "mean_section_characters": 1482.25,
+      "expected_answer": "GV5-FT2-GV5-BZ3-HW1-QR7-GV5-CM9",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-GV5",
+        "exact_match": false,
+        "latency_seconds": 1.5625823750160635,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-GV5",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-FT2-GV5-BZ3-HW1-QR7-GV5-CM9",
+        "exact_match": true,
+        "latency_seconds": 2.6947329989634454,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 8,
+      "note_repeats": 1,
+      "report_characters": 11857,
+      "mean_section_characters": 1480.375,
+      "expected_answer": "CM9-JK6-HW1-JK6-DQ4-BZ3-BZ3-CM9",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 1.9321962082758546,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-JK6-HW1-JK6-DQ4-BZ3-BZ3-CM9",
+        "exact_match": true,
+        "latency_seconds": 2.9633253337815404,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8,D8_6",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 8,
+      "note_repeats": 1,
+      "report_characters": 11848,
+      "mean_section_characters": 1479.25,
+      "expected_answer": "AX7-HW1-ST8-BZ3-DQ4-GV5-QR7-LP0",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 1.801567249931395,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-HW1-ST8-BZ3-DQ4-GV5-QR7-LP0",
+        "exact_match": true,
+        "latency_seconds": 3.651552751660347,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6,D6_2\n---\nT7\n---\nD8_4,T8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 8,
+      "note_repeats": 1,
+      "report_characters": 11871,
+      "mean_section_characters": 1482.125,
+      "expected_answer": "DQ4-QR7-LP0-MN4-DQ4-AX7-CM9-FT2",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 1.516578916925937,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-QR7-LP0-MN4-DQ4-AX7-CM9-FT2",
+        "exact_match": true,
+        "latency_seconds": 4.09537537349388,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 8,
+      "note_repeats": 1,
+      "report_characters": 11855,
+      "mean_section_characters": 1480.125,
+      "expected_answer": "DQ4-ER8-GV5-JK6-DQ4-ER8-ST8-BZ3",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 1.3598932917229831,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-ER8-GV5-JK6-DQ4-ER8-ST8-BZ3",
+        "exact_match": true,
+        "latency_seconds": 3.299492083955556,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nD8_2,T8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 12,
+      "note_repeats": 1,
+      "report_characters": 17110,
+      "mean_section_characters": 2137,
+      "expected_answer": "GV5-HW1-QR7-AX7-AX7-CM9-ST8-BZ3",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-JK6",
+        "exact_match": false,
+        "latency_seconds": 2.300830750260502,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-JK6",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-HW1-QR7-AX7-AX7-CM9-ST8-BZ3",
+        "exact_match": true,
+        "latency_seconds": 4.352377207484096,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nD2_9,D2_8,D2_3,D2_4,D2_10,D2_11,D2_6,T2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nD7_4,T7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 12,
+      "note_repeats": 1,
+      "report_characters": 17092,
+      "mean_section_characters": 2134.75,
+      "expected_answer": "CM9-QR7-QR7-CM9-LP0-ER8-HW1-LP0",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 3.1602357081137598,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-QR7-QR7-CM9-LP0-ER8-HW1",
+        "exact_match": false,
+        "latency_seconds": 4.078510330989957,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nD8_8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 12,
+      "note_repeats": 1,
+      "report_characters": 17113,
+      "mean_section_characters": 2137.375,
+      "expected_answer": "AX7-MN4-MN4-AX7-BZ3-MN4-CM9-GV5",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 2.3676922088488936,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-MN4-MN4-AX7-BZ3-MN4-CM9-GV5",
+        "exact_match": true,
+        "latency_seconds": 4.1147372904233634,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4,D4_4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 12,
+      "note_repeats": 1,
+      "report_characters": 17141,
+      "mean_section_characters": 2140.875,
+      "expected_answer": "DQ4-GV5-MN4-AX7-ST8-CM9-JK6-LP0",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-LP0",
+        "exact_match": false,
+        "latency_seconds": 2.3169352496042848,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-LP0",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-GV5-MN4-AX7-ST8-CM9-JK6-LP0",
+        "exact_match": true,
+        "latency_seconds": 4.429067416116595,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_5,D3_4,T3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 12,
+      "note_repeats": 1,
+      "report_characters": 17083,
+      "mean_section_characters": 2133.625,
+      "expected_answer": "DQ4-FT2-AX7-ER8-LP0-AX7-ST8-LP0",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 2.043172833044082,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-AX7-ER8-LP0-AX7-ST8-LP0",
+        "exact_match": false,
+        "latency_seconds": 4.209540207870305,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nD2_7,D2_4,D2_9\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 16,
+      "note_repeats": 1,
+      "report_characters": 22345,
+      "mean_section_characters": 2791.375,
+      "expected_answer": "GV5-HW1-QR7-AX7-JK6-ST8-CM9-ST8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-GV5",
+        "exact_match": false,
+        "latency_seconds": 2.6642076252028346,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-GV5",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-HW1-QR7-AX7-ST8-CM9-ST8",
+        "exact_match": false,
+        "latency_seconds": 4.938242832198739,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nD5_1\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 16,
+      "note_repeats": 1,
+      "report_characters": 22341,
+      "mean_section_characters": 2790.875,
+      "expected_answer": "CM9-GV5-FT2-JK6-JK6-GV5-MN4-QR7",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 2.982903082855046,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-GV5-FT2-JK6-GV5-MN4-QR7",
+        "exact_match": false,
+        "latency_seconds": 5.072645499370992,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nD4_6\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 16,
+      "note_repeats": 1,
+      "report_characters": 22403,
+      "mean_section_characters": 2798.625,
+      "expected_answer": "AX7-AX7-DQ4-DQ4-CM9-BZ3-AX7-LP0",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 3.3725884999148548,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-AX7-DQ4-DQ4-CM9-AX7-LP0",
+        "exact_match": false,
+        "latency_seconds": 4.161247247830033,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nNONE\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 16,
+      "note_repeats": 1,
+      "report_characters": 22408,
+      "mean_section_characters": 2799.25,
+      "expected_answer": "DQ4-FT2-DQ4-LP0-CM9-JK6-AX7-GV5",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-D2",
+        "exact_match": false,
+        "latency_seconds": 3.146175208967179,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-D2_1-T2",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-FT2-DQ4-LP0-CM9-JK6-AX7-GV5",
+        "exact_match": true,
+        "latency_seconds": 5.237989958841354,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_10,T3\n---\nT4\n---\nT5\n---\nT6\n---\nD7_4, T7\n---\nD8_5,T8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "distractor-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 16,
+      "note_repeats": 1,
+      "report_characters": 22355,
+      "mean_section_characters": 2792.625,
+      "expected_answer": "DQ4-ER8-LP0-ST8-MN4-DQ4-CM9-BZ3",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-D3",
+        "exact_match": false,
+        "latency_seconds": 3.6219275002367795,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-D3_1-D4_14",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-ER8-LP0-ST8-MN4-DQ4-CM9-BZ3",
+        "exact_match": true,
+        "latency_seconds": 4.660437791142613,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    }
+  ]
+}

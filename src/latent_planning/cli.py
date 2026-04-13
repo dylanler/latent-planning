@@ -10,6 +10,7 @@ from latent_planning.experiment import (
     discover_local_model_snapshot,
     run_pilot,
 )
+from latent_planning.reporting import build_report
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -59,6 +60,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Random seeds for task generation.",
     )
     run.add_argument(
+        "--label",
+        default=None,
+        help="Optional label for grouping result files into an experiment family.",
+    )
+    run.add_argument(
+        "--note-repeats",
+        type=int,
+        default=1,
+        help="How many note sentences to concatenate per record to increase context length.",
+    )
+    run.add_argument(
         "--chunk-max-tokens",
         type=int,
         default=80,
@@ -75,6 +87,23 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=None,
         help="JSON output path. Defaults to results/<timestamped-file>.json",
+    )
+
+    report = subparsers.add_parser(
+        "build-report",
+        help="Aggregate one or more JSON result files into a markdown report with tables and charts.",
+    )
+    report.add_argument(
+        "inputs",
+        nargs="+",
+        type=Path,
+        help="Result JSON files to aggregate.",
+    )
+    report.add_argument(
+        "--output",
+        type=Path,
+        default=Path("docs/extended_evaluation.md"),
+        help="Markdown output path.",
     )
     return parser
 
@@ -95,14 +124,24 @@ def handle_run_pilot(args: argparse.Namespace) -> int:
     output = args.output or build_results_path(model)
     summary = run_pilot(
         model_path_or_repo=str(model),
+        label=args.label,
         sections=args.sections,
         distractors_per_section=args.distractors_per_section,
         seeds=args.seeds,
+        note_repeats=args.note_repeats,
         output_path=output,
         baseline_max_tokens=args.baseline_max_tokens,
         chunk_max_tokens=args.chunk_max_tokens,
     )
     print(json.dumps(summary, indent=2))
+    return 0
+
+
+def handle_build_report(inputs: list[Path], output: Path) -> int:
+    report = build_report(inputs)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(report)
+    print(str(output))
     return 0
 
 
@@ -113,5 +152,7 @@ def main() -> int:
         return handle_check_model(args.model_repo)
     if args.command == "run-pilot":
         return handle_run_pilot(args)
+    if args.command == "build-report":
+        return handle_build_report(args.inputs, args.output)
     parser.error(f"Unknown command: {args.command}")
     return 2

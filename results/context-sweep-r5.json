@@ -1,0 +1,248 @@
+{
+  "label": "context-sweep",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "criteria": {
+    "project": "ORCHID",
+    "stage": "release",
+    "marker": "amber"
+  },
+  "sections": 8,
+  "distractors_per_section": [
+    10
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "note_repeats": 5,
+  "baseline": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 3.9389278002083303,
+    "mean_model_calls": 1
+  },
+  "managed": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 4.811452783923596,
+    "mean_model_calls": 8
+  },
+  "runs": [
+    {
+      "label": "context-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 5,
+      "report_characters": 41603,
+      "mean_section_characters": 5198.625,
+      "expected_answer": "GV5-AX7-FT2-AX7-AX7-CM9-HW1-DQ4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-QR7",
+        "exact_match": false,
+        "latency_seconds": 3.740775041282177,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-QR7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-AX7-FT2-DQ4",
+        "exact_match": false,
+        "latency_seconds": 4.675597500056028,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nNONE\n---\nNONE\n---\nNONE\n---\nNONE\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 5,
+      "report_characters": 41535,
+      "mean_section_characters": 5190.125,
+      "expected_answer": "CM9-ST8-ST8-ST8-CM9-GV5-HW1-BZ3",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 3.9112075841985643,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-ST8-CM9-GV5-HW1-BZ3",
+        "exact_match": false,
+        "latency_seconds": 4.277013374026865,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nNONE\n---\nT3\n---\nNONE\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T3",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 5,
+      "report_characters": 41561,
+      "mean_section_characters": 5193.375,
+      "expected_answer": "AX7-ST8-MN4-GV5-CM9-ER8-FT2-DQ4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 3.8946167081594467,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-ST8-MN4-GV5-CM9-ER8-FT2",
+        "exact_match": false,
+        "latency_seconds": 4.765130792744458,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nNONE",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 5,
+      "report_characters": 41537,
+      "mean_section_characters": 5190.375,
+      "expected_answer": "DQ4-ER8-AX7-HW1-HW1-JK6-CM9-LP0",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 4.456869292072952,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-AX7-HW1-HW1-CM9-LP0",
+        "exact_match": false,
+        "latency_seconds": 5.360641126986593,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nNONE\n---\nT3\n---\nT4\n---\nD5_8,T5\n---\nNONE\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T3",
+          "T4",
+          "T5",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 5,
+      "report_characters": 41518,
+      "mean_section_characters": 5188,
+      "expected_answer": "DQ4-CM9-BZ3-DQ4-ST8-AX7-BZ3-DQ4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 3.691170375328511,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-BZ3-DQ4-ST8-AX7-BZ3-DQ4",
+        "exact_match": false,
+        "latency_seconds": 4.978881125804037,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nNONE\n---\nT3\n---\nT4\n---\nD5_1,T5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    }
+  ]
+}

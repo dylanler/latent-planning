@@ -60,6 +60,12 @@ Run the pilot and write a JSON report:
 uv run latent-planning run-pilot
 ```
 
+Aggregate multiple result files into a markdown evaluation report:
+
+```bash
+uv run latent-planning build-report results/*.json --output docs/extended_evaluation.md
+```
+
 The default run uses:
 
 - `sections=8`
@@ -68,27 +74,65 @@ The default run uses:
 
 Results are written to `results/`.
 
-## Current Pilot Result
+## Evaluation Snapshot
 
-On the first local run with the cached MLX 4-bit Gemma snapshot:
+Across the expanded local evaluation set:
 
-- baseline exact-match accuracy: `0.0` across `9` tasks
-- managed exact-match accuracy: `0.8889` across `9` tasks
-- baseline mean latency: `1.74s`
-- managed mean latency: `3.02s`
+| Experiment | Runs | Avg report chars | Baseline acc | Managed acc | Baseline latency (s) | Managed latency (s) |
+| --- | --- | --- | --- | --- | --- | --- |
+| `distractor-sweep` | 20 | 14497 | 0.00 | 0.75 | 2.07 | 3.73 |
+| `section-sweep` | 15 | 14488 | 0.00 | 0.93 | 2.01 | 3.44 |
+| `context-sweep` | 15 | 28013 | 0.00 | 0.47 | 3.01 | 4.10 |
 
-That is the expected shape for this hypothesis: the scaffold buys a large accuracy jump at the cost of more calls and higher latency.
+Outcome breakdown over all expanded runs:
+
+| Outcome | Count |
+| --- | --- |
+| Managed only | 36 |
+| Baseline only | 0 |
+| Both pass | 0 |
+| Both fail | 14 |
+
+High-level read:
+
+- the baseline never won a run
+- the managed scaffold stayed strong under extra distractors and section count
+- the managed scaffold eventually collapsed when raw context got too long
+
+### Managed Accuracy vs Distractors
+
+```mermaid
+xychart-beta
+    title "Managed Accuracy vs Distractors"
+    x-axis "Distractors per section" [4, 8, 12, 16]
+    y-axis "Accuracy" 0 --> 1.1
+    line "Baseline" [0.00, 0.00, 0.00, 0.00]
+    line "Managed" [1.00, 1.00, 0.60, 0.40]
+```
+
+### Managed Accuracy vs Context Length
+
+```mermaid
+xychart-beta
+    title "Managed Accuracy vs Context Length"
+    x-axis "Note repeats" [1, 3, 5]
+    y-axis "Accuracy" 0 --> 1.0
+    line "Baseline" [0.00, 0.00, 0.00]
+    line "Managed" [0.80, 0.60, 0.00]
+```
 
 ## Experiment Plan
 
 The written plan lives in [docs/mgh_experiment_plan.md](/Users/dylan/learning-projects/latent-planning/docs/mgh_experiment_plan.md).
+The expanded results and all tables/charts live in [docs/extended_evaluation.md](/Users/dylan/learning-projects/latent-planning/docs/extended_evaluation.md).
 
 ## Interpretation
 
-If the managed condition materially outperforms the single-shot baseline, that supports a narrow version of the hypothesis:
+The broader evaluation supports a narrow version of the hypothesis:
 
 - the model already contains enough local competence to solve the subproblems
 - the failure mode is at least partly in how we allocate attention and calls, not only in model weights
+- decomposition helps much more than one-shot prompting on this task family, but it is not enough to fully defeat large context growth
 
 If both conditions fail, the likely interpretations are:
 

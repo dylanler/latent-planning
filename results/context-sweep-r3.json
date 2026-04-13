@@ -1,0 +1,255 @@
+{
+  "label": "context-sweep",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "criteria": {
+    "project": "ORCHID",
+    "stage": "release",
+    "marker": "amber"
+  },
+  "sections": 8,
+  "distractors_per_section": [
+    10
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "note_repeats": 3,
+  "baseline": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 3.0002125582657753,
+    "mean_model_calls": 1
+  },
+  "managed": {
+    "accuracy": 0.6,
+    "mean_latency_seconds": 4.261058516521007,
+    "mean_model_calls": 8
+  },
+  "runs": [
+    {
+      "label": "context-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 27977,
+      "mean_section_characters": 3495.375,
+      "expected_answer": "GV5-DQ4-HW1-QR7-JK6-CM9-BZ3-ST8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T2-D7",
+        "exact_match": false,
+        "latency_seconds": 2.8251378326676786,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T2-D7_1",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-DQ4-QR7-JK6-BZ3-ST8",
+        "exact_match": false,
+        "latency_seconds": 4.00479683233425,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_7\n---\nT4\n---\nT5\n---\nNONE\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T4",
+          "T5",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28042,
+      "mean_section_characters": 3503.5,
+      "expected_answer": "CM9-LP0-MN4-LP0-ER8-AX7-ST8-DQ4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 3.3508365834131837,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-LP0-MN4-LP0-ER8-AX7-ST8-DQ4",
+        "exact_match": true,
+        "latency_seconds": 4.203561291098595,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_0,D3_7,T3,D3_5\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28053,
+      "mean_section_characters": 3504.875,
+      "expected_answer": "AX7-DQ4-JK6-QR7-AX7-CM9-BZ3-ER8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 3.0890205833129585,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-DQ4-JK6-QR7-AX7-CM9-BZ3-ER8",
+        "exact_match": true,
+        "latency_seconds": 4.004354706499726,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28033,
+      "mean_section_characters": 3502.375,
+      "expected_answer": "DQ4-ER8-ST8-FT2-LP0-BZ3-MN4-QR7",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-D1",
+        "exact_match": false,
+        "latency_seconds": 2.8509207498282194,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-D1_1",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-ER8-ST8-FT2-LP0-BZ3-MN4-QR7",
+        "exact_match": true,
+        "latency_seconds": 4.236557542346418,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "context-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28002,
+      "mean_section_characters": 3498.5,
+      "expected_answer": "DQ4-AX7-MN4-FT2-JK6-BZ3-BZ3-AX7",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 2.885147042106837,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-AX7-MN4-JK6-BZ3-BZ3-AX7",
+        "exact_match": false,
+        "latency_seconds": 4.856022210326046,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nD4_9\n---\nD5_0,T5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    }
+  ]
+}
