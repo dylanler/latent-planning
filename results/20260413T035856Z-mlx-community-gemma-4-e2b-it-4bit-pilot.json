@@ -1,0 +1,399 @@
+{
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "criteria": {
+    "project": "ORCHID",
+    "stage": "release",
+    "marker": "amber"
+  },
+  "sections": 8,
+  "distractors_per_section": [
+    6,
+    10,
+    14
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "baseline": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 1.7359731065937214,
+    "mean_model_calls": 1
+  },
+  "managed": {
+    "accuracy": 0.8888888888888888,
+    "mean_latency_seconds": 3.0168761905386217,
+    "mean_model_calls": 8
+  },
+  "runs": [
+    {
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 6,
+      "expected_answer": "GV5-QR7-AX7-AX7-AX7-ST8-FT2-BZ3",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-GV5",
+        "exact_match": false,
+        "latency_seconds": 0.9184585004113615,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-GV5",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-QR7-AX7-AX7-AX7-ST8-FT2-BZ3",
+        "exact_match": true,
+        "latency_seconds": 2.3367091277614236,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 6,
+      "expected_answer": "CM9-ST8-FT2-AX7-AX7-CM9-ER8-FT2",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 1.2232665000483394,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-ST8-FT2-AX7-AX7-CM9-ER8-FT2",
+        "exact_match": true,
+        "latency_seconds": 2.580360624473542,
+        "model_calls": 8,
+        "raw_output": "T1, D1_3, D1_2\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nD6_0,T6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 6,
+      "expected_answer": "AX7-HW1-MN4-ST8-MN4-HW1-HW1-CM9",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 1.2144592916592956,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-HW1-MN4-ST8-MN4-HW1-HW1-CM9",
+        "exact_match": true,
+        "latency_seconds": 2.3632285837084055,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nD6_1,T6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "expected_answer": "GV5-ST8-DQ4-MN4-MN4-JK6-MN4-GV5",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-D1",
+        "exact_match": false,
+        "latency_seconds": 1.7770417081192136,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-D1_6",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-ST8-DQ4-MN4-MN4-JK6-MN4-GV5",
+        "exact_match": true,
+        "latency_seconds": 2.857705334201455,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "expected_answer": "CM9-BZ3-ST8-CM9-BZ3-DQ4-ST8-CM9",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 1.883040334098041,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-BZ3-ST8-CM9-BZ3-DQ4-ST8-CM9",
+        "exact_match": true,
+        "latency_seconds": 2.8073095828294754,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "expected_answer": "AX7-LP0-LP0-DQ4-ER8-QR7-HW1-DQ4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 1.7286865413188934,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-LP0-DQ4-ER8-QR7-HW1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 2.8288362924940884,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_5\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 14,
+      "expected_answer": "GV5-DQ4-HW1-AX7-GV5-LP0-BZ3-JK6",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-GV5",
+        "exact_match": false,
+        "latency_seconds": 2.249851958360523,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-GV5",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-DQ4-HW1-AX7-GV5-LP0-BZ3-JK6",
+        "exact_match": true,
+        "latency_seconds": 3.3533168341964483,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 14,
+      "expected_answer": "CM9-GV5-AX7-LP0-ER8-FT2-MN4-ER8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 2.29337429208681,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-GV5-AX7-LP0-ER8-FT2-MN4-ER8",
+        "exact_match": true,
+        "latency_seconds": 3.9245100412517786,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nD7_13,T7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 14,
+      "expected_answer": "AX7-ER8-ER8-ER8-GV5-AX7-DQ4-MN4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 2.3355788332410157,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-ER8-ER8-ER8-GV5-AX7-DQ4-MN4",
+        "exact_match": true,
+        "latency_seconds": 4.099909293930978,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nD7_13,T7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    }
+  ]
+}
