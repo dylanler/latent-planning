@@ -1,0 +1,389 @@
+{
+  "label": "ablation-context-sweep",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "criteria": {
+    "project": "ORCHID",
+    "stage": "release",
+    "marker": "amber"
+  },
+  "sections": 8,
+  "distractors_per_section": [
+    10
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "note_repeats": 3,
+  "baseline": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 2.6649890082888303,
+    "mean_model_calls": 1
+  },
+  "managed": {
+    "accuracy": 0.6,
+    "mean_latency_seconds": 4.09409856684506,
+    "mean_model_calls": 8
+  },
+  "no_validator": {
+    "accuracy": 0.0,
+    "mean_latency_seconds": 5.184602791257203,
+    "mean_model_calls": 8
+  },
+  "recursive": {
+    "accuracy": 0.8,
+    "mean_latency_seconds": 11.002860576100648,
+    "mean_model_calls": 27.6
+  },
+  "runs": [
+    {
+      "label": "ablation-context-sweep",
+      "seed": 0,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 27977,
+      "mean_section_characters": 3495.375,
+      "expected_answer": "GV5-DQ4-HW1-QR7-JK6-CM9-BZ3-ST8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T2-D7",
+        "exact_match": false,
+        "latency_seconds": 2.2442390830256045,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T2-D7_1",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "GV5-DQ4-QR7-JK6-BZ3-ST8",
+        "exact_match": false,
+        "latency_seconds": 5.111932415980846,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_7\n---\nT4\n---\nT5\n---\nNONE\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T4",
+          "T5",
+          "T7",
+          "T8"
+        ]
+      },
+      "no_validator": {
+        "answer": "DQ4-HW1-QR7-JK6-BZ3-ST8-DQ4-FT2",
+        "exact_match": false,
+        "latency_seconds": 5.536401332356036,
+        "model_calls": 8,
+        "raw_output": "MATCH phase=18 seal=FT2\n---\nMATCH phase=2 seal=DQ4\n---\nMATCH phase=3 seal=HW1\n---\nMATCH phase=4 seal=QR7\n---\nMATCH phase=5 seal=JK6\n---\nMATCH phase=12 seal=DQ4\n---\nMATCH phase=7 seal=BZ3\n---\nMATCH phase=8 seal=ST8",
+        "candidate_record_ids": []
+      },
+      "recursive": {
+        "answer": "GV5-HW1-QR7-JK6-CM9-BZ3-ST8",
+        "exact_match": false,
+        "latency_seconds": 10.694812876172364,
+        "model_calls": 24,
+        "raw_output": "NONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT1\n---\nGroup 3\n[Depth 1 Group 3]\nNONE\n---\nNONE\n[Depth 1 Group 1]\nD3_9\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT3\n---\n2\n[Depth 1 Group 2]\nT4\n---\nT5\n[Depth 1 Group 1]\nT5\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n3\n[Depth 1 Group 3]\nT6\n---\n2\n[Depth 1 Group 2]\nT7\n---\nNONE\n[Depth 1 Group 1]\nT8\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+        "candidate_record_ids": [
+          "T1",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "ablation-context-sweep",
+      "seed": 1,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28042,
+      "mean_section_characters": 3503.5,
+      "expected_answer": "CM9-LP0-MN4-LP0-ER8-AX7-ST8-DQ4",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-CM9",
+        "exact_match": false,
+        "latency_seconds": 3.41920758318156,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-CM9",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "CM9-LP0-MN4-LP0-ER8-AX7-ST8-DQ4",
+        "exact_match": true,
+        "latency_seconds": 4.482123041525483,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nD3_0,D3_7,T3,D3_5\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      },
+      "no_validator": {
+        "answer": "CM9-LP0-LP0-ER8-ST8-DQ4-ST8",
+        "exact_match": false,
+        "latency_seconds": 7.4498177068308,
+        "model_calls": 8,
+        "raw_output": "MATCH phase=1 seal=CM9\n---\nMATCH phase=2 seal=LP0\n---\nMATCH phase=11 seal=ST8\n---\nMATCH phase=4 seal=LP0\n---\nMATCH phase=5 seal=ER8\n---\nNONE\n---\nMATCH phase=7 seal=ST8\n---\nMATCH phase=8 seal=DQ4",
+        "candidate_record_ids": []
+      },
+      "recursive": {
+        "answer": "CM9-LP0-MN4-LP0-ER8-AX7-ST8-DQ4",
+        "exact_match": true,
+        "latency_seconds": 12.519146039616317,
+        "model_calls": 28,
+        "raw_output": "NONE\n[Depth 1 Group 1]\nD1_9\n[Depth 1 Group 2]\nT1\n[Depth 1 Group 3]\nNONE\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nT2\n[Depth 1 Group 3]\nNONE\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nT3\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nT4\n---\nNONE\n[Depth 1 Group 1]\nT5\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nT6\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT7\n---\nNONE\n[Depth 1 Group 1]\nT8\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "ablation-context-sweep",
+      "seed": 2,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28053,
+      "mean_section_characters": 3504.875,
+      "expected_answer": "AX7-DQ4-JK6-QR7-AX7-CM9-BZ3-ER8",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-AX7",
+        "exact_match": false,
+        "latency_seconds": 2.4178587500937283,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-AX7",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "AX7-DQ4-JK6-QR7-AX7-CM9-BZ3-ER8",
+        "exact_match": true,
+        "latency_seconds": 3.3964577093720436,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      },
+      "no_validator": {
+        "answer": "AX7-FT2-JK6-QR7-AX7-CM9-BZ3-ER8",
+        "exact_match": false,
+        "latency_seconds": 4.349484958220273,
+        "model_calls": 8,
+        "raw_output": "MATCH phase=1 seal=AX7\n---\nMATCH phase=1 seal=FT2\n---\nMATCH phase=3 seal=JK6\n---\nMATCH phase=4 seal=QR7\n---\nMATCH phase=5 seal=AX7\n---\nMATCH phase=6 seal=CM9\n---\nMATCH phase=7 seal=BZ3\n---\nMATCH phase=8 seal=ER8",
+        "candidate_record_ids": []
+      },
+      "recursive": {
+        "answer": "AX7-DQ4-JK6-QR7-AX7-CM9-BZ3-ER8",
+        "exact_match": true,
+        "latency_seconds": 9.426909958012402,
+        "model_calls": 28,
+        "raw_output": "T1\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT1\n---\nNONE\n[Depth 1 Group 1]\nD2_7\n[Depth 1 Group 2]\nT2\n[Depth 1 Group 3]\nNONE\n---\nNONE\n[Depth 1 Group 1]\nT3\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\nT4\n[Depth 1 Group 1]\nT4\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nT5\n---\n3\n[Depth 1 Group 3]\nT6\n---\nT7\n[Depth 1 Group 1]\nT7\n[Depth 1 Group 2]\nD7_6\n[Depth 1 Group 3]\nNONE\n---\nT8\n[Depth 1 Group 1]\nT8\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "ablation-context-sweep",
+      "seed": 3,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28033,
+      "mean_section_characters": 3502.375,
+      "expected_answer": "DQ4-ER8-ST8-FT2-LP0-BZ3-MN4-QR7",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-D1",
+        "exact_match": false,
+        "latency_seconds": 2.690996458288282,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-D1_1",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-ER8-ST8-FT2-LP0-BZ3-MN4-QR7",
+        "exact_match": true,
+        "latency_seconds": 3.745126083958894,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nT4\n---\nT5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      },
+      "no_validator": {
+        "answer": "DQ4-ST8-FT2-LP0-BZ3-MN4-QR7",
+        "exact_match": false,
+        "latency_seconds": 4.13927320856601,
+        "model_calls": 8,
+        "raw_output": "MATCH phase=1 seal=DQ4\n---\nNONE\n---\nMATCH phase=3 seal=ST8\n---\nMATCH phase=4 seal=FT2\n---\nMATCH phase=5 seal=LP0\n---\nMATCH phase=6 seal=BZ3\n---\nMATCH phase=7 seal=MN4\n---\nMATCH phase=8 seal=QR7",
+        "candidate_record_ids": []
+      },
+      "recursive": {
+        "answer": "DQ4-ER8-ST8-FT2-LP0-BZ3-MN4-QR7",
+        "exact_match": true,
+        "latency_seconds": 9.006210708990693,
+        "model_calls": 28,
+        "raw_output": "T1\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT1\n---\n3\n[Depth 1 Group 3]\nT2\n---\nT3\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT3\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nT4\n[Depth 1 Group 3]\nNONE\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nT5\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nT6\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT7\n---\nT8\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    },
+    {
+      "label": "ablation-context-sweep",
+      "seed": 4,
+      "sections": 8,
+      "distractors_per_section": 10,
+      "note_repeats": 3,
+      "report_characters": 28002,
+      "mean_section_characters": 3498.5,
+      "expected_answer": "DQ4-AX7-MN4-FT2-JK6-BZ3-BZ3-AX7",
+      "expected_record_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ],
+      "baseline": {
+        "answer": "T1-DQ4",
+        "exact_match": false,
+        "latency_seconds": 2.5526431668549776,
+        "model_calls": 1,
+        "raw_output": "ANSWER=T1-DQ4",
+        "candidate_record_ids": []
+      },
+      "managed": {
+        "answer": "DQ4-AX7-MN4-JK6-BZ3-BZ3-AX7",
+        "exact_match": false,
+        "latency_seconds": 3.7348535833880305,
+        "model_calls": 8,
+        "raw_output": "T1\n---\nT2\n---\nT3\n---\nD4_9\n---\nD5_0,T5\n---\nT6\n---\nT7\n---\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      },
+      "no_validator": {
+        "answer": "AX7-DQ4-AX7-MN4-FT2-JK6-BZ3-BZ3",
+        "exact_match": false,
+        "latency_seconds": 4.448036750312895,
+        "model_calls": 8,
+        "raw_output": "MATCH phase=1 seal=DQ4\n---\nMATCH phase=2 seal=AX7\n---\nMATCH phase=3 seal=MN4\n---\nMATCH phase=4 seal=FT2\n---\nMATCH phase=5 seal=JK6\n---\nMATCH phase=6 seal=BZ3\n---\nMATCH phase=7 seal=BZ3\n---\nMATCH phase=1 seal=AX7",
+        "candidate_record_ids": []
+      },
+      "recursive": {
+        "answer": "DQ4-AX7-MN4-FT2-JK6-BZ3-BZ3-AX7",
+        "exact_match": true,
+        "latency_seconds": 13.367223297711462,
+        "model_calls": 30,
+        "raw_output": "T1\n[Depth 1 Group 1]\nD1_5\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT1\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nD2_5\n[Depth 1 Group 3]\nT2\n---\nNONE\n[Depth 1 Group 1]\nT3\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\nT4\n[Depth 1 Group 1]\nT4\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nD4_5\n---\nT5\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT5\n---\n3\n[Depth 1 Group 3]\nT6\n---\nT7\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nD7_0\n[Depth 1 Group 3]\nT7\n---\nNONE\n[Depth 1 Group 1]\nNONE\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nT8",
+        "candidate_record_ids": [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8"
+        ]
+      }
+    }
+  ]
+}

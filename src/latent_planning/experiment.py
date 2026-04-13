@@ -236,6 +236,29 @@ def build_chunk_prompt(task: Task, section_text: str) -> str:
     )
 
 
+def build_no_validator_chunk_prompt(task: Task, section_text: str) -> str:
+    project, stage, marker = task.criteria
+    return textwrap.dedent(
+        f"""\
+        Inspect this section only.
+
+        Find the single best record that matches all three exact conditions:
+        - Project={project}
+        - Stage={stage}
+        - Marker={marker}
+
+        Return exactly one line in one of these formats:
+        - MATCH phase=<integer> seal=<seal>
+        - NONE
+
+        Do not return anything else.
+
+        Section:
+        {section_text}
+        """
+    )
+
+
 def render_records(records: list[Record]) -> str:
     return "\n\n".join(record.render() for record in records)
 
@@ -290,6 +313,14 @@ def extract_group_indices(raw_output: str, group_count: int) -> list[int]:
     return indices
 
 
+def extract_phase_seal(raw_output: str) -> tuple[int, str] | None:
+    phase_match = re.search(r"phase\s*=\s*(\d+)", raw_output, re.IGNORECASE)
+    seal_match = re.search(r"seal\s*=\s*([A-Z0-9]+)", raw_output, re.IGNORECASE)
+    if not phase_match or not seal_match:
+        return None
+    return int(phase_match.group(1)), seal_match.group(1)
+
+
 def split_records(records: list[Record], group_count: int) -> list[list[Record]]:
     if len(records) <= group_count:
         return [[record] for record in records]
@@ -340,6 +371,32 @@ def run_managed(task: Task, model: MLXPromptModel, *, max_tokens: int) -> Condit
         model_calls=len(task.section_texts),
         raw_output="\n---\n".join(raw_outputs),
         candidate_record_ids=[record.record_id for record in validated_records],
+    )
+
+
+def run_no_validator_managed(task: Task, model: MLXPromptModel, *, max_tokens: int) -> ConditionResult:
+    raw_outputs: list[str] = []
+    extracted_pairs: list[tuple[int, str]] = []
+    total_latency = 0.0
+    for section_text in task.section_texts:
+        raw_output, latency_seconds = model.generate(
+            build_no_validator_chunk_prompt(task, section_text),
+            max_tokens=max_tokens,
+        )
+        raw_outputs.append(raw_output)
+        total_latency += latency_seconds
+        pair = extract_phase_seal(raw_output)
+        if pair is not None:
+            extracted_pairs.append(pair)
+
+    answer = "-".join(seal for phase, seal in sorted(extracted_pairs))
+    return ConditionResult(
+        answer=answer,
+        exact_match=answer == task.expected_answer,
+        latency_seconds=total_latency,
+        model_calls=len(task.section_texts),
+        raw_output="\n---\n".join(raw_outputs),
+        candidate_record_ids=[],
     )
 
 
@@ -448,6 +505,8 @@ def run_pilot(
     output_path: Path,
     baseline_max_tokens: int,
     chunk_max_tokens: int,
+    no_validator_chunk_max_tokens: int,
+    include_no_validator_manager: bool,
     recursive_chunk_max_tokens: int,
     include_recursive_manager: bool,
     recursive_leaf_records: int,
@@ -457,6 +516,7 @@ def run_pilot(
     runs: list[dict[str, object]] = []
     baseline_results: list[ConditionResult] = []
     managed_results: list[ConditionResult] = []
+    no_validator_results: list[ConditionResult] = []
     recursive_results: list[ConditionResult] = []
 
     for distractor_count in distractors_per_section:
@@ -469,6 +529,13 @@ def run_pilot(
             )
             baseline = run_baseline(task, model, max_tokens=baseline_max_tokens)
             managed = run_managed(task, model, max_tokens=chunk_max_tokens)
+            no_validator = None
+            if include_no_validator_manager:
+                no_validator = run_no_validator_managed(
+                    task,
+                    model,
+                    max_tokens=no_validator_chunk_max_tokens,
+                )
             recursive = None
             if include_recursive_manager:
                 recursive = run_recursive_managed(
@@ -480,6 +547,8 @@ def run_pilot(
                 )
             baseline_results.append(baseline)
             managed_results.append(managed)
+            if no_validator:
+                no_validator_results.append(no_validator)
             if recursive:
                 recursive_results.append(recursive)
             runs.append(
@@ -495,6 +564,7 @@ def run_pilot(
                     "expected_record_ids": task.expected_record_ids,
                     "baseline": asdict(baseline),
                     "managed": asdict(managed),
+                    **({"no_validator": asdict(no_validator)} if no_validator else {}),
                     **({"recursive": asdict(recursive)} if recursive else {}),
                 }
             )
@@ -513,6 +583,7 @@ def run_pilot(
         "note_repeats": note_repeats,
         "baseline": summarize_condition(baseline_results),
         "managed": summarize_condition(managed_results),
+        **({"no_validator": summarize_condition(no_validator_results)} if no_validator_results else {}),
         **({"recursive": summarize_condition(recursive_results)} if recursive_results else {}),
         "runs": runs,
     }

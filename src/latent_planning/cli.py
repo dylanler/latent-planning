@@ -77,6 +77,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Generation budget for each managed chunk pass.",
     )
     run.add_argument(
+        "--include-no-validator-manager",
+        action="store_true",
+        help="Also evaluate a section-by-section manager without deterministic validation.",
+    )
+    run.add_argument(
+        "--no-validator-chunk-max-tokens",
+        type=int,
+        default=80,
+        help="Generation budget for each no-validator manager call.",
+    )
+    run.add_argument(
         "--include-recursive-manager",
         action="store_true",
         help="Also evaluate a recursive within-section manager.",
@@ -155,6 +166,8 @@ def handle_run_pilot(args: argparse.Namespace) -> int:
         output_path=output,
         baseline_max_tokens=args.baseline_max_tokens,
         chunk_max_tokens=args.chunk_max_tokens,
+        no_validator_chunk_max_tokens=args.no_validator_chunk_max_tokens,
+        include_no_validator_manager=args.include_no_validator_manager,
         recursive_chunk_max_tokens=args.recursive_chunk_max_tokens,
         include_recursive_manager=args.include_recursive_manager,
         recursive_leaf_records=args.recursive_leaf_records,

@@ -1,15 +1,24 @@
 # latent-planning
 
-This repo is a local pilot for the "mismanaged geniuses" hypothesis: can the same small frontier-ish model do meaningfully better on a long-context task when we replace a single prompt with a simple decomposition scaffold?
+This repo is a local pilot for the "mismanaged geniuses" hypothesis: can the same local model do materially better when we change how it is managed, rather than changing the model weights?
 
-The current pilot uses `mlx-community/gemma-4-e2b-it-4bit` on Apple Silicon. The benchmark is synthetic on purpose so we can grade it exactly:
+The current pilot uses `mlx-community/gemma-4-e2b-it-4bit` on Apple Silicon and tests one narrow question:
 
-- The model sees a long report split into sections.
+- The model sees a long synthetic report split into sections.
 - Each section contains one true target record and many near-miss distractors.
-- The baseline gets the whole report in one shot and must return the ordered seal sequence directly.
-- The managed condition queries the same model section-by-section for high-recall candidate IDs, then validates those IDs deterministically before assembling the final answer.
+- The task is to recover the exact ordered seal sequence for the target records.
+- We compare one-shot prompting against several decomposition strategies on the same tasks.
 
-That is not a complete test of the paper's hypothesis. It is a narrow pilot that asks a precise question: does a decomposition scaffold help the same local model recover structured evidence across a longer context than a single direct call?
+This is not a full proof of the hypothesis. It is a controlled local benchmark for one claim: better decomposition can unlock capability that is mostly absent in a single direct prompt.
+
+## What Is Being Compared
+
+| Strategy | What the model has to do | Intuition |
+| --- | --- | --- |
+| Baseline | Read the whole report and answer in one call | One large exam question |
+| No-validator manager | Search one section at a time, but still copy out exact `phase` and `seal` fields itself | Smaller exams, but still does all bookkeeping alone |
+| Validator-backed manager | Search one section at a time, return candidate IDs, then let Python verify exact matches and assemble the answer | Smaller exams plus a calculator for exact bookkeeping |
+| Recursive manager | Route over compact summaries first, then zoom into likely leaf chunks | First decide where to look, then inspect details |
 
 ## Architecture
 
@@ -19,29 +28,29 @@ What is implemented today:
 flowchart TD
     A[MLX Gemma 4 E2B 4-bit<br/>local Apple Silicon model] --> B[Task generator<br/>synthetic long report with sections]
     B --> C[Baseline path<br/>single full-report prompt]
-    B --> D[Managed path<br/>one prompt per section]
-    B --> R[Recursive manager<br/>group routing plus leaf search]
-    C --> E[Direct answer parser<br/>ANSWER=...]
-    D --> F[Candidate record IDs<br/>high-recall retrieval]
+    B --> D[No-validator path<br/>one prompt per section]
+    B --> E[Validator-backed path<br/>one prompt per section]
+    B --> R[Recursive path<br/>route then zoom]
+    C --> CP[Direct answer parser<br/>ANSWER=...]
+    D --> DP[Model returns<br/>phase plus seal per section]
+    E --> EP[Candidate record IDs<br/>high-recall retrieval]
     R --> RS[Compact group summaries<br/>recursive routing]
     RS --> RL[Leaf chunk search<br/>full records]
-    F --> G[Deterministic validator<br/>exact field match in Python]
-    RL --> G
-    G --> H[Ordered seal sequence]
-    E --> I[Exact-match scorer]
-    H --> I[Exact-match scorer]
-    I --> J[JSON result artifact<br/>results/*.json]
+    EP --> V[Deterministic validator<br/>exact field match in Python]
+    RL --> V
+    DP --> O[Ordered seal sequence]
+    V --> O
+    CP --> S[Exact-match scorer]
+    O --> S
+    S --> J[JSON result artifact<br/>results/*.json]
     J --> K[README + docs report]
 ```
 
 Runtime shape:
 
-- `latent-planning check-model` verifies the local MLX snapshot.
-- `latent-planning run-pilot` loads one model instance and runs both conditions over the same generated tasks.
-- The baseline uses one call per task.
-- The managed condition uses one call per section, then hands off exact bookkeeping to deterministic code.
-- The recursive manager first routes over compact field summaries, then searches only the selected leaf chunks with full records.
-- Results are persisted as JSON so runs can be compared later.
+- `latent-planning check-model` verifies that the local MLX snapshot exists.
+- `latent-planning run-pilot` loads one model instance and evaluates the selected conditions over the same generated tasks.
+- `latent-planning build-report` aggregates JSON result files into tables and charts.
 
 ## Why MLX
 
@@ -49,7 +58,7 @@ MLX is the right backend on this machine:
 
 - the MLX 4-bit Gemma snapshot is already present in the local Hugging Face cache
 - `mlx_lm` loads and runs the model successfully
-- `llama-cli` and `ollama` are not installed locally, so GGUF would require extra setup with no obvious upside for this pilot
+- `llama-cli` and `ollama` are not installed locally, so GGUF would require extra setup with no clear upside for this pilot
 
 ## Commands
 
@@ -59,134 +68,153 @@ Check whether the local MLX snapshot exists:
 uv run latent-planning check-model
 ```
 
-Run the pilot and write a JSON report:
+Run the default baseline-vs-managed pilot:
 
 ```bash
 uv run latent-planning run-pilot
 ```
 
-Run the recursive manager variant:
+Run the full ablation on one context setting:
 
 ```bash
-uv run latent-planning run-pilot --include-recursive-manager
+uv run latent-planning run-pilot \
+  --label ablation-context-sweep \
+  --sections 8 \
+  --distractors-per-section 10 \
+  --note-repeats 3 \
+  --seeds 0 1 2 3 4 \
+  --include-no-validator-manager \
+  --include-recursive-manager
 ```
 
-Aggregate multiple result files into a markdown evaluation report:
+Rebuild the markdown report from saved JSON files:
 
 ```bash
-uv run latent-planning build-report results/*.json --output docs/extended_evaluation.md
+uv run latent-planning build-report \
+  results/distractor-sweep.json \
+  results/section-sweep-s4.json \
+  results/section-sweep-s8.json \
+  results/section-sweep-s12.json \
+  results/ablation-context-sweep-r1.json \
+  results/ablation-context-sweep-r3.json \
+  results/ablation-context-sweep-r5.json \
+  --output docs/extended_evaluation.md
 ```
 
-The default run uses:
-
-- `sections=8`
-- `distractors_per_section=6 10 14`
-- `seeds=0 1 2`
-
-Results are written to `results/`.
+The full report lives in [docs/extended_evaluation.md](docs/extended_evaluation.md). The experiment plan lives in [docs/mgh_experiment_plan.md](docs/mgh_experiment_plan.md).
 
 ## Evaluation Snapshot
 
-Across the expanded local evaluation set:
+The current report set aggregates `50` runs across distractor growth, section growth, and the new context ablation.
 
-| Experiment | Runs | Avg report chars | Baseline acc | Managed acc | Baseline latency (s) | Managed latency (s) |
-| --- | --- | --- | --- | --- | --- | --- |
-| `distractor-sweep` | 20 | 14497 | 0.00 | 0.75 | 2.07 | 3.73 |
-| `section-sweep` | 15 | 14488 | 0.00 | 0.93 | 2.01 | 3.44 |
-| `context-sweep` | 15 | 28013 | 0.00 | 0.47 | 3.01 | 4.10 |
+### Experiment Summary
 
-Recursive manager comparison on the same context-scaling family:
+| Experiment | Runs | Avg report chars | Baseline acc | Managed acc | No-validator acc | Recursive acc | Baseline latency (s) | Managed latency (s) | No-validator latency (s) | Recursive latency (s) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `ablation-context-sweep` | 15 | 28013 | 0.00 | 0.47 | 0.07 | 0.80 | 2.98 | 4.23 | 5.21 | 10.59 |
+| `distractor-sweep` | 20 | 14497 | 0.00 | 0.75 | - | - | 2.07 | 3.73 | - | - |
+| `section-sweep` | 15 | 14488 | 0.00 | 0.93 | - | - | 2.01 | 3.44 | - | - |
 
-| Experiment | Runs | Avg report chars | Baseline acc | Flat managed acc | Recursive acc | Baseline latency (s) | Flat managed latency (s) | Recursive latency (s) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `recursive-context-sweep` | 15 | 28013 | 0.00 | 0.47 | 0.80 | 3.22 | 4.60 | 10.51 |
+### How To Read The Main Ablation
 
-Outcome breakdown over all expanded runs:
+Moving right means more repeated note text, so the report gets longer without changing the underlying task. Higher is better on the accuracy chart. Lower is better on the latency chart.
 
-| Outcome | Count |
-| --- | --- |
-| Flat managed beats baseline | 43 |
-| Recursive rescues flat-managed failures | 5 |
-| Baseline only | 0 |
-| Any non-baseline method succeeds | 48 |
-| All methods fail | 17 |
-
-High-level read:
-
-- the baseline never won a run
-- the managed scaffold stayed strong under extra distractors and section count
-- the flat managed scaffold eventually collapsed when raw context got too long
-- recursive chunking recovered most of that lost accuracy, but at a large latency and call-count cost
-
-### Managed Accuracy vs Distractors
+| Context size | Baseline acc | No-validator acc | Flat managed acc | Recursive acc |
+| --- | --- | --- | --- | --- |
+| `1x` notes | 0.00 | 0.20 | 0.80 | 0.80 |
+| `3x` notes | 0.00 | 0.00 | 0.60 | 0.80 |
+| `5x` notes | 0.00 | 0.00 | 0.00 | 0.80 |
 
 ```mermaid
 xychart-beta
-    title "Managed Accuracy vs Distractors"
-    x-axis "Distractors per section" [4, 8, 12, 16]
-    y-axis "Accuracy" 0 --> 1.1
-    line "Baseline" [0.00, 0.00, 0.00, 0.00]
-    line "Managed" [1.00, 1.00, 0.60, 0.40]
-```
-
-### Managed Accuracy vs Context Length
-
-```mermaid
-xychart-beta
-    title "Managed Accuracy vs Context Length"
+    title "Context Growth vs Accuracy"
     x-axis "Note repeats" [1, 3, 5]
-    y-axis "Accuracy" 0 --> 1.0
+    y-axis "Exact-match accuracy" 0 --> 1.0
     line "Baseline" [0.00, 0.00, 0.00]
-    line "Managed" [0.80, 0.60, 0.00]
-```
-
-### Flat vs Recursive Under Context Growth
-
-```mermaid
-xychart-beta
-    title "Flat vs Recursive Context Accuracy"
-    x-axis "Note repeats" [1, 3, 5]
-    y-axis "Accuracy" 0 --> 1.0
-    line "Baseline" [0.00, 0.00, 0.00]
-    line "Managed" [0.80, 0.60, 0.00]
+    line "No-validator" [0.20, 0.00, 0.00]
+    line "Flat managed" [0.80, 0.60, 0.00]
     line "Recursive" [0.80, 0.80, 0.80]
 ```
 
-## Experiment Plan
+```mermaid
+xychart-beta
+    title "Context Growth vs Latency"
+    x-axis "Note repeats" [1, 3, 5]
+    y-axis "Latency seconds" 0 --> 12.81
+    line "Baseline" [1.73, 2.66, 4.55]
+    line "No-validator" [3.75, 5.18, 6.70]
+    line "Flat managed" [2.98, 4.09, 5.62]
+    line "Recursive" [8.07, 11.00, 12.71]
+```
 
-The written plan lives in [docs/mgh_experiment_plan.md](/Users/dylan/learning-projects/latent-planning/docs/mgh_experiment_plan.md).
-The expanded results and all tables/charts live in [docs/extended_evaluation.md](/Users/dylan/learning-projects/latent-planning/docs/extended_evaluation.md).
+### What The Other Sweeps Say
 
-## Interpretation
+The context ablation is the most important visual, but the simpler sweeps matter because they show the model is not failing everywhere.
 
-The broader evaluation supports a narrow version of the hypothesis:
+| Sweep | What changes | Result |
+| --- | --- | --- |
+| Distractor sweep | More near-miss records per section | Flat managed stays above zero even at the hardest setting, baseline stays at zero |
+| Section sweep | More sections to search | Flat managed remains very strong overall, baseline stays at zero |
+| Context ablation | Same task, much longer repeated notes | Flat managed eventually breaks, recursive does not |
 
-- the model already contains enough local competence to solve the subproblems
-- the failure mode is at least partly in how we allocate attention and calls, not only in model weights
-- decomposition helps much more than one-shot prompting on this task family
-- flat decomposition alone is still brittle under heavy context inflation
-- recursive decomposition with a routing stage materially improves robustness under long context, which is the strongest evidence in the repo for the hypothesis so far
+```mermaid
+xychart-beta
+    title "Distractor Sweep Accuracy"
+    x-axis "Distractors per section" [4, 8, 12, 16]
+    y-axis "Exact-match accuracy" 0 --> 1.1
+    line "Baseline" [0.00, 0.00, 0.00, 0.00]
+    line "Flat managed" [1.00, 1.00, 0.60, 0.40]
+```
 
-If both conditions fail, the likely interpretations are:
+```mermaid
+xychart-beta
+    title "Section Sweep Accuracy"
+    x-axis "Sections" [4, 8, 12]
+    y-axis "Exact-match accuracy" 0 --> 1.1
+    line "Baseline" [0.00, 0.00, 0.00]
+    line "Flat managed" [1.00, 0.80, 1.00]
+```
 
-- the task is still too hard for the model even after decomposition
-- the scaffold is poorly chosen
-- the hypothesis does not hold on this task family
+### Outcome Breakdown
+
+| Outcome | Count |
+| --- | --- |
+| Flat managed beats baseline | 36 |
+| No-validator beats baseline | 1 |
+| Recursive rescues flat-managed failures | 5 |
+| Baseline only | 0 |
+| Any non-baseline method succeeds | 41 |
+| All methods fail | 9 |
+
+## Intuitive Read
+
+The cleanest way to read these results is:
+
+- Giving the model smaller subproblems helps a lot.
+- Giving the model smaller subproblems is not enough by itself.
+- The strongest gains come from combining decomposition with either exact external bookkeeping or better routing.
+
+The no-validator line is the key ablation. It asks: what if we still decompose, but the model has to do the exact copying and ordering itself? The answer is that performance mostly disappears. That means the gain is not just "more calls"; it comes from structuring the task so the model only does the fuzzy part and deterministic code does the exact part.
+
+The recursive line is the second key result. Flat section-by-section management works when the report is moderately sized, but it breaks when the context gets very long. Recursive routing fixes that by first asking where to look, then only reading those leaf chunks in detail.
+
+## Conclusion
+
+This repo now supports a stronger conclusion than the first pilot.
+
+On this task family, the same local Gemma model clearly has the knowledge needed to solve the problem, but it does not reliably express that capability in one-shot prompting. Flat decomposition helps a lot, deterministic validation adds major reliability, and recursive routing is what keeps performance alive once context length becomes the real bottleneck.
+
+The most defensible conclusion is therefore:
+
+- the pilot supports the narrow "mismanaged geniuses" claim on this benchmark
+- decomposition policy matters, not just model size
+- deterministic support code is currently part of what makes the capability appear
+- recursive decomposition is the most promising direction in this repo, but it is also the most expensive path in latency and model calls
 
 ## Next Steps
 
-- Add run-to-run comparison tooling so new results can be benchmarked against the first pilot instead of inspected manually.
-- Stress the current scaffold with harder settings: more sections, more distractors, longer notes, and noisier field names.
-- Replace fixed sectioning with recursive splitting so the manager chooses where to zoom in next.
-- Add ablations to separate which part of the gain comes from decomposition versus deterministic validation.
-- Expand beyond retrieval-heavy tasks into multi-hop reasoning and real code-edit workflows.
-
-## Things To Test Next
-
-- Variable-depth planning: let the model decide whether to answer directly, inspect sections, or recurse into subsections.
-- No-validator mode: require the model to return structured JSON all the way through and measure how much accuracy drops.
-- Different decomposition languages: candidate IDs, free-form plans, tool-call style actions, or recursive loop/code execution.
-- Context-length scaling: hold the task constant while increasing report length until both methods fail.
-- Realistic schema drift: rename fields, reorder records, or add irrelevant prose so the scaffold cannot overfit the template.
-- Cross-model comparison: run the same harness against a stronger MLX model and measure whether better weights reduce the value of scaffolding.
-- Codebase tasks: adapt the benchmark to multi-file bug localization where each chunk is a file and the final answer is a patch target set.
+- Add a learned or adaptive routing policy so recursion does not always pay the full search cost.
+- Move beyond synthetic retrieval into real codebase tasks such as file selection and bug localization.
+- Compare stronger local MLX models to test whether better weights reduce the marginal value of scaffolding.
+- Measure token and energy cost, not just wall-clock latency, so tradeoffs are easier to compare.
+- Try decomposition languages beyond IDs and summaries: plans, tool calls, loops, or executable recursive programs.

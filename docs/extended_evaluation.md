@@ -4,12 +4,11 @@ This report aggregates local MLX runs for the Gemma decomposition pilot.
 
 ## Experiment Summary
 
-| Experiment | Runs | Avg report chars | Baseline acc | Managed acc | Recursive acc | Baseline latency (s) | Managed latency (s) | Recursive latency (s) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| context-sweep | 15 | 28013 | 0.00 | 0.47 | - | 3.01 | 4.10 | - |
-| distractor-sweep | 20 | 14497 | 0.00 | 0.75 | - | 2.07 | 3.73 | - |
-| recursive-context-sweep | 15 | 28013 | 0.00 | 0.47 | 0.80 | 3.22 | 4.60 | 10.51 |
-| section-sweep | 15 | 14488 | 0.00 | 0.93 | - | 2.01 | 3.44 | - |
+| Experiment | Runs | Avg report chars | Baseline acc | No-validator acc | Managed acc | Recursive acc | Baseline latency (s) | No-validator latency (s) | Managed latency (s) | Recursive latency (s) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ablation-context-sweep | 15 | 28013 | 0.00 | 0.07 | 0.47 | 0.80 | 2.98 | 5.21 | 4.23 | 10.59 |
+| distractor-sweep | 20 | 14497 | 0.00 | - | 0.75 | - | 2.07 | - | 3.73 | - |
+| section-sweep | 15 | 14488 | 0.00 | - | 0.93 | - | 2.01 | - | 3.44 | - |
 
 ## Distractor Sweep
 
@@ -64,75 +63,50 @@ xychart-beta
     line "Managed" [1.58, 3.36, 5.39]
 ```
 
-## Context Sweep
+## Ablation Context Sweep
 
-| Setting | Runs | Avg report chars | Baseline acc | Managed acc | Baseline latency (s) | Managed latency (s) |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1x | 5 | 14467 | 0.00 | 0.80 | 2.08 | 3.24 |
-| 3x | 5 | 28021 | 0.00 | 0.60 | 3.00 | 4.26 |
-| 5x | 5 | 41551 | 0.00 | 0.00 | 3.94 | 4.81 |
+| Setting | Runs | Avg report chars | Baseline acc | No-validator acc | Managed acc | Recursive acc | Baseline latency (s) | No-validator latency (s) | Managed latency (s) | Recursive latency (s) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1x | 5 | 14467 | 0.00 | 0.20 | 0.80 | 0.80 | 1.73 | 3.75 | 2.98 | 8.07 |
+| 3x | 5 | 28021 | 0.00 | 0.00 | 0.60 | 0.80 | 2.66 | 5.18 | 4.09 | 11.00 |
+| 5x | 5 | 41551 | 0.00 | 0.00 | 0.00 | 0.80 | 4.55 | 6.70 | 5.62 | 12.71 |
 
 ```mermaid
 xychart-beta
-    title "Context Sweep Accuracy"
+    title "Ablation Context Sweep Accuracy"
     x-axis "Note repeats" [1, 3, 5]
     y-axis "Value" 0 --> 1.0
     line "Baseline" [0.00, 0.00, 0.00]
-    line "Managed" [0.80, 0.60, 0.00]
-```
-
-```mermaid
-xychart-beta
-    title "Context Sweep Latency"
-    x-axis "Note repeats" [1, 3, 5]
-    y-axis "Value" 0 --> 4.91
-    line "Baseline" [2.08, 3.00, 3.94]
-    line "Managed" [3.24, 4.26, 4.81]
-```
-
-## Recursive Context Sweep
-
-| Setting | Runs | Avg report chars | Baseline acc | Managed acc | Recursive acc | Baseline latency (s) | Managed latency (s) | Recursive latency (s) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1x | 5 | 14467 | 0.00 | 0.80 | 0.80 | 2.10 | 3.79 | 9.08 |
-| 3x | 5 | 28021 | 0.00 | 0.60 | 0.80 | 3.29 | 4.75 | 11.12 |
-| 5x | 5 | 41551 | 0.00 | 0.00 | 0.80 | 4.26 | 5.25 | 11.32 |
-
-```mermaid
-xychart-beta
-    title "Recursive Context Sweep Accuracy"
-    x-axis "Note repeats" [1, 3, 5]
-    y-axis "Value" 0 --> 1.0
-    line "Baseline" [0.00, 0.00, 0.00]
+    line "No-validator" [0.20, 0.00, 0.00]
     line "Managed" [0.80, 0.60, 0.00]
     line "Recursive" [0.80, 0.80, 0.80]
 ```
 
 ```mermaid
 xychart-beta
-    title "Recursive Context Sweep Latency"
+    title "Ablation Context Sweep Latency"
     x-axis "Note repeats" [1, 3, 5]
-    y-axis "Value" 0 --> 11.42
-    line "Baseline" [2.10, 3.29, 4.26]
-    line "Managed" [3.79, 4.75, 5.25]
-    line "Recursive" [9.08, 11.12, 11.32]
+    y-axis "Value" 0 --> 12.81
+    line "Baseline" [1.73, 2.66, 4.55]
+    line "No-validator" [3.75, 5.18, 6.70]
+    line "Managed" [2.98, 4.09, 5.62]
+    line "Recursive" [8.07, 11.00, 12.71]
 ```
 
 ## Outcome Breakdown
 | Outcome | Count |
 | --- | --- |
-| Flat managed beats baseline | 43 |
+| Flat managed beats baseline | 36 |
+| No-validator beats baseline | 1 |
 | Recursive rescues flat-managed failures | 5 |
 | Baseline only | 0 |
-| Any non-baseline method succeeds | 48 |
-| All methods fail | 17 |
+| Any non-baseline method succeeds | 41 |
+| All methods fail | 9 |
 ## Key Findings
-- Flat managed wins over baseline: `43` runs. Recursive-only rescues beyond flat managed: `5` runs. Baseline-only wins: `0` runs.
+- Flat managed wins over baseline: `36` runs. No-validator wins over baseline: `1` runs. Recursive-only rescues beyond flat managed: `5` runs. Baseline-only wins: `0` runs.
 - Managed accuracy under distractor growth: `4` distractors -> `1.00`, `8` distractors -> `1.00`, `12` distractors -> `0.60`, `16` distractors -> `0.40`.
 - Even at the hardest distractor setting (`16` per section), the baseline stayed at `0.00` while managed retained non-zero accuracy.
-- Managed accuracy under context growth: `1x` notes -> `0.80`, `3x` notes -> `0.60`, `5x` notes -> `0.00`.
-- The strongest failure mode is raw context inflation: by `5x` repeated notes, both methods collapsed to `0.00` exact-match.
-- Recursive manager accuracy under context growth: `1x` notes -> `0.80`, `3x` notes -> `0.80`, `5x` notes -> `0.80`.
-- At `5x` notes, recursive chunking recovered `0.80` accuracy versus flat managed `0.00`.
+- Context ablation by method: `1x` -> baseline `0.00`, no-validator `0.20`, flat managed `0.80`, recursive `0.80`, `3x` -> baseline `0.00`, no-validator `0.00`, flat managed `0.60`, recursive `0.80`, `5x` -> baseline `0.00`, no-validator `0.00`, flat managed `0.00`, recursive `0.80`.
+- At `5x` notes, no-validator management reached `0.00`, flat managed reached `0.00`, and recursive routing reached `0.80`.
 ## Conclusion
-Across these local runs, the managed scaffold consistently outperformed the single-shot baseline on exact-match accuracy, while paying a latency and call-count premium. The evidence supports the narrow version of the hypothesis: for this model and task family, better management of model calls unlocks capabilities that are mostly absent in one-shot prompting. Flat section-by-section management still breaks under severe context inflation, but recursive routing over compact summaries recovers most of that lost accuracy. The main open problem is therefore not whether decomposition helps, but how to make the decomposition policy cheaper and more general.
+Across these local runs, the managed scaffold consistently outperformed the single-shot baseline on exact-match accuracy, while paying a latency and call-count premium. The evidence supports the narrow version of the hypothesis: for this model and task family, better management of model calls unlocks capabilities that are mostly absent in one-shot prompting. The new no-validator ablation shows that decomposition alone helps, but deterministic bookkeeping contributes meaningful extra reliability. Flat section-by-section management still breaks under severe context inflation, while recursive routing over compact summaries recovers most of that lost accuracy. The main open problem is therefore not whether decomposition helps, but how to make the decomposition policy both cheaper and more general.
