@@ -39,39 +39,60 @@ The broad version would be stronger:
 
 ## What Was Run In This Repo Now
 
-This repo now includes the first step toward the broader version:
+This repo now includes all four of the originally listed extensions:
 
 - a cross-family local suite over prose retrieval, ledger aggregation, and code-like localization
-- the same local model
-- the same shared configuration
-- the same four methods: baseline, no-validator, validator-backed managed, recursive
+- compute-normalized reporting with prompt, completion, and total-token accounting
+- a Gemma context ladder at context scales `1`, `3`, and `5`
+- a real codebase file-selection benchmark over this repository
+- a second-model replication on `mlx-community/Llama-3.2-3B-Instruct-4bit`
 
-That is reported in [broad_evidence_report.md](/Users/dylan/learning-projects/latent-planning/docs/broad_evidence_report.md).
+These are reported in:
 
-## Next Experiments In Order
+- [broad_evidence_report.md](/Users/dylan/learning-projects/latent-planning/docs/broad_evidence_report.md)
+- [context_ladder_report.md](/Users/dylan/learning-projects/latent-planning/docs/context_ladder_report.md)
+- [codebase_benchmark_report.md](/Users/dylan/learning-projects/latent-planning/docs/codebase_benchmark_report.md)
+- [model_transfer_report.md](/Users/dylan/learning-projects/latent-planning/docs/model_transfer_report.md)
+
+## Completed Extensions
 
 1. Real codebase benchmark
-- Convert a small set of real repository tasks into graded file-selection or symbol-selection problems.
-- Compare one-shot prompting against flat managed and recursive managed.
+- Implemented as a graded file-selection benchmark over real repo files.
+- Result: negative transfer for the current scaffold. One-shot baseline was best on this task.
 
 2. Cross-model replication
-- Rerun the broad suite on a stronger local MLX model.
-- Check whether management still adds value or whether better weights erase most of the gain.
+- Reran the broad suite on `mlx-community/Llama-3.2-3B-Instruct-4bit`.
+- Result: the Gemma scaffold pattern did not transfer cleanly to the second model.
 
 3. Harder context ladder
-- Take each family and raise context systematically until flat management breaks.
-- Measure whether recursive routing consistently extends that boundary.
+- Reran the broad suite on Gemma at context scales `1`, `3`, and `5`.
+- Result: flat managed stayed strong overall, but recursive routing was not consistently better across families.
 
 4. Compute-normalized comparison
-- Add token-count accounting and report accuracy versus compute, not just accuracy versus method.
+- Added token accounting to the synthetic breadth suite and the codebase benchmark.
+- Result: managed methods usually buy their gains with extra tokens, not free capability.
+
+## Remaining Gaps
+
+1. Better real-task managers
+- The current codebase manager loses too much global context and over-selects files.
+- The next real-task scaffold should compare or rank candidate files instead of asking independent yes/no questions.
+
+2. Stronger model transfer
+- One weaker second model is not enough to characterize transfer.
+- The next informative replication is a stronger local model with enough capacity to follow the decomposition language reliably.
+
+3. Real bug-localization or patch-target tasks
+- File selection is a real task, but still a shallow one.
+- The next proof point should require choosing patch targets or isolating a failing subsystem.
 
 ## Current Best Conclusion
 
-The repo is now past “one synthetic benchmark only,” but it is not at “broad proof.”
+The repo is now well past “one synthetic benchmark only,” but it is still not at “broad proof.”
 
 The strongest honest claim at this point is:
 
 - management advantages transfer across multiple synthetic task families
 - deterministic support code matters on some tasks
-- recursion matters when the flat policy starts to miss evidence
-- broader proof still requires model transfer and at least one real code task
+- the effect is not universal across scaffolds, tasks, or models
+- broader proof still requires a stronger real-task manager and stronger model-transfer evidence

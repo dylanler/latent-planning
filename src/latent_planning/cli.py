@@ -11,6 +11,7 @@ from latent_planning.experiment import (
     run_pilot,
 )
 from latent_planning.breadth_suite import build_breadth_report, run_breadth_suite
+from latent_planning.codebase_benchmark import build_codebase_report, run_codebase_benchmark
 from latent_planning.reporting import build_report
 
 
@@ -241,6 +242,62 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("docs/broad_evidence_report.md"),
         help="Markdown output path.",
     )
+
+    codebase = subparsers.add_parser(
+        "run-codebase-benchmark",
+        help="Run a real repository file-selection benchmark over this codebase.",
+    )
+    codebase.add_argument(
+        "--model",
+        default=None,
+        help="Local model path or HF repo. Defaults to the discovered local snapshot when available.",
+    )
+    codebase.add_argument(
+        "--baseline-max-tokens",
+        type=int,
+        default=120,
+        help="Generation budget for the single-shot baseline.",
+    )
+    codebase.add_argument(
+        "--chunk-max-tokens",
+        type=int,
+        default=40,
+        help="Generation budget for each managed file pass.",
+    )
+    codebase.add_argument(
+        "--no-validator-chunk-max-tokens",
+        type=int,
+        default=48,
+        help="Generation budget for each no-validator file pass.",
+    )
+    codebase.add_argument(
+        "--recursive-chunk-max-tokens",
+        type=int,
+        default=40,
+        help="Generation budget for each recursive group and file pass.",
+    )
+    codebase.add_argument(
+        "--output",
+        type=Path,
+        default=Path("results/codebase-benchmark.json"),
+        help="JSON output path.",
+    )
+
+    codebase_report = subparsers.add_parser(
+        "build-codebase-report",
+        help="Convert a codebase benchmark JSON file into a markdown report.",
+    )
+    codebase_report.add_argument(
+        "input",
+        type=Path,
+        help="Codebase benchmark JSON file.",
+    )
+    codebase_report.add_argument(
+        "--output",
+        type=Path,
+        default=Path("docs/codebase_benchmark_report.md"),
+        help="Markdown output path.",
+    )
     return parser
 
 
@@ -316,6 +373,28 @@ def handle_build_breadth_report(inputs: list[Path], output: Path) -> int:
     return 0
 
 
+def handle_run_codebase_benchmark(args: argparse.Namespace) -> int:
+    model = args.model or discover_local_model_snapshot(DEFAULT_MODEL_REPO) or DEFAULT_MODEL_REPO
+    summary = run_codebase_benchmark(
+        model_path_or_repo=str(model),
+        output_path=args.output,
+        baseline_max_tokens=args.baseline_max_tokens,
+        chunk_max_tokens=args.chunk_max_tokens,
+        no_validator_chunk_max_tokens=args.no_validator_chunk_max_tokens,
+        recursive_chunk_max_tokens=args.recursive_chunk_max_tokens,
+    )
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def handle_build_codebase_report(input_path: Path, output: Path) -> int:
+    report = build_codebase_report(input_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(report)
+    print(str(output))
+    return 0
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
@@ -329,5 +408,9 @@ def main() -> int:
         return handle_run_breadth_suite(args)
     if args.command == "build-breadth-report":
         return handle_build_breadth_report(args.inputs, args.output)
+    if args.command == "run-codebase-benchmark":
+        return handle_run_codebase_benchmark(args)
+    if args.command == "build-codebase-report":
+        return handle_build_codebase_report(args.input, args.output)
     parser.error(f"Unknown command: {args.command}")
     return 2

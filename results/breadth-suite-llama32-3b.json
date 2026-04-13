@@ -1,0 +1,686 @@
+{
+  "label": "breadth-suite",
+  "model_path_or_repo": "mlx-community/Llama-3.2-3B-Instruct-4bit",
+  "families": [
+    {
+      "family": "records",
+      "display_name": "Prose records",
+      "task_type": "retrieval in prose",
+      "answer_mode": "sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 3,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 9446.333333333334,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 2.272906860957543,
+        "mean_model_calls": 1,
+        "mean_prompt_tokens": 2220.6666666666665,
+        "mean_completion_tokens": 122.33333333333333,
+        "mean_total_tokens": 2343
+      },
+      "no_validator": {
+        "accuracy": 0.3333333333333333,
+        "mean_latency_seconds": 3.2196100543563566,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 2450.6666666666665,
+        "mean_completion_tokens": 312,
+        "mean_total_tokens": 2762.6666666666665
+      },
+      "managed": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 3.3969471803866327,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 2566.6666666666665,
+        "mean_completion_tokens": 323,
+        "mean_total_tokens": 2889.6666666666665
+      },
+      "recursive": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 10.26741702777023,
+        "mean_model_calls": 16,
+        "mean_prompt_tokens": 4560.333333333333,
+        "mean_completion_tokens": 1291,
+        "mean_total_tokens": 5851.333333333333
+      },
+      "runs": [
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9457,
+          "expected_answer": "GV5-JK6-AX7-AX7",
+          "baseline": {
+            "answer": "DIST1_0-DIST1_5-DIST2_0-DIST2_3-DIST2_5-DIST3_0-DIST3_2-DIST3_5-DIST4_0-DIST4_4-DIST4_5-DIST4_3",
+            "exact_match": false,
+            "latency_seconds": 2.386000624857843,
+            "model_calls": 1,
+            "prompt_tokens": 2221,
+            "completion_tokens": 118,
+            "total_tokens": 2339,
+            "raw_output": "ANSWER=DIST1_0-DIST1_5-DIST2_0-DIST2_3-DIST2_5-DIST3_0-DIST3_2-DIST3_5-DIST4_0-DIST4_4-DIST4_5-DIST4_3\n\nNote: The answer is a comma-separated list of item IDs that match the specified conditions. The conditions are:\n\n* Project = ORCHID\n* Stage = release\n* Marker = amber\n* Status = locked\n\nThe answer is sorted by Order in ascending order.",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "FT2-JK6-DQ4-AX7",
+            "exact_match": false,
+            "latency_seconds": 3.237242749892175,
+            "model_calls": 4,
+            "prompt_tokens": 2451,
+            "completion_tokens": 295,
+            "total_tokens": 2746,
+            "raw_output": "- MATCH order=10 token=DQ4\n- NONE\n\nThe item with the ID DIST1_5 matches all the conditions: Project=ORCHID, Stage=release, Marker=amber, and Status=locked.\n---\n- MATCH order=9 token=JK6\n- NONE\n\nThe item with the ID DIST2_0 matches the conditions: Project=ORCHID, Stage=release, Marker=amber, and Status=locked. The item with the ID DIST2_0 has an order of 9 and a token of JK6. Therefore, the correct answer is:\n\n- MATCH order=9 token=JK6\n- NONE\n\nThis item does not match the conditions: Project\n---\n- MATCH order=5 token=FT2\n- NONE\n\nThe item with the order of 5 and the token FT2 matches the conditions. The project is ORCHID, the stage is draft, the marker is amber, and the status is shadow.\n---\n- MATCH order=10 token=AX7\n- NONE\n\nThe item ID DIST4_3 does not match the stage \"release\". Therefore, it is not a match. The item ID DIST4_0 does not match the marker \"amber\". Therefore, it is not a match. The item ID DIST4_5 does not match the stage \"release\". Therefore, it is not a match. The item ID DIST4_1 does not match the marker \"amber",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "",
+            "exact_match": false,
+            "latency_seconds": 3.495280041359365,
+            "model_calls": 4,
+            "prompt_tokens": 2567,
+            "completion_tokens": 324,
+            "total_tokens": 2891,
+            "raw_output": "import re\n\ndef find_candidates(candidate_ids):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Project\", \"value\": \"ORCHID\"},\n        {\"key\": \"Stage\", \"value\": \"release\"},\n        {\"key\": \"Marker\", \"value\": \"amber\"},\n        {\"key\": \"Status\", \"value\": \"locked\"}\n    ]\n\n    # Filter the candidate\n---\nimport re\n\ndef find_candidates(candidate_ids):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Filter the candidate IDs\n    filtered_ids = [id for id in candidate_ids if all(conditions.get(key, None) == value\n---\nimport re\n\ndef get_candidate_ids(candidate_list):\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked'\n    }\n\n    # Filter the candidate list based on the conditions\n    filtered_list = [item for item in candidate_list if all(item.get(key)\n---\nimport re\n\ndef find_candidate_ids(section):\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked'\n    }\n\n    # Initialize the list of candidate IDs\n    candidate_ids = []\n\n    # Iterate over the items in the section\n    for item in section",
+            "candidate_item_ids": []
+          },
+          "recursive": {
+            "answer": "",
+            "exact_match": false,
+            "latency_seconds": 10.333859667181969,
+            "model_calls": 16,
+            "prompt_tokens": 4564,
+            "completion_tokens": 1293,
+            "total_tokens": 5857,
+            "raw_output": "def find_groups(group_list):\n    groups = []\n    for group in group_list:\n        group_number = group['id']\n        group_items = group['items']\n        for item in group_items:\n            if item['Project'] == 'ORCHID' and item['Stage'] == 'release' and item['Marker'] == 'amber' and item['Status'] == 'locked':\n[Depth 1 Group 1]\nimport re\n\ndef find_candidate_ids(item_list):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Filter the items based on the conditions\n    filtered_items = [item for item in item_list if all(item.get(condition) ==\n[Depth 1 Group 2]\nThe function should return a comma-separated list of candidate IDs that satisfy the conditions. Based on the provided section, the function should return the following candidate IDs: DIST1_2, DIST1_1, DIST1_5.\n\nThe function should be locked, as it is a critical component of the pipeline. The function should also be permissive, as it should include candidate IDs that are unsure or\n[Depth 1 Group 3]\nThis is a simple filtering problem. We need to filter a list of candidate IDs based on certain conditions. The conditions are:\n\n- Project=ORCHID\n- Stage=release\n- Marker=amber\n- Status=locked\n\nWe need to return a plain comma-separated list of candidate IDs that satisfy all these conditions. If we are unsure, we should include the candidate ID. We should also\n---\nimport re\n\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the regex pattern\n    pattern = \"|\".join(f\"({key})={value}\" for key, value in conditions.items())\n[Depth 1 Group 1]\nThis is a text-based problem that requires a filtering process to identify candidate IDs that meet specific conditions. The problem statement is clear, and the provided section contains multiple items with varying project, stage, marker, status, order, token, and note fields. The goal is to return a comma-separated list of candidate IDs that satisfy the conditions:\n\n1. Project = ORCHID\n2. Stage =\n[Depth 1 Group 2]\nThis is a simple filtering problem. We need to filter a list of items based on certain conditions and return a comma-separated list of candidate IDs that satisfy all the conditions.\n\nHere's a step-by-step solution:\n\n1. Define the conditions:\n   - Project = ORCHID\n   - Stage = release\n   - Marker = amber\n   - Status = locked\n\n2. Create a list of\n[Depth 1 Group 3]\nThis is a simple query to retrieve candidate IDs that satisfy specific conditions. The conditions are:\n\n1. Project = ORCHID\n2. Stage = release\n3. Marker = amber\n4. Status = locked\n\nThe query is designed to be permissive, meaning it will include candidate IDs if there's any uncertainty.\n\nThe query will return a plain comma-separated list of candidate IDs that meet these\n---\nimport re\n\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the regex pattern\n    pattern = \"|\".join(f\"{key}={value}\" for key, value in conditions.items())\n[Depth 1 Group 1]\nThis is a text-based data inspection task. The task is to extract candidate IDs that meet specific conditions from a given section of text. The conditions are:\n\n1. Project = ORCHID\n2. Stage = release\n3. Marker = amber\n4. Status = locked\n\nThe task requires the model to be permissive and include candidate IDs that are unsure or plausible, but not necessarily exact\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids():\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Project\", \"value\": \"ORCHID\"},\n        {\"key\": \"Stage\", \"value\": \"release\"},\n        {\"key\": \"Marker\", \"value\": \"amber\"},\n        {\"key\": \"Status\", \"value\": \"locked\"}\n    ]\n\n    # Define the candidate IDs\n[Depth 1 Group 3]\nThis section does not require a specific response format, but I'll provide a general answer based on the given conditions.\n\nTo satisfy all exact conditions, the candidate IDs that might satisfy all conditions are:\n\n- DIST3_3\n\nThis is because DIST3_3 is the only item that meets all the conditions:\n\n- Project=ORCHID\n- Stage=release (DIST3_3 is in\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Initialize an empty list to store the group numbers\n    group_numbers = []\n\n    # Iterate over the groups\n    for group in group\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(item_list):\n    # Filter items by exact match of project, stage, marker, and status\n    filtered_items = [item for item in item_list if \n                      item['Project'] == 'ORCHID' and \n                      item['Stage'] == 'release' and \n                      item['Marker'] == 'amber' and \n                      item['Status']\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and \n                       item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and \n                       item['Status'] == 'locked')]\n[Depth 1 Group 3]\nBased on the given section, the candidate IDs that might satisfy all exact conditions are:\n\n- DIST4_3\n\nThis is because the section provided does not meet the conditions of the problem statement. The project is LATTICE, not ORCHID, and the stage is release, but the marker is amber, not amber. The status is locked, but the order and token are not specified.",
+            "candidate_item_ids": []
+          }
+        },
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9439,
+          "expected_answer": "CM9-LP0-HW1-GV5",
+          "baseline": {
+            "answer": "CM9-ER8-LP0-GV5-JK6-BZ3-FT2",
+            "exact_match": false,
+            "latency_seconds": 2.1175123332068324,
+            "model_calls": 1,
+            "prompt_tokens": 2224,
+            "completion_tokens": 105,
+            "total_tokens": 2329,
+            "raw_output": "ANSWER=CM9-ER8-LP0-GV5-JK6-BZ3-FT2\n\nThe sorted list of items matching the conditions is:\n\n1. CM9\n2. ER8\n3. LP0\n4. GV5\n5. JK6\n6. BZ3\n7. FT2\n\nThe tokens are sorted in ascending order of their corresponding item IDs. The final answer is a comma-separated list of the tokens in the order they appear in the sorted list.",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "CM9-LP0-HW1-GV5",
+            "exact_match": true,
+            "latency_seconds": 3.2116932068020105,
+            "model_calls": 4,
+            "prompt_tokens": 2454,
+            "completion_tokens": 324,
+            "total_tokens": 2778,
+            "raw_output": "- MATCH order=1 token=CM9\n- NONE\n\nThe item with the ID \"TARGET1\" matches all the conditions. The order is 1, the project is ORCHID, the stage is release, the marker is amber, and the status is locked. The token is CM9.\n---\n- MATCH order=2 token=LP0\n- NONE\n\nThe correct answer is:\n\n- MATCH order=2 token=LP0\n- NONE\n\nThe correct answer is:\n\n- MATCH order=2 token=LP0\n- NONE\n\nThe correct answer is:\n\n- MATCH order=2 token=LP0\n- NONE\n\nThe correct answer is:\n\n- MATCH order=2 token=LP0\n- NONE\n\nThe correct answer is:\n\n- MATCH order=2 token\n---\n- MATCH order=3 token=HW1\n- NONE\n\nThis is because the only item that matches all the conditions is the third item, which has an order of 3, a token of HW1, a project of ORCHID, a stage of release, a marker of amber, and a status of locked.\n---\nThe single best item matching all exact conditions is:\n\n- MATCH order=4 token=GV5\n- NONE\n\nThe item with ID DIST4_4 does not match the conditions, as it has a stage of \"review\" instead of \"release\". The item with ID TARGET4 matches the conditions, but it does not have the exact order of 4. The item with ID DIST4_0 matches the conditions, but it has a stage of \"release\" and an",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "CM9",
+            "exact_match": false,
+            "latency_seconds": 3.3573209163732827,
+            "model_calls": 4,
+            "prompt_tokens": 2570,
+            "completion_tokens": 323,
+            "total_tokens": 2893,
+            "raw_output": "import re\n\ndef get_candidate_ids():\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked'\n    }\n\n    # Define the items\n    items = [\n        {'Item ID': 'TARGET1', 'Project': 'ORCHID', 'Stage':\n---\nimport re\n\ndef find_candidate_ids(item_list):\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked'\n    }\n\n    # Filter the items based on the conditions\n    filtered_items = [item for item in item_list if all(item.get(condition) ==\n---\ndef find_candidate_ids():\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Project\", \"value\": \"ORCHID\"},\n        {\"key\": \"Stage\", \"value\": \"release\"},\n        {\"key\": \"Marker\", \"value\": \"amber\"},\n        {\"key\": \"Status\", \"value\": \"locked\"}\n    ]\n\n    # Initialize the list of candidate IDs\n---\nimport re\n\ndef find_candidate_ids(candidate_items):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Filter the candidate items\n    filtered_items = [item for item in candidate_items if all(item.get(condition) == value for condition",
+            "candidate_item_ids": [
+              "TARGET1"
+            ]
+          },
+          "recursive": {
+            "answer": "GV5",
+            "exact_match": false,
+            "latency_seconds": 10.215017372276634,
+            "model_calls": 16,
+            "prompt_tokens": 4558,
+            "completion_tokens": 1289,
+            "total_tokens": 5847,
+            "raw_output": "def find_groups(group_list):\n    groups = []\n    for group in group_list:\n        group_number = group['id']\n        group_items = group['items']\n        for item in group_items:\n            if item['Project'] == 'ORCHID' and item['Stage'] == 'release' and item['Marker'] == 'amber' and item['Status'] == 'locked':\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and \n                       item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and \n                       item['Status'] == 'locked')]\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and item['Status'] == 'locked')]\n    \n    # If no\n[Depth 1 Group 3]\nThis is a simple query that requires filtering and sorting of candidate IDs based on the given conditions. To solve this problem, we can use a SQL-like query to generate the list of candidate IDs.\n\nHere's a sample code in Python:\n\n```python\ndef get_candidate_ids():\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Project\", \"value\": \"ORCHID\"},\n---\ndef find_groups(group_list):\n    groups = []\n    for group in group_list:\n        group_number = group['id']\n        group_items = group['items']\n        for item in group_items:\n            if item['Project'] == 'ORCHID' and item['Stage'] == 'release' and item['Marker'] == 'amber' and item['Status'] == 'locked':\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and \n                       item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and \n                       item['Status'] == 'locked')]\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and item['Status'] == 'locked')]\n    \n    # If no\n[Depth 1 Group 3]\nThis is a simple query that requires filtering and sorting of candidate IDs based on the given conditions. Here's a step-by-step breakdown:\n\n1.  **Filtering**: First, we need to filter the candidate IDs based on the given conditions:\n    *   Project = ORCHID\n    *   Stage = release\n    *   Marker = amber\n    *   Status = locked\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the regex pattern\n    pattern = \"|\".join(f\"({key})={value}\" for key, value in conditions.items())\n[Depth 1 Group 1]\nimport re\n\ndef find_candidate_ids(candidate_ids, conditions):\n    # Define the conditions\n    conditions = {\n        'Project': ['ORCHID'],\n        'Stage': ['release'],\n        'Marker': ['amber'],\n        'Status': ['locked']\n    }\n\n    # Filter the candidate IDs based on the conditions\n    filtered_ids = [id for id in candidate_ids if all(conditions\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(candidate_list):\n    # Filter the candidate list based on the given conditions\n    filtered_list = [item for item in candidate_list if \n                     (item['Project'] == 'ORCHID' and \n                      item['Stage'] == 'release' and \n                      item['Marker'] == 'amber' and \n                      item['Status'] == 'locked')]\n[Depth 1 Group 3]\nThis is a simple query that requires filtering and sorting of candidate IDs based on the given conditions. To solve this problem, we can use a SQL-like query to generate the list of candidate IDs.\n\nHere's a sample code in Python:\n\n```python\ndef get_candidate_ids():\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Project\", \"value\": \"ORCHID\"},\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the groups\n    groups = group_data\n\n    # Initialize the result\n    result = []\n\n    # Iterate over the groups\n[Depth 1 Group 1]\nThis is a text-based problem that requires natural language processing and information extraction. The goal is to identify candidate IDs that meet specific conditions.\n\nTo solve this problem, we need to analyze the given text and extract the relevant information. We will then use this information to identify the candidate IDs that satisfy the conditions.\n\nHere's the step-by-step solution:\n\n1. **Identify the conditions**: The conditions are\n[Depth 1 Group 2]\nThis is a text-based problem that requires a specific format for the response. Here is the solution:\n\nThe candidate IDs that might satisfy all exact conditions are:\n\nDIST4_1, DIST4_2, TARGET4\n\nThese IDs meet the conditions:\n\n- Project=ORCHID\n- Stage=release\n- Marker=amber\n- Status=locked\n\nThe other IDs do not meet the conditions\n[Depth 1 Group 3]\nThis section does not require a specific response format, but I'll provide a general answer based on the given prompt.\n\nTo solve this problem, we need to identify candidate IDs that satisfy all the given conditions. Let's break down the conditions:\n\n1. Project = ORCHID\n2. Stage = release\n3. Marker = amber\n4. Status = locked\n\nWe need to find candidate IDs",
+            "candidate_item_ids": [
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9443,
+          "expected_answer": "AX7-HW1-CM9-DQ4",
+          "baseline": {
+            "answer": "AX7-FT2-ER8-MN4-QR7-JK6-BZ3-FW1-CM9-AX7-GV5-DQ4-AX7",
+            "exact_match": false,
+            "latency_seconds": 2.315207624807954,
+            "model_calls": 1,
+            "prompt_tokens": 2217,
+            "completion_tokens": 144,
+            "total_tokens": 2361,
+            "raw_output": "ANSWER=AX7-FT2-ER8-MN4-QR7-JK6-BZ3-FW1-CM9-AX7-GV5-DQ4-AX7\n\nThe sorted list of items matching the conditions is:\n\n1. AX7 - FT2 - ER8 - MN4 - QR7 - JK6 - BZ3 - FW1 - CM9 - AX7 - GV5 - DQ4 - AX7\n\nThe items matching the conditions are:\n\n- Project=ORCHID\n- Stage=release\n- Marker=amber\n- Status=locked\n\nThe items are sorted by Order in ascending order. The tokens are separated by hyphens.",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "FT2-BZ3-ER8-AX7",
+            "exact_match": false,
+            "latency_seconds": 3.2098942063748837,
+            "model_calls": 4,
+            "prompt_tokens": 2447,
+            "completion_tokens": 317,
+            "total_tokens": 2764,
+            "raw_output": "- MATCH order=7 token=AX7\n- NONE\n\nThe item with the order of 7 and the token AX7 is the one that matches all the conditions. Therefore, the correct answer is:\n\n- MATCH order=7 token=AX7\n- NONE\n\nThis item matches the conditions:\n\n- Project=ORCHID\n- Stage=release\n- Marker=amber\n- Status=locked\n\nThe order and token are also correct. Therefore, the correct answer\n---\n- MATCH order=4 token=FT2\n- NONE\n\nThis is because the item with ID DIST2_0 has the exact conditions: Project=ORCHID, Stage=release, Marker=amber, and Status=locked. The order is 4 and the token is FT2. Therefore, the correct answer is - MATCH order=4 token=FT2. \n\nNote that the other items do not match all the conditions, so they are not included in the\n---\n- MATCH order=5 token=ER8\n- NONE\n\nThe item with the order of 5 and the token ER8 is the one that matches all the conditions: Project=ORCHID, Stage=release, Marker=amber, and Status=locked.\n---\nThe single best item matching all exact conditions is:\n\n- MATCH order=4 token=BZ3\n- NONE\n\nThe item with order 4 and token BZ3 matches the conditions of Project=ORCHID, Stage=release, Marker=amber, and Status=locked. The other items do not match all the conditions.",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "",
+            "exact_match": false,
+            "latency_seconds": 3.3382405834272504,
+            "model_calls": 4,
+            "prompt_tokens": 2563,
+            "completion_tokens": 322,
+            "total_tokens": 2885,
+            "raw_output": "import re\n\ndef get_candidate_ids(candidate_list):\n    # Filter the candidate list based on the given conditions\n    filtered_list = [item for item in candidate_list if \n                     item['Project'] == 'ORCHID' and \n                     item['Stage'] == 'release' and \n                     item['Marker'] == 'amber' and \n                     item['Status'] == 'locked']\n---\nimport re\n\ndef find_candidates(candidate_ids):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Filter the candidate IDs\n    filtered_ids = [id for id in candidate_ids if all(conditions.get(key, None) == value\n---\nimport re\n\ndef get_candidate_ids(candidate_list):\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked'\n    }\n\n    # Filter the candidate list based on the conditions\n    filtered_list = [item for item in candidate_list if all(item.get(key)\n---\nimport re\n\ndef get_candidate_ids(candidate_list):\n    # Filter the candidate list based on the given conditions\n    filtered_list = [item for item in candidate_list if \n                     item['Project'] == 'ORCHID' and \n                     item['Stage'] == 'release' and \n                     item['Marker'] == 'amber' and \n                     item['Status'] == 'locked']",
+            "candidate_item_ids": []
+          },
+          "recursive": {
+            "answer": "",
+            "exact_match": false,
+            "latency_seconds": 10.25337404385209,
+            "model_calls": 16,
+            "prompt_tokens": 4559,
+            "completion_tokens": 1291,
+            "total_tokens": 5850,
+            "raw_output": "import re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the regex pattern\n    pattern = \"|\".join(f\"({key})={value}\" for key, value in conditions.items())\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and \n                       item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and \n                       item['Status'] == 'locked')]\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(section):\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked',\n    }\n\n    # Define the pattern for candidate IDs\n    pattern = r'^DIST\\d+_(\\d+)$'\n\n    # Initialize the list of\n[Depth 1 Group 3]\nThis is a simple query that requires filtering and sorting of candidate IDs based on the given conditions. To solve this, we can use a SQL-like query language. Here's a possible solution:\n\n```sql\nSELECT GROUP_CONCAT(candidate_id) AS result\nFROM candidates\nWHERE \n  project = 'ORCHID' AND \n  stage = 'release' AND \n  marker = 'amber\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define a function to check if a group meets the conditions\n    def meets_conditions(group):\n        for key, value in conditions.items():\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items based on the given conditions\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and \n                       item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and \n                       item['Status'] == 'locked')]\n[Depth 1 Group 2]\nBased on the provided section, I will return a plain comma-separated list of candidate IDs that might satisfy all exact conditions. Here are the candidate IDs that meet the conditions:\n\nDIST2_4\n\nThis is the only item that meets all the conditions: Project=ORCHID, Stage=release, Marker=amber, and Status=locked. The other items do not meet the Stage=release condition\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(candidate):\n    # Define the conditions\n    conditions = {\n        'Project': 'ORCHID',\n        'Stage': 'release',\n        'Marker': 'amber',\n        'Status': 'locked'\n    }\n\n    # Define the function to check conditions\n    def check_conditions(candidate):\n        for key, value in conditions.items():\n            if candidate.get(key\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Initialize an empty list to store the group numbers\n    group_numbers = []\n\n    # Iterate over the groups\n    for group in group\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Filter the candidate items based on the conditions\n    filtered_items = [item for item in candidate_items if all(item.get(condition)\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids():\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the items\n    items = [\n        {\"Item ID\": \"DIST3_5\", \"Project\": \"ORCHID\", \"\n[Depth 1 Group 3]\nThis section is not relevant to the problem at hand. The problem is to return a plain comma-separated list of candidate IDs that might satisfy all exact conditions: Project=ORCHID, Stage=release, Marker=amber, and Status=locked. The provided section is a log entry and does not contain any relevant information for this problem.\n\nTo solve this problem, we need to analyze the given conditions\n---\ndef find_groups(group_list):\n    groups = []\n    for group in group_list:\n        group_number = group['id']\n        group_items = group['items']\n        for item in group_items:\n            if item['Project'] == 'ORCHID' and item['Stage'] == 'release' and item['Marker'] == 'amber' and item['Status'] == 'locked':\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_items):\n    # Filter candidate items by exact matches\n    filtered_items = [item for item in candidate_items if \n                      (item['Project'] == 'ORCHID' and \n                       item['Stage'] == 'release' and \n                       item['Marker'] == 'amber' and \n                       item['Status'] == 'locked')]\n    \n    #\n[Depth 1 Group 2]\nimport re\n\ndef find_candidate_ids(candidate_ids):\n    # Define the conditions\n    conditions = {\n        \"Project\": \"ORCHID\",\n        \"Stage\": \"release\",\n        \"Marker\": \"amber\",\n        \"Status\": \"locked\"\n    }\n\n    # Define the pattern for candidate IDs\n    pattern = r\"^(TARGET|DIST)_\\d{1,2}$\"\n[Depth 1 Group 3]\nThis is a simple text-based query. The model will return a comma-separated list of candidate IDs that satisfy the given conditions. Since the input is a section, we will need to parse it and extract the relevant information.\n\nThe conditions are:\n- Project=ORCHID\n- Stage=release\n- Marker=amber\n- Status=locked\n\nWe will need to check each item in the section",
+            "candidate_item_ids": []
+          }
+        }
+      ]
+    },
+    {
+      "family": "ledger",
+      "display_name": "Ledger aggregation",
+      "task_type": "retrieval plus arithmetic",
+      "answer_mode": "total_and_sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 3,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 9075.333333333334,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 2.7189088611242673,
+        "mean_model_calls": 1,
+        "mean_prompt_tokens": 2382,
+        "mean_completion_tokens": 181,
+        "mean_total_tokens": 2563
+      },
+      "no_validator": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 3.006051472543428,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 2628,
+        "mean_completion_tokens": 249.66666666666666,
+        "mean_total_tokens": 2877.6666666666665
+      },
+      "managed": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 3.494389597326517,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 2728,
+        "mean_completion_tokens": 320.6666666666667,
+        "mean_total_tokens": 3048.6666666666665
+      },
+      "recursive": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 9.36538187492018,
+        "mean_model_calls": 14,
+        "mean_prompt_tokens": 4355,
+        "mean_completion_tokens": 1133.3333333333333,
+        "mean_total_tokens": 5488.333333333333
+      },
+      "runs": [
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9181,
+          "expected_answer": "157|LP0-HW1-QR7-BZ3",
+          "baseline": {
+            "answer": "The task is to select items that match all the conditions and sort them by Order in ascending order. The conditions are:\n\n- Desk=ORCHID\n- Quarter=Q4\n- Flag=amber\n- Channel=prime\n\nThe matching items are:\n\n- DIST1_0\n- TARGET1\n- DIST1_5\n- TARGET2\n- DIST2_1\n- DIST2_3\n- DIST2_5\n- TARGET2\n- DIST3_3\n- DIST3_5\n- DIST3_4\n- DIST3_2\n- DIST3_1\n- DIST3_0\n- TARGET3\n- DIST4_2\n- DIST4_3\n- DIST4_5\n- TARGET4\n- DIST4_4\n- DIST4_1\n- DIST4_0\n\nSorting them by Order in ascending",
+            "exact_match": false,
+            "latency_seconds": 2.6833185832947493,
+            "model_calls": 1,
+            "prompt_tokens": 2377,
+            "completion_tokens": 181,
+            "total_tokens": 2558,
+            "raw_output": "The task is to select items that match all the conditions and sort them by Order in ascending order. The conditions are:\n\n- Desk=ORCHID\n- Quarter=Q4\n- Flag=amber\n- Channel=prime\n\nThe matching items are:\n\n- DIST1_0\n- TARGET1\n- DIST1_5\n- TARGET2\n- DIST2_1\n- DIST2_3\n- DIST2_5\n- TARGET2\n- DIST3_3\n- DIST3_5\n- DIST3_4\n- DIST3_2\n- DIST3_1\n- DIST3_0\n- TARGET3\n- DIST4_2\n- DIST4_3\n- DIST4_5\n- TARGET4\n- DIST4_4\n- DIST4_1\n- DIST4_0\n\nSorting them by Order in ascending",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "138|QR7-CM9-HW1-MN4",
+            "exact_match": false,
+            "latency_seconds": 2.834381291642785,
+            "model_calls": 4,
+            "prompt_tokens": 2623,
+            "completion_tokens": 226,
+            "total_tokens": 2849,
+            "raw_output": "- MATCH order=10 token=MN4 amount=70\n- MATCH order=10 token=ST8 amount=43\n- MATCH order=6 token=AX7 amount=67\n- MATCH order=1 token=ST8 amount=48\n- MATCH order=1 token=LP0 amount=53\n- MATCH order=8 token=LP0 amount=86\n- MATCH order=7 token=JK6 amount=78\n\n- NONE\n\nThe best\n---\n- MATCH order=4 token=CM9 amount=18\n- MATCH order=9 token=LP0 amount=15\n- MATCH order=9 token=BZ3 amount=34\n- NONE\n\nThe single best item matching all exact conditions is:\n- MATCH order=9 token=BZ3 amount=34\n- MATCH order=9 token=LP0 amount=15\n- MATCH order=9 token=JK6 amount=43\n- MATCH order=9\n---\n- MATCH order=3 token=QR7 amount=35\n- NONE\n---\n- MATCH order=4 token=HW1 amount=15\n- NONE",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "0|",
+            "exact_match": false,
+            "latency_seconds": 3.400375542230904,
+            "model_calls": 4,
+            "prompt_tokens": 2723,
+            "completion_tokens": 320,
+            "total_tokens": 3043,
+            "raw_output": "def find_candidate_ids(txn_ids):\n    # Define the conditions\n    conditions = [\n        {\"Desk\": \"ORCHID\"},\n        {\"Quarter\": \"Q4\"},\n        {\"Flag\": \"amber\"},\n        {\"Channel\": \"prime\"}\n    ]\n\n    # Filter the transactions based on the conditions\n    filtered_txns = [txn for txn in txn_ids if all(txn.get(condition)\n---\ndef find_candidate_ids(txn_ids):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result\n---\ndef find_candidate_ids(section):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result\n---\ndef find_candidate_ids(section):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result",
+            "candidate_item_ids": []
+          },
+          "recursive": {
+            "answer": "0|",
+            "exact_match": false,
+            "latency_seconds": 10.468917416408658,
+            "model_calls": 16,
+            "prompt_tokens": 4879,
+            "completion_tokens": 1296,
+            "total_tokens": 6175,
+            "raw_output": "import re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Desk\": \"ORCHID\",\n        \"Quarter\": \"Q4\",\n        \"Flag\": \"amber\",\n        \"Channel\": \"prime\"\n    }\n\n    # Initialize an empty list to store the group numbers that might contain at least one item satisfying all exact conditions\n    plausible_groups = []\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n---\nfrom itertools import chain\n\ndef find_groups(groups):\n    # Define the conditions\n    conditions = {\n        \"Desk\": [\"ORCHID\", \"EMBER\"],\n        \"Quarter\": [\"Q4\"],\n        \"Flag\": [\"amber\"],\n        \"Channel\": [\"prime\"]\n    }\n\n    # Flatten the groups\n    flat_groups = list(chain(*groups))\n\n    # Filter the groups\n    filtered_groups\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n---\nfrom itertools import product\n\ndef find_plausible_groups(groups):\n    conditions = {\n        \"Desk\": [\"LATTICE\", \"ORCHID\"],\n        \"Quarter\": [\"Q1\", \"Q2\", \"Q4\"],\n        \"Flag\": [\"amber\", \"violet\"],\n        \"Channel\": [\"hedge\", \"prime\", \"shadow\"]\n    }\n\n    plausible_groups = []\n    for\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(section):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe to include only rows where the desk is ORCHID, quarter is Q4, flag is amber, and channel is prime\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') &\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe based on the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return\n---\nfrom itertools import chain\n\ndef find_groups(groups):\n    # Define the conditions\n    conditions = {\n        \"Desk\": [\"ORCHID\", \"NOVA\"],\n        \"Quarter\": [\"Q4\"],\n        \"Flag\": [\"amber\"],\n        \"Channel\": [\"prime\"],\n    }\n\n    # Flatten the groups\n    flat_groups = chain(*groups)\n\n    # Filter the groups\n    filtered_groups\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(candidate_data):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '",
+            "candidate_item_ids": []
+          }
+        },
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9003,
+          "expected_answer": "218|FT2-LP0-BZ3-ST8",
+          "baseline": {
+            "answer": "def solve_artifact():\n    # Filter transactions based on conditions\n    filtered_transactions = [\n        {\n            \"Desk\": \"ORCHID\",\n            \"Quarter\": \"Q4\",\n            \"Flag\": \"amber\",\n            \"Channel\": \"prime\",\n            \"Order\": 1,\n            \"Token\": \"FT2\",\n            \"Amount\": 23,\n            \"Memo\": \"Clearing batch was replayed after the settlement file arrived late. The dry-run close matched the control sheet on the second pass. The dry-run close matched the control sheet on the second pass.\"\n        },\n        {\n            \"Desk\": \"ORCHID\",\n            \"Quarter\": \"Q4\",\n            \"Flag\": \"amber\",\n            \"Channel\": \"prime\",\n            \"Order\": 2,\n            \"Token\": \"ER8\",\n            \"Amount\": 86,\n            \"Memo\": \"Back",
+            "exact_match": false,
+            "latency_seconds": 2.688196875154972,
+            "model_calls": 1,
+            "prompt_tokens": 2388,
+            "completion_tokens": 181,
+            "total_tokens": 2569,
+            "raw_output": "def solve_artifact():\n    # Filter transactions based on conditions\n    filtered_transactions = [\n        {\n            \"Desk\": \"ORCHID\",\n            \"Quarter\": \"Q4\",\n            \"Flag\": \"amber\",\n            \"Channel\": \"prime\",\n            \"Order\": 1,\n            \"Token\": \"FT2\",\n            \"Amount\": 23,\n            \"Memo\": \"Clearing batch was replayed after the settlement file arrived late. The dry-run close matched the control sheet on the second pass. The dry-run close matched the control sheet on the second pass.\"\n        },\n        {\n            \"Desk\": \"ORCHID\",\n            \"Quarter\": \"Q4\",\n            \"Flag\": \"amber\",\n            \"Channel\": \"prime\",\n            \"Order\": 2,\n            \"Token\": \"ER8\",\n            \"Amount\": 86,\n            \"Memo\": \"Back",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "339|FT2-BZ3-FT2-CM9",
+            "exact_match": false,
+            "latency_seconds": 2.8174112499691546,
+            "model_calls": 4,
+            "prompt_tokens": 2634,
+            "completion_tokens": 216,
+            "total_tokens": 2850,
+            "raw_output": "- MATCH order=4 token=FT2 amount=89\n- NONE\n---\nThe single best item matching all exact conditions is:\n\n- MATCH order=2 token=FT2 amount=91\n- NONE\n\nThe conditions are:\n- Desk=ORCHID\n- Quarter=Q4\n- Flag=amber\n- Channel=prime\n\nThe item that matches all these conditions is the one with order=2, token=FT2, and amount=91. The other items do not match all these conditions. Therefore, the correct answer is MATCH order\n---\nThe single best item matching all exact conditions is:\n\n- MATCH order=3 token=BZ3 amount=92\n- NONE\n\nThe item matches the conditions:\n- Desk=ORCHID\n- Quarter=Q4\n- Flag=amber\n- Channel=prime\n\nThe order is 3, the token is BZ3, and the amount is 92. The rest of the items do not match the conditions.\n---\n- MATCH order=10 token=CM9 amount=67\n- NONE",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "0|",
+            "exact_match": false,
+            "latency_seconds": 3.5018570008687675,
+            "model_calls": 4,
+            "prompt_tokens": 2734,
+            "completion_tokens": 322,
+            "total_tokens": 3056,
+            "raw_output": "import re\n\ndef find_candidate_ids(txn_ids, conditions):\n    # Define the conditions\n    conditions = {\n        \"Desk\": lambda x: x == \"ORCHID\",\n        \"Quarter\": lambda x: x == \"Q4\",\n        \"Flag\": lambda x: x == \"amber\",\n        \"Channel\": lambda x: x == \"prime\"\n    }\n\n    # Filter the\n---\ndef find_candidate_ids(txn_ids):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result\n---\ndef find_candidate_ids(txn_ids):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result\n---\ndef find_candidate_ids(section):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result",
+            "candidate_item_ids": []
+          },
+          "recursive": {
+            "answer": "0|",
+            "exact_match": false,
+            "latency_seconds": 9.356460916344076,
+            "model_calls": 14,
+            "prompt_tokens": 4368,
+            "completion_tokens": 1133,
+            "total_tokens": 5501,
+            "raw_output": "def find_plausible_groups(group_summaries):\n    plausible_groups = []\n    for group_summary in group_summaries:\n        conditions = []\n        for item_summary in group_summary:\n            if '=' in item_summary:\n                condition, value = item_summary.split('=')\n                conditions.append((condition, value))\n        for condition, value in conditions:\n            if condition == 'Desk' and value == 'OR\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe based on the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match, return 'NONE'\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Desk\": [\"ORCHID\", \"NOVA\"],\n        \"Quarter\": [\"Q4\"],\n        \"Flag\": [\"amber\"],\n        \"Channel\": [\"prime\"]\n    }\n\n    # Initialize the result\n    result = []\n\n    # Iterate over the groups\n    for group in group_data:\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n---\ndef find_group_numbers(group):\n    conditions = {\n        \"Desk\": \"ORCHID\",\n        \"Quarter\": \"Q4\",\n        \"Flag\": \"amber\",\n        \"Channel\": \"prime\"\n    }\n    for item in group:\n        for condition, value in conditions.items():\n            if item[condition]!= value:\n                return None\n    return group[0]\n\ndef find_pl\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(candidate_data):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n---\nfrom itertools import chain\n\ndef get_group_numbers(group):\n    # Get all item summaries from the group\n    item_summaries = [line for line in group.split('\\n') if line]\n\n    # Filter item summaries based on conditions\n    filtered_summaries = [summary for summary in item_summaries if\n                          (summary.startswith('Desk=') and summary.split('=')[1] == '\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '",
+            "candidate_item_ids": []
+          }
+        },
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 9042,
+          "expected_answer": "189|GV5-FT2-AX7-ER8",
+          "baseline": {
+            "answer": "<total>|<token-1>-<token-2>-... and nothing else.",
+            "exact_match": false,
+            "latency_seconds": 2.78521112492308,
+            "model_calls": 1,
+            "prompt_tokens": 2381,
+            "completion_tokens": 181,
+            "total_tokens": 2562,
+            "raw_output": "The artifact is a list of transactions with various attributes. We need to select only the items that match the following conditions:\n\n- Desk=ORCHID\n- Quarter=Q4\n- Flag=amber\n- Channel=prime\n\nWe need to sort the matching items by Order ascending and return exactly one line in the format ANSWER=<total>|<token-1>-<token-2>-... and nothing else.\n\nHere is the solution:\n\n1. Filter the transactions to include only those with Desk=ORCHID, Quarter=Q4, Flag=amber, and Channel=prime.\n2. Sort the filtered transactions by Order ascending.\n3. Extract the Token values from the sorted transactions.\n4. Return the result in the format ANSWER=<total>|<token-1>-<token-2>-... and nothing else.\n\nHere is the Python code to solve the problem:\n\n```",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "178|GV5-AX7-ER8-ER8",
+            "exact_match": false,
+            "latency_seconds": 3.3663618760183454,
+            "model_calls": 4,
+            "prompt_tokens": 2627,
+            "completion_tokens": 307,
+            "total_tokens": 2934,
+            "raw_output": "- MATCH order=1 token=GV5 amount=44\n- NONE\n---\nThe single best item matching all exact conditions is:\n\n- MATCH order=3 token=AX7 amount=53\n- MATCH order=6 token=MN4 amount=54\n- MATCH order=6 token=LP0 amount=64\n- MATCH order=3 token=GV5 amount=72\n- MATCH order=4 token=DQ4 amount=48\n- MATCH order=2 token=FT2 amount=67\n\nHowever, the problem statement asks for exactly\n---\n- MATCH order=4 token=ER8 amount=39\n- NONE\n\nThe single best item matching all exact conditions is:\n\n- MATCH order=4 token=ER8 amount=39\n- NONE\n\nThis is because the transaction ID DIST3_0 has the exact conditions: order=4, token=ER8, and amount=39. The other transactions do not match all the conditions. \n\nThe correct answer is:\n\n- MATCH order=4 token=ER8\n---\nThe single best item matching all exact conditions is:\n\n- MATCH order=4 token=ER8 amount=42\n- NONE\n\nThe conditions are:\n- Desk=ORCHID\n- Quarter=Q4\n- Flag=amber\n- Channel=prime\n\nThe first transaction ID (TARGET4) matches all these conditions. The second transaction ID (DIST4_0) also matches all these conditions, but it has a different order number (10) and a different token",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "0|",
+            "exact_match": false,
+            "latency_seconds": 3.5809362488798797,
+            "model_calls": 4,
+            "prompt_tokens": 2727,
+            "completion_tokens": 320,
+            "total_tokens": 3047,
+            "raw_output": "def find_candidate_ids(section):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result\n---\nimport re\n\ndef find_candidate_ids(txn_ids, conditions):\n    # Define the conditions\n    conditions = {\n        'Desk': lambda x: x == 'ORCHID',\n        'Quarter': lambda x: x == 'Q4',\n        'Flag': lambda x: x == 'amber',\n        'Channel': lambda x: x == 'prime'\n    }\n\n    # Filter the\n---\ndef find_candidate_ids(txn_ids):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result\n---\ndef find_candidate_ids(section):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize the result",
+            "candidate_item_ids": []
+          },
+          "recursive": {
+            "answer": "0|",
+            "exact_match": false,
+            "latency_seconds": 8.270767292007804,
+            "model_calls": 12,
+            "prompt_tokens": 3818,
+            "completion_tokens": 971,
+            "total_tokens": 4789,
+            "raw_output": "from itertools import chain\n\ndef get_group_numbers(group):\n    # Get all item summaries from the group\n    item_summaries = [s for s in group if s.startswith('DIST')]\n\n    # Filter item summaries based on conditions\n    filtered_summaries = [s for s in item_summaries if\n                          (s.startswith('Desk=') and s.split('=')[1] == '\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n---\ndef find_group_numbers(group):\n    conditions = {\n        \"Desk\": \"ORCHID\",\n        \"Quarter\": \"Q4\",\n        \"Flag\": \"amber\",\n        \"Channel\": \"prime\"\n    }\n    items = group.split(\"\\n\")\n    for item in items:\n        item_parts = item.split(\"|\")\n        if item_parts[1] == conditions[\"Desk\"]:\n            desk =\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe based on the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"Desk\": \"ORCHID\",\n        \"Quarter\": \"Q4\",\n        \"Flag\": \"amber\",\n        \"Channel\": \"prime\"\n    }\n\n    # Initialize an empty list to store the group numbers that might contain at least one item satisfying all exact conditions\n    plausible_groups = []\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(candidate_data):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Initialize\n[Depth 1 Group 3]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n---\nfrom itertools import chain\n\ndef get_group_numbers(groups):\n    # Define the conditions\n    conditions = {\n        \"Desk\": \"ORCHID\",\n        \"Quarter\": \"Q4\",\n        \"Flag\": \"amber\",\n        \"Channel\": \"prime\"\n    }\n\n    # Define the recursion depth\n    depth = 0\n\n    # Define the function to check conditions\n    def check_conditions\n[Depth 1 Group 1]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe by the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # If no rows match the conditions, return '\n[Depth 1 Group 2]\nimport pandas as pd\n\ndef get_candidate_ids(df):\n    # Filter the dataframe based on the given conditions\n    filtered_df = df[(df['Desk'] == 'ORCHID') & (df['Quarter'] == 'Q4') & (df['Flag'] == 'amber') & (df['Channel'] == 'prime')]\n    \n    # Check if any rows match the conditions\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(candidate_data):\n    # Define the conditions\n    conditions = [\n        {\"key\": \"Desk\", \"value\": \"ORCHID\"},\n        {\"key\": \"Quarter\", \"value\": \"Q4\"},\n        {\"key\": \"Flag\", \"value\": \"amber\"},\n        {\"key\": \"Channel\", \"value\": \"prime\"}\n    ]\n\n    # Filter",
+            "candidate_item_ids": []
+          }
+        }
+      ]
+    },
+    {
+      "family": "code",
+      "display_name": "Code localization",
+      "task_type": "code-like localization",
+      "answer_mode": "sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 3,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 15128,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 3.2749612640279033,
+        "mean_model_calls": 1,
+        "mean_prompt_tokens": 2942,
+        "mean_completion_tokens": 181,
+        "mean_total_tokens": 3123
+      },
+      "no_validator": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 2.8760547501345477,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 3172,
+        "mean_completion_tokens": 107.66666666666667,
+        "mean_total_tokens": 3279.6666666666665
+      },
+      "managed": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 4.005005389607201,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 3288,
+        "mean_completion_tokens": 324,
+        "mean_total_tokens": 3612
+      },
+      "recursive": {
+        "accuracy": 0.3333333333333333,
+        "mean_latency_seconds": 11.115206902070591,
+        "mean_model_calls": 15.333333333333334,
+        "mean_prompt_tokens": 5094,
+        "mean_completion_tokens": 1239.6666666666667,
+        "mean_total_tokens": 6333.666666666667
+      },
+      "runs": [
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 15117,
+          "expected_answer": "GV5-MN4-AX7-JK6",
+          "baseline": {
+            "answer": "The task is to select only items matching all exact conditions and sort the matching items by Order ascending. The conditions are:\n\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nThe matching items are:\n\n- ITEM ID: TARGET1\n  PROJECT = \"ORCHID\"\n  STAGE = \"release\"\n  MARKER = \"amber\"\n  GUARD = \"prime\"\n  ORDER = 1\n  TOKEN = \"GV5\"\n\n- ITEM ID: TARGET2\n  PROJECT = \"ORCHID\"\n  STAGE = \"release\"\n  MARKER = \"amber\"\n  GUARD = \"prime\"\n  ORDER = 2\n  TOKEN = \"MN4\"\n\n- ITEM ID: TARGET3\n  PROJECT = \"ORCHID\"\n  STAGE = \"release\"\n  MARKER = \"amber\"\n  GU",
+            "exact_match": false,
+            "latency_seconds": 3.199335167184472,
+            "model_calls": 1,
+            "prompt_tokens": 2938,
+            "completion_tokens": 181,
+            "total_tokens": 3119,
+            "raw_output": "The task is to select only items matching all exact conditions and sort the matching items by Order ascending. The conditions are:\n\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nThe matching items are:\n\n- ITEM ID: TARGET1\n  PROJECT = \"ORCHID\"\n  STAGE = \"release\"\n  MARKER = \"amber\"\n  GUARD = \"prime\"\n  ORDER = 1\n  TOKEN = \"GV5\"\n\n- ITEM ID: TARGET2\n  PROJECT = \"ORCHID\"\n  STAGE = \"release\"\n  MARKER = \"amber\"\n  GUARD = \"prime\"\n  ORDER = 2\n  TOKEN = \"MN4\"\n\n- ITEM ID: TARGET3\n  PROJECT = \"ORCHID\"\n  STAGE = \"release\"\n  MARKER = \"amber\"\n  GU",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "GV5-MN4-AX7",
+            "exact_match": false,
+            "latency_seconds": 2.5379447913728654,
+            "model_calls": 4,
+            "prompt_tokens": 3168,
+            "completion_tokens": 52,
+            "total_tokens": 3220,
+            "raw_output": "- MATCH order=1 token=GV5\n- NONE\n---\n- MATCH order=2 token=MN4\n- NONE\n---\n- MATCH order=3 token=AX7\n- NONE\n---\n- MATCH order=1 token=\"QR7\"\n- NONE",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "GV5",
+            "exact_match": false,
+            "latency_seconds": 3.893597960472107,
+            "model_calls": 4,
+            "prompt_tokens": 3284,
+            "completion_tokens": 324,
+            "total_tokens": 3608,
+            "raw_output": "def find_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in [1, 2, 3, 4, 5]:\n        if item == 1:\n            candidate_ids.append(\"TARGET1\")\n        elif item == 2:\n            candidate_ids.append(\"DIST1_2\")\n        elif item == 2:\n            candidate_ids.append(\"\n---\ndef get_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in get_all_items():\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and item['GUARD'] == guard:\n            candidate_ids.append(item['TOKEN'])\n    if not candidate_ids:\n        return 'NONE'\n    return ',\n---\ndef get_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in inspect_module_3():\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and item['GUARD'] == guard:\n            candidate_ids.append(item['TOKEN'])\n    if not candidate_ids:\n        return 'NONE'\n    return\n---\ndef get_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in get_items():\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and item['GUARD'] == guard:\n            candidate_ids.append(item['TOKEN'])\n    if not candidate_ids:\n        return \"NONE\"\n    return \", \".",
+            "candidate_item_ids": [
+              "TARGET1"
+            ]
+          },
+          "recursive": {
+            "answer": "GV5-AX7",
+            "exact_match": false,
+            "latency_seconds": 11.30734283477068,
+            "model_calls": 16,
+            "prompt_tokens": 5297,
+            "completion_tokens": 1291,
+            "total_tokens": 6588,
+            "raw_output": "def find_groups(group_list):\n    groups = []\n    for group in group_list:\n        group_number = group['id']\n        group_items = group['items']\n        for item in group_items:\n            if item['project'] == 'ORCHID' and item['stage'] == 'release' and item['marker'] == 'amber' and item['guard'] == 'prime':\n[Depth 1 Group 1]\nThe function should return a comma-separated list of candidate IDs that satisfy all the conditions. In this case, the function should return \"TARGET1, TARGET3, DIST1_4, DIST1_2\". The function should be permissive and include candidate IDs that are unsure or plausible.\n\nThe function should return \"NONE\" if no item is plausible. The function should return only candidate IDs or \"\n[Depth 1 Group 2]\nThis is a Python code snippet that appears to be part of a larger program. It seems to be related to testing or validation of some kind. The code defines several functions, each with a specific ID and a set of attributes. The functions are likely used to test or validate the behavior of a program or system.\n\nThe code defines three functions:\n\n1. `helper_step_1_3`: This\n[Depth 1 Group 3]\nThis is a Python code snippet that appears to be part of a larger program. It seems to be a function or method that takes no arguments and returns a string representing a comma-separated list of candidate IDs. The function is designed to filter candidate IDs based on certain conditions.\n\nHere's a breakdown of the code:\n\n1. The function is not explicitly defined, but it appears to be a method of a\n---\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Initialize an empty list to store the group numbers that satisfy the conditions\n    satisfying_groups = []\n\n    # Iterate over each group in the list\n[Depth 1 Group 1]\nThis is a Python code snippet that appears to be part of a larger program. It seems to be related to testing or auditing, given the presence of audit notes and the use of helper functions. The code defines three items with different IDs, each with its own set of project, stage, marker, and guard values. The `helper_step_2_4`, `helper_step_2_2\n[Depth 1 Group 2]\nThe function should return a comma-separated list of candidate IDs that satisfy all the conditions. In this case, the conditions are:\n\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nThe function should be permissive and include candidate IDs that are unsure or plausible.\n\nThe function should return only candidate IDs or \"NONE\" if no item is plausible.\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the candidate IDs\n    candidate_ids = [\n        \"TARGET3\",\n        \"DIST3_2\",\n        \"DIST2\n---\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Initialize an empty list to store the group numbers that satisfy the conditions\n    satisfying_groups = []\n\n    # Iterate over each group in the list\n[Depth 1 Group 1]\nThe function should return a comma-separated list of candidate IDs that satisfy all the conditions. In this case, the conditions are:\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nThe function should be permissive and include candidate IDs that are unsure or plausible.\n\nThe function should return only candidate IDs or \"NONE\" if no item is plausible.\n[Depth 1 Group 2]\nThe function should return a string of candidate IDs that satisfy the conditions. Since the conditions are not met for any of the items, the function should return \"NONE\".\n\n```python\ndef find_candidate_ids():\n    candidate_ids = []\n    for item in items:\n        if item['project'] == 'ORCHID' and item['stage'] == 'release' and item['marker'] == '\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the candidate IDs\n    candidate_ids = [\n        \"TARGET3\",\n        \"DIST3_1\",\n        \"DIST3\n---\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Initialize a list to store the group numbers that satisfy the conditions\n    satisfying_groups = []\n\n    # Iterate over each group in the list\n    for\n[Depth 1 Group 1]\nThe function should return a string of candidate IDs that satisfy the conditions. Since the function is not defined, I will provide a sample implementation.\n\n```python\ndef get_candidate_ids():\n    candidate_ids = []\n    for item in items:\n        if item['project'] == 'ORCHID' and item['stage'] == 'release' and item['marker'] == 'amber' and item['\n[Depth 1 Group 2]\nThis is a code snippet that appears to be part of a larger program, likely a deployment or testing framework. It's written in Python and seems to be describing a set of items with their properties, such as project, stage, marker, and guard. Each item has a unique ID and a function associated with it.\n\nThe code snippet is inspecting a section of items and their properties to determine which\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the pattern for the candidate IDs\n    pattern = r\"^(?P<id>[A-Za-z0-9_]+)(?P<token>[A-Za-z0-9_]+)$\"\n    \n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3"
+            ]
+          }
+        },
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 15127,
+          "expected_answer": "FT2-MN4-JK6-ER8",
+          "baseline": {
+            "answer": "import json\n\ndef solve_task():\n    artifacts = [\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\": \"amber\",\n            \"guard\": \"prime\",\n            \"order\": 1,\n            \"token\": \"FT2\"\n        },\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\": \"amber\",\n            \"guard\": \"prime\",\n            \"order\": 2,\n            \"token\": \"MN4\"\n        },\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\": \"amber\",\n            \"guard\": \"prime\",\n            \"order\": 3,\n            \"token\": \"JK6\"\n        },\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\":",
+            "exact_match": false,
+            "latency_seconds": 3.310285917017609,
+            "model_calls": 1,
+            "prompt_tokens": 2944,
+            "completion_tokens": 181,
+            "total_tokens": 3125,
+            "raw_output": "import json\n\ndef solve_task():\n    artifacts = [\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\": \"amber\",\n            \"guard\": \"prime\",\n            \"order\": 1,\n            \"token\": \"FT2\"\n        },\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\": \"amber\",\n            \"guard\": \"prime\",\n            \"order\": 2,\n            \"token\": \"MN4\"\n        },\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\": \"amber\",\n            \"guard\": \"prime\",\n            \"order\": 3,\n            \"token\": \"JK6\"\n        },\n        {\n            \"project\": \"ORCHID\",\n            \"stage\": \"release\",\n            \"marker\":",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "FT2-ER8-ER8-DQ4",
+            "exact_match": false,
+            "latency_seconds": 3.461912624537945,
+            "model_calls": 4,
+            "prompt_tokens": 3174,
+            "completion_tokens": 219,
+            "total_tokens": 3393,
+            "raw_output": "- MATCH order=1 token=FT2\n- NONE\n\nThe model is predicting that the single best item matching all exact conditions is the one with order=1 and token=FT2. This is because the other conditions (project, stage, marker, and guard) are all present in the code snippet, but the order and token are the only ones that are explicitly defined. The model is using the information in the code snippet to infer that the order and token are the\n---\n- MATCH order=9 token=DQ4\n- NONE\n---\n- MATCH order=5 token=ER8\n- NONE\n\nThe model is saying that the item with the order of 5 and the token ER8 is the one that matches all the conditions. The order and token are the only ones that are not matching the conditions. The guard is \"shadow\" and the marker is \"amber\". The project is \"ORCHID\" and the stage is \"release\". \n\nThe correct answer is indeed the item with the order of\n---\n- MATCH order=4 token=ER8\n- NONE",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "JK6-ER8",
+            "exact_match": false,
+            "latency_seconds": 4.058634418062866,
+            "model_calls": 4,
+            "prompt_tokens": 3290,
+            "completion_tokens": 324,
+            "total_tokens": 3614,
+            "raw_output": "def find_candidate_ids():\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Define the candidate IDs\n    candidate_ids = [\n        \"TARGET3\",\n        \"DIST3_2\",\n        \"DIST1_3\",\n        \"\n---\ndef find_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in inspect_module_2():\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and item['GUARD'] == guard:\n            candidate_ids.append(item['TOKEN'])\n    if not candidate_ids:\n        return \"NONE\"\n    return\n---\ndef find_candidate_ids():\n    candidate_ids = []\n    for item in [\n        {\"PROJECT\": \"ORCHID\", \"STAGE\": \"release\", \"MARKER\": \"amber\", \"GUARD\": \"prime\", \"ORDER\": 3, \"TOKEN\": \"JK6\"},\n        {\"PROJECT\": \"ORCHID\", \"STAGE\": \"release\", \"MARKER\": \"amber\n---\ndef get_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in [DIST4_1, DIST4_0, DIST4_2, DIST4_5, TARGET4, DIST4_3, DIST4_4]:\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and",
+            "candidate_item_ids": [
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "JK6-ER8",
+            "exact_match": false,
+            "latency_seconds": 10.150913750287145,
+            "model_calls": 14,
+            "prompt_tokens": 4679,
+            "completion_tokens": 1133,
+            "total_tokens": 5812,
+            "raw_output": "def find_group_numbers(group):\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n    for item in group:\n        if not all(item.get(key) == value for key, value in conditions.items()):\n            return None\n    return group[0].get(\"Order\")\n[Depth 1 Group 1]\nThe function should return a comma-separated list of candidate IDs that might satisfy all exact conditions. If no item is plausible, it should return \"NONE\".\n\ndef get_candidate_ids():\n    candidate_ids = []\n    for item in items:\n        if item['project'] == 'ORCHID' and item['stage'] == 'release' and item['marker'] == 'amber' and item['guard\n[Depth 1 Group 2]\nThe function should return a comma-separated list of candidate IDs that satisfy the conditions. Since the function is not defined, I will provide a sample implementation.\n\n```python\ndef get_candidate_ids():\n    candidate_ids = []\n    for item in items:\n        if item['project'] == 'ORCHID' and item['stage'] == 'release' and item['marker'] == 'amber' and\n[Depth 1 Group 3]\nI can help you with that. Here's the code that meets the requirements:\n\n```python\ndef get_candidate_ids():\n    # Define the conditions\n    conditions = [\n        {\"project\": \"ORCHID\"},\n        {\"stage\": \"release\"},\n        {\"marker\": \"amber\"},\n        {\"guard\": \"prime\"}\n    ]\n\n    # Define the candidate IDs\n    candidate_ids = [\n        \"\n---\ndef find_group_numbers(group):\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n    for item in group:\n        if all(item.get(key) == value for key, value in conditions.items()):\n            return group.index(item) + 1\n    return None\n\ndef\n[Depth 1 Group 1]\nThe function should return a list of candidate IDs that satisfy the given conditions. To do this, we need to iterate over the provided section and check each item's conditions. We will use a list to store the candidate IDs that satisfy the conditions.\n\n```python\ndef find_candidate_ids(section):\n    candidate_ids = []\n    for item in section:\n        if item['PROJECT'] == 'ORCHID\n---\ndef find_group_numbers(group):\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n    for item in group:\n        if not all(item.get(key) == value for key, value in conditions.items()):\n            return None\n    return group[0].get(\"Order\")\n[Depth 1 Group 1]\nBased on the provided information, the candidate IDs that might satisfy all exact conditions are:\n\n- TARGET3\n- DIST3_1\n- DIST3_0\n\nThese IDs match the project, stage, marker, and guard conditions. The other IDs do not meet the exact conditions. Therefore, the function should return a plain comma-separated list of these IDs.\n\nThe final answer is: TARGET3,\n[Depth 1 Group 2]\nThe function should return a comma-separated list of candidate IDs that satisfy all the conditions. In this case, the conditions are:\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nThe function should be permissive and include candidate IDs that are unsure or do not meet all the conditions. The function should return only candidate IDs or \"NONE\" if\n[Depth 1 Group 3]\nI can help you with that. Here's the code that meets the requirements:\n\n```python\ndef get_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in items:  # assuming items is a list of dictionaries\n        if (item['project'] == project and\n            item['stage'] == stage and\n            item['marker'] == marker and\n---\nimport re\n\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Define the pattern\n    pattern = \"|\".join(f\"({key})={value}\" for key, value in conditions.items())\n[Depth 1 Group 1]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the exact conditions for the helper steps\n    helper_conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\n[Depth 1 Group 2]\nBased on the provided information, I will return a plain comma-separated list of candidate IDs that might satisfy all exact conditions. Here is the result:\n\nTARGET4, DIST4_3\n\nThese IDs match the conditions:\n\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nBoth IDs satisfy all the conditions, so they are included in the result.\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the exact conditions for the candidate IDs\n    candidate_conditions = {\n        \"project\": r\"ORCHID\",\n        \"",
+            "candidate_item_ids": [
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 3,
+          "artifact_characters": 15140,
+          "expected_answer": "ER8-CM9-ST8-HW1",
+          "baseline": {
+            "answer": "import re\n\n# Define the conditions\nconditions = {\n    \"project\": \"ORCHID\",\n    \"stage\": \"release\",\n    \"marker\": \"amber\",\n    \"guard\": \"prime\"\n}\n\n# Define the items\nitems = [\n    {\"project\": \"ORCHID\", \"stage\": \"release\", \"marker\": \"amber\", \"guard\": \"prime\", \"order\": 1, \"token\": \"ER8\"},\n    {\"project\": \"LATTICE\", \"stage\": \"release\", \"marker\": \"teal\", \"guard\": \"prime\", \"order\": 8, \"token\": \"QR7\"},\n    {\"project\": \"NOVA\", \"stage\": \"release\", \"marker\": \"teal\", \"guard\": \"legacy\", \"order\": 8, \"token\": \"DQ4\"},\n    {\"project\": \"ORCHID",
+            "exact_match": false,
+            "latency_seconds": 3.3152627078816295,
+            "model_calls": 1,
+            "prompt_tokens": 2944,
+            "completion_tokens": 181,
+            "total_tokens": 3125,
+            "raw_output": "import re\n\n# Define the conditions\nconditions = {\n    \"project\": \"ORCHID\",\n    \"stage\": \"release\",\n    \"marker\": \"amber\",\n    \"guard\": \"prime\"\n}\n\n# Define the items\nitems = [\n    {\"project\": \"ORCHID\", \"stage\": \"release\", \"marker\": \"amber\", \"guard\": \"prime\", \"order\": 1, \"token\": \"ER8\"},\n    {\"project\": \"LATTICE\", \"stage\": \"release\", \"marker\": \"teal\", \"guard\": \"prime\", \"order\": 8, \"token\": \"QR7\"},\n    {\"project\": \"NOVA\", \"stage\": \"release\", \"marker\": \"teal\", \"guard\": \"legacy\", \"order\": 8, \"token\": \"DQ4\"},\n    {\"project\": \"ORCHID",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "ER8-CM9-HW1",
+            "exact_match": false,
+            "latency_seconds": 2.6283068344928324,
+            "model_calls": 4,
+            "prompt_tokens": 3174,
+            "completion_tokens": 52,
+            "total_tokens": 3226,
+            "raw_output": "- MATCH order=1 token=ER8\n- NONE\n---\n- MATCH order=2 token=CM9\n- NONE\n---\n- MATCH order=4 token=\"FT2\"\n- NONE\n---\n- MATCH order=4 token=HW1\n- NONE",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "CM9-HW1",
+            "exact_match": false,
+            "latency_seconds": 4.06278379028663,
+            "model_calls": 4,
+            "prompt_tokens": 3290,
+            "completion_tokens": 324,
+            "total_tokens": 3614,
+            "raw_output": "def get_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in get_items():\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and item['GUARD'] == guard:\n            candidate_ids.append(item['TOKEN'])\n    if not candidate_ids:\n        return 'NONE'\n    return ', '.\n---\ndef find_candidate_ids(project, stage, marker, guard):\n    \"\"\"\n    Returns a plain comma-separated list of candidate IDs that might satisfy all exact conditions.\n    \"\"\"\n    candidate_ids = []\n    for item_id in [\"DIST2_5\", \"DIST2_4\", \"DIST2_3\", \"DIST2_2\", \"TARGET2\", \"DIST2_0\", \"DIST2\n---\ndef find_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in inspect_module_3():\n        if item['PROJECT'] == project and item['STAGE'] == stage and item['MARKER'] == marker and item['GUARD'] == guard:\n            candidate_ids.append(item['TOKEN'])\n    if not candidate_ids:\n        return 'NONE'\n    return\n---\ndef find_candidate_ids(project, stage, marker, guard):\n    candidate_ids = []\n    for item in [DIST4_0, DIST4_1, DIST4_4, DIST4_3, TARGET4]:\n        if item.PROJECT == project and item.STAGE == stage and item.MARKER == marker and item.GUARD == guard:\n            candidate_ids.append(item.TOKEN",
+            "candidate_item_ids": [
+              "TARGET2",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "ER8-CM9-ST8-HW1",
+            "exact_match": true,
+            "latency_seconds": 11.88736412115395,
+            "model_calls": 16,
+            "prompt_tokens": 5306,
+            "completion_tokens": 1295,
+            "total_tokens": 6601,
+            "raw_output": "def find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Initialize a list to store the group numbers that satisfy the conditions\n    satisfying_groups = []\n\n    # Iterate over each group in the list\n    for\n[Depth 1 Group 1]\nBased on the conditions, the candidate IDs that might satisfy all exact conditions are:\n\n- TARGET1\n- DIST1_5\n- DIST1_1\n\nThese IDs meet the conditions:\n\n- project=\"ORCHID\"\n- stage=\"release\"\n- marker=\"amber\"\n- guard=\"prime\"\n\nThe ID TARGET1 meets all conditions, while DIST1_5 and DIST1_1 do not\n[Depth 1 Group 2]\nThe function should return a list of candidate IDs that satisfy all the conditions. Based on the conditions, the function should return a list of candidate IDs that match the project, stage, marker, and guard. The function should be more permissive and include candidate IDs that are plausible but may not satisfy all conditions.\n\nHere is a sample code snippet that demonstrates how to implement the function:\n\n```python\ndef\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the exact conditions as a regex pattern\n    pattern = \"|\".join(f\"({key})='{value}'\" for key\n---\nimport re\n\ndef find_groups(group_data):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Initialize an empty list to store the group numbers\n    plausible_groups = []\n\n    # Iterate over the groups\n    for group in group\n[Depth 1 Group 1]\nThis is a Python code snippet that appears to be part of a larger system for managing and auditing deployment steps. The code defines three functions, `helper_step_2_5`, `helper_step_2_4`, and `helper_step_2_3`, each with a specific set of parameters and a return statement. The functions seem to be related to auditing and deployment, with the `helper\n[Depth 1 Group 2]\nThe function should return a comma-separated list of candidate IDs that satisfy the conditions. In this case, the function should return \"TARGET2, DIST2_0\". The function should be able to handle cases where no item is plausible, returning \"NONE\". \n\nThe function should be able project, stage, marker, and guard values. The function should also be able to handle the order and token values\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the candidate IDs\n    candidate_ids = [\n        \"TARGET3\",\n        \"DIST3_2\",\n        \"DIST2\n---\ndef find_groups(group_list):\n    # Initialize an empty list to store the group numbers that might contain at least one item satisfying all exact conditions\n    plausible_groups = []\n\n    # Iterate over each group in the group list\n    for group in group_list:\n        # Initialize a flag to indicate whether the group satisfies all conditions\n        satisfies_conditions = True\n\n        # Iterate over each item in the\n[Depth 1 Group 1]\nThis is a complex section with multiple conditions and guards. To solve this problem, we need to analyze the conditions and guards to determine which candidate IDs might satisfy all exact conditions.\n\nHere's a step-by-step breakdown:\n\n1. The conditions are:\n\t* project=\"ORCHID\"\n\t* stage=\"release\"\n\t* marker=\"amber\"\n\t* guard=\"prime\"\n2. The guards are\n[Depth 1 Group 2]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the candidate IDs\n    candidate_ids = [\n        {\"id\": \"DIST3_0\", \"project\": \"ORCH\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the exact conditions\n    conditions = {\n        \"project\": project,\n        \"stage\": stage,\n        \"marker\": marker,\n        \"guard\": guard\n    }\n\n    # Define the candidate IDs\n    candidate_ids = [\n        \"TARGET3\",\n        \"DIST3_1\",\n        \"DIST3\n---\nimport re\n\ndef find_groups(group_list):\n    # Define the conditions\n    conditions = {\n        \"project\": \"ORCHID\",\n        \"stage\": \"release\",\n        \"marker\": \"amber\",\n        \"guard\": \"prime\"\n    }\n\n    # Define the pattern\n    pattern = \"|\".join(f\"project={condition}\" for condition in conditions)\n    pattern += r\"| stage\n[Depth 1 Group 1]\nThis is a simple filtering problem. We need to find candidate IDs that satisfy all the conditions. We can do this by iterating over the given items and checking if each item meets all the conditions.\n\nHere is a Python solution:\n\n```python\ndef find_candidate_ids(items):\n    candidate_ids = []\n    for item in items:\n        if (item[\"project\"] == \"ORCHID\" and\n[Depth 1 Group 2]\nThe function should return a comma-separated list of candidate IDs that satisfy all the conditions. In this case, the function should return \"TARGET4, DIST4_5\" because both candidate IDs satisfy all the conditions. If no item is plausible, the function should return \"NONE\".\n\nThe function should be inspected only, and it should not be executed. The inspection is done to determine the correct implementation of\n[Depth 1 Group 3]\nimport re\n\ndef get_candidate_ids(project, stage, marker, guard):\n    # Define the pattern for the candidate IDs\n    pattern = r\"^(?P<id>[A-Za-z0-9_]+)(?P<project>[A-Za-z0-9_]+)(?P<stage>[A-Za-z0-9_]+)(?P<marker>[A-Za",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "baseline_accuracy_mean": 0.0,
+    "no_validator_accuracy_mean": 0.1111111111111111,
+    "managed_accuracy_mean": 0.0,
+    "recursive_accuracy_mean": 0.1111111111111111
+  }
+}

@@ -102,6 +102,9 @@ class MLXPromptModel:
         ).strip()
         return output, time.perf_counter() - started
 
+    def count_tokens(self, text: str) -> int:
+        return len(self.tokenizer.encode(text))
+
 
 def build_results_path(model_path_or_repo: str | Path) -> Path:
     model_value = str(model_path_or_repo)

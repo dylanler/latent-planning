@@ -1,0 +1,602 @@
+{
+  "label": "codebase-benchmark",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "files": [
+    "README.md",
+    "src/latent_planning/cli.py",
+    "src/latent_planning/experiment.py",
+    "src/latent_planning/reporting.py",
+    "src/latent_planning/breadth_suite.py",
+    "docs/extended_evaluation.md",
+    "docs/broad_evidence_report.md",
+    "docs/broad_hypothesis_plan.md"
+  ],
+  "baseline": {
+    "accuracy": 0.75,
+    "mean_latency_seconds": 7.855125317699276,
+    "mean_model_calls": 1,
+    "mean_total_tokens": 34497.25
+  },
+  "no_validator": {
+    "accuracy": 0,
+    "mean_latency_seconds": 7.03864115558099,
+    "mean_model_calls": 8,
+    "mean_total_tokens": 35056
+  },
+  "managed": {
+    "accuracy": 0,
+    "mean_latency_seconds": 6.762304755102377,
+    "mean_model_calls": 8,
+    "mean_total_tokens": 34904
+  },
+  "recursive": {
+    "accuracy": 0,
+    "mean_latency_seconds": 6.188187145453412,
+    "mean_model_calls": 9.5,
+    "mean_total_tokens": 30155.625
+  },
+  "runs": [
+    {
+      "task_id": "cli-dispatch",
+      "question": "Which file defines the command-line interface, subcommand parsing, and command dispatch for the latent-planning tool?",
+      "expected_paths": [
+        "src/latent_planning/cli.py"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "src/latent_planning/cli.py"
+        ],
+        "exact_match": true,
+        "latency_seconds": 8.416842834092677,
+        "model_calls": 1,
+        "prompt_tokens": 34486,
+        "completion_tokens": 11,
+        "total_tokens": 34497,
+        "raw_output": "ANSWER=src/latent_planning/cli.py"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.163846041541547,
+        "model_calls": 8,
+        "prompt_tokens": 35052,
+        "completion_tokens": 44,
+        "total_tokens": 35096,
+        "raw_output": "NONE\n---\nMATCH path=src/latent_planning/cli.py\n---\nMATCH path=src/latent_planning/experiment.py\n---\nNONE\n---\nMATCH path=src/latent_planning/breadth_suite.py\n---\nNONE\n---\nNONE\n---\nNONE"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.896623959764838,
+        "model_calls": 8,
+        "prompt_tokens": 34932,
+        "completion_tokens": 16,
+        "total_tokens": 34948,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- NO\n---\ndocs/broad_evidence_report.md\n- NO\n---\ndocs/broad_hypothesis_plan.md\n- NO"
+      },
+      "recursive": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.158357582055032,
+        "model_calls": 8,
+        "prompt_tokens": 31288,
+        "completion_tokens": 15,
+        "total_tokens": 31303,
+        "raw_output": "[Group root]\n- YES\n---\n[Group src]\n- YES\n---\n[Group docs]\nNO\n---\nREADME.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES"
+      }
+    },
+    {
+      "task_id": "pilot-core",
+      "question": "Which file implements the original local pilot task generator and the baseline versus managed experiment logic?",
+      "expected_paths": [
+        "src/latent_planning/experiment.py"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "src/latent_planning/experiment.py"
+        ],
+        "exact_match": true,
+        "latency_seconds": 7.609859500080347,
+        "model_calls": 1,
+        "prompt_tokens": 34481,
+        "completion_tokens": 11,
+        "total_tokens": 34492,
+        "raw_output": "ANSWER=src/latent_planning/experiment.py"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.739401374477893,
+        "model_calls": 8,
+        "prompt_tokens": 35012,
+        "completion_tokens": 33,
+        "total_tokens": 35045,
+        "raw_output": "NONE\n---\nNONE\n---\nMATCH path=src/latent_planning/experiment.py\n---\nNONE\n---\nMATCH path=src/latent_planning/breadth_suite.py\n---\nNONE\n---\nNONE\n---\nNONE"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.480957624968141,
+        "model_calls": 8,
+        "prompt_tokens": 34892,
+        "completion_tokens": 16,
+        "total_tokens": 34908,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- NO"
+      },
+      "recursive": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 5.938145542051643,
+        "model_calls": 8,
+        "prompt_tokens": 31248,
+        "completion_tokens": 16,
+        "total_tokens": 31264,
+        "raw_output": "[Group root]\n- YES\n---\n[Group src]\n- YES\n---\n[Group docs]\n- NO\n---\nREADME.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES"
+      }
+    },
+    {
+      "task_id": "broad-suite",
+      "question": "Which file implements the broader cross-family synthetic transfer suite and its reporting helpers?",
+      "expected_paths": [
+        "src/latent_planning/breadth_suite.py"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": true,
+        "latency_seconds": 7.344891000073403,
+        "model_calls": 1,
+        "prompt_tokens": 34480,
+        "completion_tokens": 14,
+        "total_tokens": 34494,
+        "raw_output": "ANSWER=src/latent_planning/breadth_suite.py"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.916167250368744,
+        "model_calls": 8,
+        "prompt_tokens": 35004,
+        "completion_tokens": 72,
+        "total_tokens": 35076,
+        "raw_output": "MATCH path=README.md\n---\nMATCH path=src/latent_planning/cli.py\n---\nMATCH path=src/latent_planning/experiment.py\n---\nMATCH path=src/latent_planning/reporting.py\n---\nMATCH path=src/latent_planning/breadth_suite.py\n---\nNONE\n---\nMATCH path=docs/broad_evidence_report.md\n---\n- NONE"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.46221529180184,
+        "model_calls": 8,
+        "prompt_tokens": 34884,
+        "completion_tokens": 16,
+        "total_tokens": 34900,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- NO\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      },
+      "recursive": {
+        "answer_paths": [
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.424214793369174,
+        "model_calls": 10,
+        "prompt_tokens": 32446,
+        "completion_tokens": 19,
+        "total_tokens": 32465,
+        "raw_output": "[Group root]\nNO\n---\n[Group src]\n- YES\n---\n[Group docs]\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- NO\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      }
+    },
+    {
+      "task_id": "narrow-report",
+      "question": "Which file aggregates narrow-pilot JSON results into markdown tables and charts?",
+      "expected_paths": [
+        "src/latent_planning/reporting.py"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "src/latent_planning/reporting.py"
+        ],
+        "exact_match": true,
+        "latency_seconds": 7.403914334252477,
+        "model_calls": 1,
+        "prompt_tokens": 34478,
+        "completion_tokens": 11,
+        "total_tokens": 34489,
+        "raw_output": "ANSWER=src/latent_planning/reporting.py"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "README.md",
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.667811667080969,
+        "model_calls": 8,
+        "prompt_tokens": 34988,
+        "completion_tokens": 24,
+        "total_tokens": 35012,
+        "raw_output": "MATCH path=README.md\n---\nNONE\n---\nNONE\n---\nNONE\n---\nNONE\n---\nNONE\n---\nMATCH path=docs/broad_evidence_report.md\n---\nNONE"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.734136040322483,
+        "model_calls": 8,
+        "prompt_tokens": 34868,
+        "completion_tokens": 16,
+        "total_tokens": 34884,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- NO"
+      },
+      "recursive": {
+        "answer_paths": [
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 1.5534864161163568,
+        "model_calls": 6,
+        "prompt_tokens": 4618,
+        "completion_tokens": 10,
+        "total_tokens": 4628,
+        "raw_output": "[Group root]\nNO\n---\n[Group src]\nNO\n---\n[Group docs]\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- NO"
+      }
+    },
+    {
+      "task_id": "broad-plan-doc",
+      "question": "Which document explains what would count as stronger evidence for the broad hypothesis and lists the remaining proof plan?",
+      "expected_paths": [
+        "docs/broad_hypothesis_plan.md"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": true,
+        "latency_seconds": 7.847086582798511,
+        "model_calls": 1,
+        "prompt_tokens": 34484,
+        "completion_tokens": 11,
+        "total_tokens": 34495,
+        "raw_output": "ANSWER=docs/broad_hypothesis_plan.md"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "README.md",
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.051778206601739,
+        "model_calls": 8,
+        "prompt_tokens": 35036,
+        "completion_tokens": 24,
+        "total_tokens": 35060,
+        "raw_output": "MATCH path=README.md\n---\nNONE\n---\nNONE\n---\nNONE\n---\nNONE\n---\nNONE\n---\nMATCH path=docs/broad_evidence_report.md\n---\nNONE"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.6609470010735095,
+        "model_calls": 8,
+        "prompt_tokens": 34916,
+        "completion_tokens": 16,
+        "total_tokens": 34932,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      },
+      "recursive": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.230024541262537,
+        "model_calls": 11,
+        "prompt_tokens": 35421,
+        "completion_tokens": 22,
+        "total_tokens": 35443,
+        "raw_output": "[Group root]\n- YES\n---\n[Group src]\n- YES\n---\n[Group docs]\n- YES\n---\nREADME.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      }
+    },
+    {
+      "task_id": "broad-report-doc",
+      "question": "Which document summarizes the broader transfer-suite results and conclusions?",
+      "expected_paths": [
+        "docs/broad_evidence_report.md"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "docs/broad_evidence_report.md"
+        ],
+        "exact_match": true,
+        "latency_seconds": 7.736450624652207,
+        "model_calls": 1,
+        "prompt_tokens": 34476,
+        "completion_tokens": 11,
+        "total_tokens": 34487,
+        "raw_output": "ANSWER=docs/broad_evidence_report.md"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "README.md",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.0045766229741275,
+        "model_calls": 8,
+        "prompt_tokens": 34972,
+        "completion_tokens": 44,
+        "total_tokens": 35016,
+        "raw_output": "MATCH path=README.md\n---\nNONE\n---\nNONE\n---\nNONE\n---\nNONE\n---\nMATCH path=docs/extended_evaluation.md\n---\nMATCH path=docs/broad_evidence_report.md\n---\nMATCH path=docs/broad_hypothesis_plan.md"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.772457707673311,
+        "model_calls": 8,
+        "prompt_tokens": 34852,
+        "completion_tokens": 16,
+        "total_tokens": 34868,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      },
+      "recursive": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.291714665945619,
+        "model_calls": 11,
+        "prompt_tokens": 35333,
+        "completion_tokens": 22,
+        "total_tokens": 35355,
+        "raw_output": "[Group root]\n- YES\n---\n[Group src]\n- YES\n---\n[Group docs]\n- YES\n---\nREADME.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      }
+    },
+    {
+      "task_id": "broad-exec-path",
+      "question": "Which files together define and wire the broader suite execution path end-to-end?",
+      "expected_paths": [
+        "src/latent_planning/breadth_suite.py",
+        "src/latent_planning/cli.py"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 8.30309391580522,
+        "model_calls": 1,
+        "prompt_tokens": 34481,
+        "completion_tokens": 44,
+        "total_tokens": 34525,
+        "raw_output": "ANSWER=src/latent_planning/cli.py,src/latent_planning/experiment.py,src/latent_planning/reporting.py,src/latent_planning/breadth_suite.py"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.300590749364346,
+        "model_calls": 8,
+        "prompt_tokens": 35012,
+        "completion_tokens": 71,
+        "total_tokens": 35083,
+        "raw_output": "MATCH path=README.md\n---\nMATCH path=src/latent_planning/cli.py\n---\nMATCH path=src/latent_planning/experiment.py\n---\nNONE\n---\nMATCH path=src/latent_planning/breadth_suite.py\n---\nNONE\n---\nMATCH path=docs/broad_evidence_report.md\n---\nMATCH path=docs/broad_hypothesis_plan.md"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 6.955299041233957,
+        "model_calls": 8,
+        "prompt_tokens": 34892,
+        "completion_tokens": 16,
+        "total_tokens": 34908,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      },
+      "recursive": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.41519112419337,
+        "model_calls": 11,
+        "prompt_tokens": 35388,
+        "completion_tokens": 22,
+        "total_tokens": 35410,
+        "raw_output": "[Group root]\n- YES\n---\n[Group src]\n- YES\n---\n[Group docs]\n- YES\n---\nREADME.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      }
+    },
+    {
+      "task_id": "narrow-eval-path",
+      "question": "Which files together define and present the original narrow-pilot evaluation path?",
+      "expected_paths": [
+        "src/latent_planning/experiment.py",
+        "src/latent_planning/reporting.py",
+        "README.md"
+      ],
+      "baseline": {
+        "answer_paths": [
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py"
+        ],
+        "exact_match": false,
+        "latency_seconds": 8.178863749839365,
+        "model_calls": 1,
+        "prompt_tokens": 34478,
+        "completion_tokens": 21,
+        "total_tokens": 34499,
+        "raw_output": "ANSWER=src/latent_planning/experiment.py,src/latent_planning/reporting.py"
+      },
+      "no_validator": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.464957332238555,
+        "model_calls": 8,
+        "prompt_tokens": 34988,
+        "completion_tokens": 72,
+        "total_tokens": 35060,
+        "raw_output": "MATCH path=README.md\n---\nMATCH path=src/latent_planning/cli.py\n---\nMATCH path=src/latent_planning/experiment.py\n---\nNONE\n---\nMATCH path=src/latent_planning/breadth_suite.py\n---\n- NONE\n---\n- MATCH path=docs/broad_evidence_report.md\n---\n- MATCH docs/broad_hypothesis_plan.md"
+      },
+      "managed": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.135801373980939,
+        "model_calls": 8,
+        "prompt_tokens": 34868,
+        "completion_tokens": 16,
+        "total_tokens": 34884,
+        "raw_output": "README.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      },
+      "recursive": {
+        "answer_paths": [
+          "README.md",
+          "src/latent_planning/cli.py",
+          "src/latent_planning/experiment.py",
+          "src/latent_planning/reporting.py",
+          "src/latent_planning/breadth_suite.py",
+          "docs/extended_evaluation.md",
+          "docs/broad_evidence_report.md",
+          "docs/broad_hypothesis_plan.md"
+        ],
+        "exact_match": false,
+        "latency_seconds": 7.4943624986335635,
+        "model_calls": 11,
+        "prompt_tokens": 35355,
+        "completion_tokens": 22,
+        "total_tokens": 35377,
+        "raw_output": "[Group root]\n- YES\n---\n[Group src]\n- YES\n---\n[Group docs]\n- YES\n---\nREADME.md\n- YES\n---\nsrc/latent_planning/cli.py\n- YES\n---\nsrc/latent_planning/experiment.py\n- YES\n---\nsrc/latent_planning/reporting.py\n- YES\n---\nsrc/latent_planning/breadth_suite.py\n- YES\n---\ndocs/extended_evaluation.md\n- YES\n---\ndocs/broad_evidence_report.md\n- YES\n---\ndocs/broad_hypothesis_plan.md\n- YES"
+      }
+    }
+  ]
+}

@@ -24,11 +24,11 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 
 ## Family Results
 
-| Family | Task type | Runs | Avg chars | Baseline acc | No-validator acc | Managed acc | Recursive acc | Baseline latency (s) | No-validator latency (s) | Managed latency (s) | Recursive latency (s) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Prose records | retrieval in prose | 3 | 9446 | 0.00 | 1.00 | 1.00 | 1.00 | 0.50 | 1.11 | 0.99 | 1.92 |
-| Ledger aggregation | retrieval plus arithmetic | 3 | 9075 | 0.00 | 0.00 | 0.67 | 0.67 | 0.57 | 1.23 | 1.00 | 1.65 |
-| Code localization | code-like localization | 3 | 15128 | 0.00 | 0.67 | 1.00 | 1.00 | 0.57 | 1.21 | 1.07 | 1.96 |
+| Family | Task type | Runs | Avg chars | Baseline acc | No-validator acc | Managed acc | Recursive acc | Baseline latency (s) | No-validator latency (s) | Managed latency (s) | Recursive latency (s) | Baseline tokens | No-validator tokens | Managed tokens | Recursive tokens |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Prose records | retrieval in prose | 3 | 9446 | 0.00 | 1.00 | 1.00 | 1.00 | 0.48 | 1.06 | 0.95 | 1.82 | 2252 | 2518 | 2615 | 2835 |
+| Ledger aggregation | retrieval plus arithmetic | 3 | 9075 | 0.00 | 0.00 | 0.67 | 0.67 | 0.57 | 1.21 | 1.00 | 1.64 | 2472 | 2759 | 2825 | 2574 |
+| Code localization | code-like localization | 3 | 15128 | 0.00 | 0.67 | 1.00 | 1.00 | 0.58 | 1.19 | 1.06 | 1.94 | 3106 | 3386 | 3482 | 3273 |
 
 ## Aggregate Accuracy Means
 
@@ -38,6 +38,15 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 | No-validator | 0.56 |
 | Managed | 0.89 |
 | Recursive | 0.89 |
+
+## Aggregate Compute Means
+
+| Method | Mean total tokens across families |
+| --- | --- |
+| Baseline | 2610 |
+| No-validator | 2887 |
+| Managed | 2974 |
+| Recursive | 2894 |
 
 ## Scorecard
 
@@ -53,6 +62,8 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 If the hypothesis were only an artifact of one synthetic retrieval task, the improvement should disappear when the surface form changes. Instead, the same pattern persisting across prose, arithmetic-ledger, and code-like tasks is stronger evidence that the bottleneck is partly in decomposition rather than only in raw model weights.
 
 At the same time, the no-validator condition remains much weaker than the validator-backed manager. That means the broad claim still cannot be stated as 'the model alone already does everything once decomposed.' The more accurate statement is that the model plus a better management policy and exact support code unlocks capabilities that one-shot prompting leaves on the table.
+
+The compute-normalized view matters too. Managed and recursive methods use materially more tokens than the baseline, so this is not free capability. The evidence is therefore about better capability per task, not magical capability without extra compute.
 
 ## Conclusion
 

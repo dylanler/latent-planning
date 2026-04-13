@@ -213,7 +213,7 @@ The most defensible conclusion is therefore:
 
 ## Broader Suite
 
-The repo now also includes a first broader transfer test across three task families:
+The repo now also includes a broader transfer test across three task families:
 
 - prose retrieval
 - ledger aggregation
@@ -221,10 +221,47 @@ The repo now also includes a first broader transfer test across three task famil
 
 That broader run lives in [broad_evidence_report.md](/Users/dylan/learning-projects/latent-planning/docs/broad_evidence_report.md), and the explicit roadmap for what would count as a genuinely broader proof lives in [broad_hypothesis_plan.md](/Users/dylan/learning-projects/latent-planning/docs/broad_hypothesis_plan.md).
 
-## Next Steps
+## What The Finished Roadmap Says
 
-- Add a learned or adaptive routing policy so recursion does not always pay the full search cost.
-- Move beyond synthetic retrieval into real codebase tasks such as file selection and bug localization.
-- Compare stronger local MLX models to test whether better weights reduce the marginal value of scaffolding.
-- Measure token and energy cost, not just wall-clock latency, so tradeoffs are easier to compare.
+After finishing the original next-step list, the evidence is mixed rather than uniformly positive.
+
+| Evidence slice | What was tested | Result | Takeaway |
+| --- | --- | --- | --- |
+| Broad synthetic transfer | Same scaffold across prose, ledger, and code-like families on Gemma | Managed `0.89`, recursive `0.89`, baseline `0.00` | Strong positive evidence inside synthetic tasks |
+| Gemma context ladder | Same broad suite at context scales `1`, `3`, `5` | Managed stayed strong, recursive was unstable | Better management helps, but recursion is not universally best |
+| Real codebase benchmark | Exact file selection over real repo files | Baseline `0.75`, all managed variants `0.00` | Current scaffold does not transfer to this real task |
+| Model transfer | Same broad suite on `Llama-3.2-3B-Instruct-4bit` | Managed `0.00`, recursive `0.11` | Current scaffold is not model-agnostic |
+
+```mermaid
+xychart-beta
+    title "Where The Current Manager Helps"
+    x-axis "Evidence slice" [GemmaSynthetic, LlamaSynthetic, RealCodebase]
+    y-axis "Accuracy" 0 --> 1.0
+    line "Baseline" [0.00, 0.00, 0.75]
+    line "Managed" [0.89, 0.00, 0.00]
+```
+
+## Intuitive Conclusion
+
+The cleanest high-level picture is:
+
+- The same model can look far more capable when the task is decomposed well.
+- That effect is real on this repo's Gemma synthetic suites.
+- But the effect is not automatic across tasks or models.
+
+In plain language: the repo now supports "management matters" much more strongly than it supports "the current manager solves the broad hypothesis." The current decomposition policy is good for Gemma on the synthetic families, weak on real file selection, and brittle on a second smaller model.
+
+## Additional Reports
+
+- [Broad synthetic transfer report](docs/broad_evidence_report.md)
+- [Gemma context ladder report](docs/context_ladder_report.md)
+- [Real codebase benchmark report](docs/codebase_benchmark_report.md)
+- [Cross-model transfer report](docs/model_transfer_report.md)
+- [Updated broader-proof plan](docs/broad_hypothesis_plan.md)
+
+## Remaining Next Steps
+
+- Replace the current codebase yes/no manager with a compare-and-eliminate or ranking-based manager that preserves global context.
+- Run the same suite on a stronger second local model to separate prompt brittleness from capacity limits.
+- Move from file selection to bug localization or patch-target selection so the real-task benchmark is less shallow.
 - Try decomposition languages beyond IDs and summaries: plans, tool calls, loops, or executable recursive programs.

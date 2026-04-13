@@ -90,6 +90,9 @@ class BenchConditionResult:
     exact_match: bool
     latency_seconds: float
     model_calls: int
+    prompt_tokens: int
+    completion_tokens: int
+    total_tokens: int
     raw_output: str
     candidate_item_ids: list[str]
 
@@ -110,6 +113,10 @@ class FamilyReportRow:
     no_validator_latency: float
     managed_latency: float
     recursive_latency: float
+    baseline_tokens: float
+    no_validator_tokens: float
+    managed_tokens: float
+    recursive_tokens: float
 
 
 def repeat_sentences(rng: random.Random, sentences: list[str], count: int) -> str:
@@ -307,13 +314,19 @@ def build_recursive_group_prompt(task: BenchTask, groups: list[list[BenchItem]],
 
 
 def run_baseline(task: BenchTask, model: MLXPromptModel, *, max_tokens: int) -> BenchConditionResult:
-    raw_output, latency_seconds = model.generate(build_baseline_prompt(task), max_tokens=max_tokens)
+    prompt = build_baseline_prompt(task)
+    raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
     answer = normalize_baseline_answer(raw_output)
+    prompt_tokens = model.count_tokens(prompt)
+    completion_tokens = model.count_tokens(raw_output)
     return BenchConditionResult(
         answer=answer,
         exact_match=answer == task.expected_answer,
         latency_seconds=latency_seconds,
         model_calls=1,
+        prompt_tokens=prompt_tokens,
+        completion_tokens=completion_tokens,
+        total_tokens=prompt_tokens + completion_tokens,
         raw_output=raw_output,
         candidate_item_ids=[],
     )
@@ -323,10 +336,15 @@ def run_managed(task: BenchTask, model: MLXPromptModel, *, max_tokens: int) -> B
     raw_outputs: list[str] = []
     candidate_ids: list[str] = []
     total_latency = 0.0
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
     for section_text in task.section_texts:
-        raw_output, latency_seconds = model.generate(build_chunk_prompt(task, section_text), max_tokens=max_tokens)
+        prompt = build_chunk_prompt(task, section_text)
+        raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
         raw_outputs.append(raw_output)
         total_latency += latency_seconds
+        total_prompt_tokens += model.count_tokens(prompt)
+        total_completion_tokens += model.count_tokens(raw_output)
         candidate_ids.extend(extract_candidate_ids(raw_output))
 
     validated_items = validate_candidates(task, candidate_ids)
@@ -336,6 +354,9 @@ def run_managed(task: BenchTask, model: MLXPromptModel, *, max_tokens: int) -> B
         exact_match=answer == task.expected_answer,
         latency_seconds=total_latency,
         model_calls=len(task.section_texts),
+        prompt_tokens=total_prompt_tokens,
+        completion_tokens=total_completion_tokens,
+        total_tokens=total_prompt_tokens + total_completion_tokens,
         raw_output="\n---\n".join(raw_outputs),
         candidate_item_ids=[item.item_id for item in validated_items],
     )
@@ -345,13 +366,15 @@ def run_no_validator(task: BenchTask, model: MLXPromptModel, *, max_tokens: int)
     raw_outputs: list[str] = []
     matches: list[ExtractedMatch] = []
     total_latency = 0.0
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
     for section_text in task.section_texts:
-        raw_output, latency_seconds = model.generate(
-            build_no_validator_prompt(task, section_text),
-            max_tokens=max_tokens,
-        )
+        prompt = build_no_validator_prompt(task, section_text)
+        raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
         raw_outputs.append(raw_output)
         total_latency += latency_seconds
+        total_prompt_tokens += model.count_tokens(prompt)
+        total_completion_tokens += model.count_tokens(raw_output)
         extracted = extract_match(raw_output)
         if extracted is not None:
             matches.append(extracted)
@@ -362,6 +385,9 @@ def run_no_validator(task: BenchTask, model: MLXPromptModel, *, max_tokens: int)
         exact_match=answer == task.expected_answer,
         latency_seconds=total_latency,
         model_calls=len(task.section_texts),
+        prompt_tokens=total_prompt_tokens,
+        completion_tokens=total_completion_tokens,
+        total_tokens=total_prompt_tokens + total_completion_tokens,
         raw_output="\n---\n".join(raw_outputs),
         candidate_item_ids=[],
     )
@@ -379,25 +405,40 @@ def recursive_search(
 ) -> tuple[list[str], str, float, int]:
     if len(items) <= leaf_items:
         section_text = "\n\n".join(item.text for item in items)
-        raw_output, latency_seconds = model.generate(build_chunk_prompt(task, section_text), max_tokens=max_tokens)
-        return extract_candidate_ids(raw_output), raw_output, latency_seconds, 1
+        prompt = build_chunk_prompt(task, section_text)
+        raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
+        return (
+            extract_candidate_ids(raw_output),
+            raw_output,
+            latency_seconds,
+            1,
+            model.count_tokens(prompt),
+            model.count_tokens(raw_output),
+        )
 
     groups = split_items(items, branching_factor)
-    raw_output, latency_seconds = model.generate(
-        build_recursive_group_prompt(task, groups, depth=depth),
-        max_tokens=max_tokens,
-    )
+    prompt = build_recursive_group_prompt(task, groups, depth=depth)
+    raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
     selected_groups = extract_group_indices(raw_output, len(groups))
     if not selected_groups:
         selected_groups = list(range(1, len(groups) + 1))
 
     total_latency = latency_seconds
     total_calls = 1
+    total_prompt_tokens = model.count_tokens(prompt)
+    total_completion_tokens = model.count_tokens(raw_output)
     child_outputs: list[str] = []
     candidate_ids: list[str] = []
 
     for group_index in selected_groups:
-        child_ids, child_output, child_latency, child_calls = recursive_search(
+        (
+            child_ids,
+            child_output,
+            child_latency,
+            child_calls,
+            child_prompt_tokens,
+            child_completion_tokens,
+        ) = recursive_search(
             task,
             model,
             groups[group_index - 1],
@@ -410,11 +451,20 @@ def recursive_search(
         child_outputs.append(f"[Depth {depth + 1} Group {group_index}]\n{child_output}")
         total_latency += child_latency
         total_calls += child_calls
+        total_prompt_tokens += child_prompt_tokens
+        total_completion_tokens += child_completion_tokens
 
     combined_output = raw_output
     if child_outputs:
         combined_output = raw_output + "\n" + "\n".join(child_outputs)
-    return candidate_ids, combined_output, total_latency, total_calls
+    return (
+        candidate_ids,
+        combined_output,
+        total_latency,
+        total_calls,
+        total_prompt_tokens,
+        total_completion_tokens,
+    )
 
 
 def run_recursive(
@@ -429,9 +479,18 @@ def run_recursive(
     candidate_ids: list[str] = []
     total_latency = 0.0
     total_calls = 0
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
 
     for section_items in task.section_items:
-        section_ids, section_output, section_latency, section_calls = recursive_search(
+        (
+            section_ids,
+            section_output,
+            section_latency,
+            section_calls,
+            section_prompt_tokens,
+            section_completion_tokens,
+        ) = recursive_search(
             task,
             model,
             section_items,
@@ -443,6 +502,8 @@ def run_recursive(
         candidate_ids.extend(section_ids)
         total_latency += section_latency
         total_calls += section_calls
+        total_prompt_tokens += section_prompt_tokens
+        total_completion_tokens += section_completion_tokens
 
     validated_items = validate_candidates(task, candidate_ids)
     answer = compose_answer(task, validated_items)
@@ -451,6 +512,9 @@ def run_recursive(
         exact_match=answer == task.expected_answer,
         latency_seconds=total_latency,
         model_calls=total_calls,
+        prompt_tokens=total_prompt_tokens,
+        completion_tokens=total_completion_tokens,
+        total_tokens=total_prompt_tokens + total_completion_tokens,
         raw_output="\n---\n".join(raw_outputs),
         candidate_item_ids=[item.item_id for item in validated_items],
     )
@@ -461,6 +525,9 @@ def summarize_condition(results: list[BenchConditionResult]) -> dict[str, float]
         "accuracy": sum(result.exact_match for result in results) / len(results),
         "mean_latency_seconds": statistics.mean(result.latency_seconds for result in results),
         "mean_model_calls": statistics.mean(result.model_calls for result in results),
+        "mean_prompt_tokens": statistics.mean(result.prompt_tokens for result in results),
+        "mean_completion_tokens": statistics.mean(result.completion_tokens for result in results),
+        "mean_total_tokens": statistics.mean(result.total_tokens for result in results),
     }
 
 
@@ -1037,6 +1104,10 @@ def load_breadth_rows(paths: Iterable[Path]) -> list[FamilyReportRow]:
                     no_validator_latency=family["no_validator"]["mean_latency_seconds"],
                     managed_latency=family["managed"]["mean_latency_seconds"],
                     recursive_latency=family["recursive"]["mean_latency_seconds"],
+                    baseline_tokens=family["baseline"]["mean_total_tokens"],
+                    no_validator_tokens=family["no_validator"]["mean_total_tokens"],
+                    managed_tokens=family["managed"]["mean_total_tokens"],
+                    recursive_tokens=family["recursive"]["mean_total_tokens"],
                 )
             )
     return rows
@@ -1074,6 +1145,10 @@ def build_breadth_report(paths: Iterable[Path]) -> str:
             format_float(row.no_validator_latency),
             format_float(row.managed_latency),
             format_float(row.recursive_latency),
+            format_float(row.baseline_tokens, 0),
+            format_float(row.no_validator_tokens, 0),
+            format_float(row.managed_tokens, 0),
+            format_float(row.recursive_tokens, 0),
         ]
         for row in rows
     ]
@@ -1115,6 +1190,10 @@ def build_breadth_report(paths: Iterable[Path]) -> str:
                 "No-validator latency (s)",
                 "Managed latency (s)",
                 "Recursive latency (s)",
+                "Baseline tokens",
+                "No-validator tokens",
+                "Managed tokens",
+                "Recursive tokens",
             ],
             family_rows,
         ),
@@ -1126,6 +1205,16 @@ def build_breadth_report(paths: Iterable[Path]) -> str:
                 ["No-validator", format_float(overall["no_validator"])],
                 ["Managed", format_float(overall["managed"])],
                 ["Recursive", format_float(overall["recursive"])],
+            ],
+        ),
+        "## Aggregate Compute Means",
+        render_table(
+            ["Method", "Mean total tokens across families"],
+            [
+                ["Baseline", format_float(statistics.mean(row.baseline_tokens for row in rows), 0)],
+                ["No-validator", format_float(statistics.mean(row.no_validator_tokens for row in rows), 0)],
+                ["Managed", format_float(statistics.mean(row.managed_tokens for row in rows), 0)],
+                ["Recursive", format_float(statistics.mean(row.recursive_tokens for row in rows), 0)],
             ],
         ),
         "## Scorecard",
@@ -1147,6 +1236,10 @@ def build_breadth_report(paths: Iterable[Path]) -> str:
             "At the same time, the no-validator condition remains much weaker than the validator-backed manager. "
             "That means the broad claim still cannot be stated as 'the model alone already does everything once decomposed.' "
             "The more accurate statement is that the model plus a better management policy and exact support code unlocks capabilities that one-shot prompting leaves on the table."
+        ),
+        (
+            "The compute-normalized view matters too. Managed and recursive methods use materially more tokens than the baseline, "
+            "so this is not free capability. The evidence is therefore about better capability per task, not magical capability without extra compute."
         ),
         "## Conclusion",
         (

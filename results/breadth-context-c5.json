@@ -1,0 +1,742 @@
+{
+  "label": "breadth-suite",
+  "model_path_or_repo": "/Users/dylan/.cache/huggingface/hub/models--mlx-community--gemma-4-e2b-it-4bit/snapshots/76b6a5af250fa029339a757deeb93716baa8ead0",
+  "families": [
+    {
+      "family": "records",
+      "display_name": "Prose records",
+      "task_type": "retrieval in prose",
+      "answer_mode": "sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 5,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 13718,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 0.5725965557309488,
+        "mean_model_calls": 1,
+        "mean_prompt_tokens": 2968,
+        "mean_completion_tokens": 7,
+        "mean_total_tokens": 2975
+      },
+      "no_validator": {
+        "accuracy": 0.6666666666666666,
+        "mean_latency_seconds": 1.1826369725167751,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 3211,
+        "mean_completion_tokens": 32.333333333333336,
+        "mean_total_tokens": 3243.3333333333335
+      },
+      "managed": {
+        "accuracy": 0.3333333333333333,
+        "mean_latency_seconds": 1.062355097848922,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 3331,
+        "mean_completion_tokens": 9.333333333333334,
+        "mean_total_tokens": 3340.3333333333335
+      },
+      "recursive": {
+        "accuracy": 0.3333333333333333,
+        "mean_latency_seconds": 2.3602474443614483,
+        "mean_model_calls": 11.333333333333334,
+        "mean_prompt_tokens": 3871,
+        "mean_completion_tokens": 17.333333333333332,
+        "mean_total_tokens": 3888.3333333333335
+      },
+      "runs": [
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 13730,
+          "expected_answer": "GV5-DQ4-LP0-QR7",
+          "baseline": {
+            "answer": "TARGET1-GV5",
+            "exact_match": false,
+            "latency_seconds": 0.6111151669174433,
+            "model_calls": 1,
+            "prompt_tokens": 2977,
+            "completion_tokens": 7,
+            "total_tokens": 2984,
+            "raw_output": "ANSWER=TARGET1-GV5",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "GV5-DQ4-LP0-QR7",
+            "exact_match": true,
+            "latency_seconds": 1.1876082504168153,
+            "model_calls": 4,
+            "prompt_tokens": 3220,
+            "completion_tokens": 32,
+            "total_tokens": 3252,
+            "raw_output": "MATCH order=1 token=GV5\n---\nMATCH order=1 token=DQ4\n---\nMATCH order=3 token=LP0\n---\nMATCH order=4 token=QR7",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "GV5-LP0-QR7",
+            "exact_match": false,
+            "latency_seconds": 1.0699756685644388,
+            "model_calls": 4,
+            "prompt_tokens": 3340,
+            "completion_tokens": 10,
+            "total_tokens": 3350,
+            "raw_output": "TARGET1\n---\nDIST2_1\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "GV5-DQ4-LP0-QR7",
+            "exact_match": true,
+            "latency_seconds": 2.9101657099090517,
+            "model_calls": 14,
+            "prompt_tokens": 4796,
+            "completion_tokens": 21,
+            "total_tokens": 4817,
+            "raw_output": "TARGET1\n[Depth 1 Group 1]\nTARGET1\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\nTARGET3\n[Depth 1 Group 1]\nTARGET3\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\nTARGET4\n[Depth 1 Group 1]\nTARGET4\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 13725,
+          "expected_answer": "CM9-ST8-MN4-MN4",
+          "baseline": {
+            "answer": "TARGET1-CM9",
+            "exact_match": false,
+            "latency_seconds": 0.5473826671950519,
+            "model_calls": 1,
+            "prompt_tokens": 2961,
+            "completion_tokens": 7,
+            "total_tokens": 2968,
+            "raw_output": "ANSWER=TARGET1-CM9",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "CM9-ST8-MN4-GV5",
+            "exact_match": false,
+            "latency_seconds": 1.1831011669710279,
+            "model_calls": 4,
+            "prompt_tokens": 3204,
+            "completion_tokens": 33,
+            "total_tokens": 3237,
+            "raw_output": "MATCH order=1 token=CM9\n---\nMATCH order=2 token=ST8\n---\nMATCH order=3 token=MN4\n---\nMATCH order=10 token=GV5",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "CM9-ST8-MN4-MN4",
+            "exact_match": true,
+            "latency_seconds": 1.0559982918202877,
+            "model_calls": 4,
+            "prompt_tokens": 3324,
+            "completion_tokens": 8,
+            "total_tokens": 3332,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "CM9-MN4-MN4",
+            "exact_match": false,
+            "latency_seconds": 2.0629294579848647,
+            "model_calls": 10,
+            "prompt_tokens": 3303,
+            "completion_tokens": 14,
+            "total_tokens": 3317,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\n3\n[Depth 1 Group 3]\nNONE\n---\nTARGET3\n[Depth 1 Group 1]\nTARGET3\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "records",
+          "display_name": "Prose records",
+          "task_type": "retrieval in prose",
+          "answer_mode": "sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 13699,
+          "expected_answer": "AX7-ER8-CM9-ER8",
+          "baseline": {
+            "answer": "TARGET1-AX7",
+            "exact_match": false,
+            "latency_seconds": 0.5592918330803514,
+            "model_calls": 1,
+            "prompt_tokens": 2966,
+            "completion_tokens": 7,
+            "total_tokens": 2973,
+            "raw_output": "ANSWER=TARGET1-AX7",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "AX7-ER8-CM9-ER8",
+            "exact_match": true,
+            "latency_seconds": 1.1772015001624823,
+            "model_calls": 4,
+            "prompt_tokens": 3209,
+            "completion_tokens": 32,
+            "total_tokens": 3241,
+            "raw_output": "MATCH order=1 token=AX7\n---\nMATCH order=2 token=ER8\n---\nMATCH order=3 token=CM9\n---\nMATCH order=4 token=ER8",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "ER8-CM9-ER8",
+            "exact_match": false,
+            "latency_seconds": 1.0610913331620395,
+            "model_calls": 4,
+            "prompt_tokens": 3329,
+            "completion_tokens": 10,
+            "total_tokens": 3339,
+            "raw_output": "DIST1_0\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "ER8-CM9-ER8",
+            "exact_match": false,
+            "latency_seconds": 2.1076471651904285,
+            "model_calls": 10,
+            "prompt_tokens": 3514,
+            "completion_tokens": 17,
+            "total_tokens": 3531,
+            "raw_output": "1\n[Depth 1 Group 1]\nDIST1_0\n---\n1\n[Depth 1 Group 1]\nTARGET2\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\nTARGET4\n[Depth 1 Group 1]\nTARGET4\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+            "candidate_item_ids": [
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "ledger",
+      "display_name": "Ledger aggregation",
+      "task_type": "retrieval plus arithmetic",
+      "answer_mode": "total_and_sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 5,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 13109,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 0.586649416324993,
+        "mean_model_calls": 1,
+        "mean_prompt_tokens": 3131,
+        "mean_completion_tokens": 9,
+        "mean_total_tokens": 3140
+      },
+      "no_validator": {
+        "accuracy": 0.3333333333333333,
+        "mean_latency_seconds": 1.307089583793034,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 3390,
+        "mean_completion_tokens": 48,
+        "mean_total_tokens": 3438
+      },
+      "managed": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 1.0683268744808931,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 3494,
+        "mean_completion_tokens": 8,
+        "mean_total_tokens": 3502
+      },
+      "recursive": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 2.188897388676802,
+        "mean_model_calls": 10.333333333333334,
+        "mean_prompt_tokens": 3714,
+        "mean_completion_tokens": 18.666666666666668,
+        "mean_total_tokens": 3732.6666666666665
+      },
+      "runs": [
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 13094,
+          "expected_answer": "174|LP0-GV5-LP0-AX7",
+          "baseline": {
+            "answer": "1|TARGET1-LP0",
+            "exact_match": false,
+            "latency_seconds": 0.5894025410525501,
+            "model_calls": 1,
+            "prompt_tokens": 3115,
+            "completion_tokens": 9,
+            "total_tokens": 3124,
+            "raw_output": "ANSWER=1|TARGET1-LP0",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "161|LP0-LP0-GV5-AX7",
+            "exact_match": false,
+            "latency_seconds": 1.301629207096994,
+            "model_calls": 4,
+            "prompt_tokens": 3374,
+            "completion_tokens": 48,
+            "total_tokens": 3422,
+            "raw_output": "MATCH order=1 token=LP0 amount=53\n---\nMATCH order=4 token=GV5 amount=22\n---\nMATCH order=3 token=LP0 amount=17\n---\nMATCH order=4 token=AX7 amount=69",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "174|LP0-GV5-LP0-AX7",
+            "exact_match": true,
+            "latency_seconds": 1.069058165885508,
+            "model_calls": 4,
+            "prompt_tokens": 3478,
+            "completion_tokens": 8,
+            "total_tokens": 3486,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "139|LP0-LP0-AX7",
+            "exact_match": false,
+            "latency_seconds": 1.9175856243818998,
+            "model_calls": 9,
+            "prompt_tokens": 3337,
+            "completion_tokens": 17,
+            "total_tokens": 3354,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\n2\n[Depth 1 Group 2]\nDIST2_0\n---\n2,3\n[Depth 1 Group 2]\nTARGET3\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 13099,
+          "expected_answer": "201|FT2-DQ4-BZ3-ER8",
+          "baseline": {
+            "answer": "1|TARGET1-FT2",
+            "exact_match": false,
+            "latency_seconds": 0.5804172079078853,
+            "model_calls": 1,
+            "prompt_tokens": 3142,
+            "completion_tokens": 9,
+            "total_tokens": 3151,
+            "raw_output": "ANSWER=1|TARGET1-FT2",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "201|FT2-DQ4-BZ3-ER8",
+            "exact_match": true,
+            "latency_seconds": 1.3077553356997669,
+            "model_calls": 4,
+            "prompt_tokens": 3401,
+            "completion_tokens": 48,
+            "total_tokens": 3449,
+            "raw_output": "MATCH order=1 token=FT2 amount=23\n---\nMATCH order=2 token=DQ4 amount=87\n---\nMATCH order=4 token=BZ3 amount=35\n---\nMATCH order=4 token=ER8 amount=56",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "201|FT2-DQ4-BZ3-ER8",
+            "exact_match": true,
+            "latency_seconds": 1.0642315824516118,
+            "model_calls": 4,
+            "prompt_tokens": 3505,
+            "completion_tokens": 8,
+            "total_tokens": 3513,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "145|FT2-DQ4-BZ3",
+            "exact_match": false,
+            "latency_seconds": 2.5434567905031145,
+            "model_calls": 12,
+            "prompt_tokens": 4446,
+            "completion_tokens": 21,
+            "total_tokens": 4467,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\nNONE\n[Depth 1 Group 1]\nTARGET2\n[Depth 1 Group 2]\nDIST2_4\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\nNONE\n[Depth 1 Group 1]\nDIST4_0\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3"
+            ]
+          }
+        },
+        {
+          "family": "ledger",
+          "display_name": "Ledger aggregation",
+          "task_type": "retrieval plus arithmetic",
+          "answer_mode": "total_and_sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 13134,
+          "expected_answer": "188|GV5-FT2-JK6-DQ4",
+          "baseline": {
+            "answer": "1|TARGET1-GV5",
+            "exact_match": false,
+            "latency_seconds": 0.5901285000145435,
+            "model_calls": 1,
+            "prompt_tokens": 3136,
+            "completion_tokens": 9,
+            "total_tokens": 3145,
+            "raw_output": "ANSWER=1|TARGET1-GV5",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "182|GV5-JK6-DQ4-AX7",
+            "exact_match": false,
+            "latency_seconds": 1.3118842085823417,
+            "model_calls": 4,
+            "prompt_tokens": 3395,
+            "completion_tokens": 48,
+            "total_tokens": 3443,
+            "raw_output": "MATCH order=1 token=GV5 amount=44\n---\nMATCH order=7 token=AX7 amount=28\n---\nMATCH order=3 token=JK6 amount=44\n---\nMATCH order=4 token=DQ4 amount=66",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "188|GV5-FT2-JK6-DQ4",
+            "exact_match": true,
+            "latency_seconds": 1.0716908751055598,
+            "model_calls": 4,
+            "prompt_tokens": 3499,
+            "completion_tokens": 8,
+            "total_tokens": 3507,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "78|GV5-FT2",
+            "exact_match": false,
+            "latency_seconds": 2.1056497511453927,
+            "model_calls": 10,
+            "prompt_tokens": 3359,
+            "completion_tokens": 18,
+            "total_tokens": 3377,
+            "raw_output": "DIST1_0\n[Depth 1 Group 1]\nDIST1_0\n[Depth 1 Group 2]\nTARGET1\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\n3\n[Depth 1 Group 3]\nNONE\n---\n3\n[Depth 1 Group 3]\nNONE",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family": "code",
+      "display_name": "Code localization",
+      "task_type": "code-like localization",
+      "answer_mode": "sequence",
+      "sections": 4,
+      "distractors_per_section": 6,
+      "context_scale": 5,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "artifact_characters_mean": 19155.666666666668,
+      "baseline": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 0.6648191946248213,
+        "mean_model_calls": 1,
+        "mean_prompt_tokens": 3797.6666666666665,
+        "mean_completion_tokens": 7,
+        "mean_total_tokens": 3804.6666666666665
+      },
+      "no_validator": {
+        "accuracy": 0.3333333333333333,
+        "mean_latency_seconds": 1.2793884583127995,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 4052.6666666666665,
+        "mean_completion_tokens": 32,
+        "mean_total_tokens": 4084.6666666666665
+      },
+      "managed": {
+        "accuracy": 1.0,
+        "mean_latency_seconds": 1.1477241533187528,
+        "mean_model_calls": 4,
+        "mean_prompt_tokens": 4172.666666666667,
+        "mean_completion_tokens": 8,
+        "mean_total_tokens": 4180.666666666667
+      },
+      "recursive": {
+        "accuracy": 0.0,
+        "mean_latency_seconds": 1.977010347880423,
+        "mean_model_calls": 9.333333333333334,
+        "mean_prompt_tokens": 3507.6666666666665,
+        "mean_completion_tokens": 13,
+        "mean_total_tokens": 3520.6666666666665
+      },
+      "runs": [
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 0,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 19128,
+          "expected_answer": "GV5-AX7-FT2-CM9",
+          "baseline": {
+            "answer": "TARGET1-GV5",
+            "exact_match": false,
+            "latency_seconds": 0.6666777092032135,
+            "model_calls": 1,
+            "prompt_tokens": 3805,
+            "completion_tokens": 7,
+            "total_tokens": 3812,
+            "raw_output": "ANSWER=TARGET1-GV5",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "GV5-AX7-FT2-CM9",
+            "exact_match": true,
+            "latency_seconds": 1.2769947494380176,
+            "model_calls": 4,
+            "prompt_tokens": 4060,
+            "completion_tokens": 32,
+            "total_tokens": 4092,
+            "raw_output": "MATCH order=1 token=GV5\n---\nMATCH order=3 token=AX7\n---\nMATCH order=3 token=FT2\n---\nMATCH order=4 token=CM9",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "GV5-AX7-FT2-CM9",
+            "exact_match": true,
+            "latency_seconds": 1.1538664591498673,
+            "model_calls": 4,
+            "prompt_tokens": 4180,
+            "completion_tokens": 8,
+            "total_tokens": 4188,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "GV5-AX7-CM9",
+            "exact_match": false,
+            "latency_seconds": 1.690923542715609,
+            "model_calls": 8,
+            "prompt_tokens": 3014,
+            "completion_tokens": 11,
+            "total_tokens": 3025,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\n2\n[Depth 1 Group 2]\nTARGET2\n---\n3\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 1,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 19162,
+          "expected_answer": "FT2-QR7-ER8-AX7",
+          "baseline": {
+            "answer": "TARGET1-FT2",
+            "exact_match": false,
+            "latency_seconds": 0.6737237498164177,
+            "model_calls": 1,
+            "prompt_tokens": 3804,
+            "completion_tokens": 7,
+            "total_tokens": 3811,
+            "raw_output": "ANSWER=TARGET1-FT2",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "FT2-QR7-ER8-MN4",
+            "exact_match": false,
+            "latency_seconds": 1.2800814164802432,
+            "model_calls": 4,
+            "prompt_tokens": 4059,
+            "completion_tokens": 32,
+            "total_tokens": 4091,
+            "raw_output": "MATCH order=1 token=FT2\n---\nMATCH order=2 token=QR7\n---\nMATCH order=3 token=ER8\n---\nMATCH order=8 token=MN4",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "FT2-QR7-ER8-AX7",
+            "exact_match": true,
+            "latency_seconds": 1.1448031668551266,
+            "model_calls": 4,
+            "prompt_tokens": 4179,
+            "completion_tokens": 8,
+            "total_tokens": 4187,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "FT2-ER8-AX7",
+            "exact_match": false,
+            "latency_seconds": 1.6991244163364172,
+            "model_calls": 8,
+            "prompt_tokens": 3001,
+            "completion_tokens": 11,
+            "total_tokens": 3012,
+            "raw_output": "2\n[Depth 1 Group 2]\nTARGET1\n---\n3\n[Depth 1 Group 3]\nNONE\n---\n1\n[Depth 1 Group 1]\nTARGET3\n---\n2\n[Depth 1 Group 2]\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        },
+        {
+          "family": "code",
+          "display_name": "Code localization",
+          "task_type": "code-like localization",
+          "answer_mode": "sequence",
+          "seed": 2,
+          "sections": 4,
+          "distractors_per_section": 6,
+          "context_scale": 5,
+          "artifact_characters": 19177,
+          "expected_answer": "ER8-CM9-HW1-MN4",
+          "baseline": {
+            "answer": "TARGET1-ER8",
+            "exact_match": false,
+            "latency_seconds": 0.6540561248548329,
+            "model_calls": 1,
+            "prompt_tokens": 3784,
+            "completion_tokens": 7,
+            "total_tokens": 3791,
+            "raw_output": "ANSWER=TARGET1-ER8",
+            "candidate_item_ids": []
+          },
+          "no_validator": {
+            "answer": "ER8-CM9-MN4-QR7",
+            "exact_match": false,
+            "latency_seconds": 1.2810892090201378,
+            "model_calls": 4,
+            "prompt_tokens": 4039,
+            "completion_tokens": 32,
+            "total_tokens": 4071,
+            "raw_output": "MATCH order=1 token=ER8\n---\nMATCH order=2 token=CM9\n---\nMATCH order=6 token=QR7\n---\nMATCH order=4 token=MN4",
+            "candidate_item_ids": []
+          },
+          "managed": {
+            "answer": "ER8-CM9-HW1-MN4",
+            "exact_match": true,
+            "latency_seconds": 1.1445028339512646,
+            "model_calls": 4,
+            "prompt_tokens": 4159,
+            "completion_tokens": 8,
+            "total_tokens": 4167,
+            "raw_output": "TARGET1\n---\nTARGET2\n---\nTARGET3\n---\nTARGET4",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET2",
+              "TARGET3",
+              "TARGET4"
+            ]
+          },
+          "recursive": {
+            "answer": "ER8-HW1-MN4",
+            "exact_match": false,
+            "latency_seconds": 2.540983084589243,
+            "model_calls": 12,
+            "prompt_tokens": 4508,
+            "completion_tokens": 17,
+            "total_tokens": 4525,
+            "raw_output": "TARGET1\n[Depth 1 Group 1]\nTARGET1\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE\n---\n3\n[Depth 1 Group 3]\nNONE\n---\n2\n[Depth 1 Group 2]\nTARGET3\n---\nTARGET4\n[Depth 1 Group 1]\nTARGET4\n[Depth 1 Group 2]\nNONE\n[Depth 1 Group 3]\nNONE",
+            "candidate_item_ids": [
+              "TARGET1",
+              "TARGET3",
+              "TARGET4"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "overall": {
+    "baseline_accuracy_mean": 0.0,
+    "no_validator_accuracy_mean": 0.4444444444444444,
+    "managed_accuracy_mean": 0.7777777777777778,
+    "recursive_accuracy_mean": 0.1111111111111111
+  }
+}
