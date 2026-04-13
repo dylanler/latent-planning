@@ -11,6 +11,33 @@ The current pilot uses `mlx-community/gemma-4-e2b-it-4bit` on Apple Silicon. The
 
 That is not a complete test of the paper's hypothesis. It is a narrow pilot that asks a precise question: does a decomposition scaffold help the same local model recover structured evidence across a longer context than a single direct call?
 
+## Architecture
+
+What is implemented today:
+
+```mermaid
+flowchart TD
+    A[MLX Gemma 4 E2B 4-bit<br/>local Apple Silicon model] --> B[Task generator<br/>synthetic long report with sections]
+    B --> C[Baseline path<br/>single full-report prompt]
+    B --> D[Managed path<br/>one prompt per section]
+    C --> E[Direct answer parser<br/>ANSWER=...]
+    D --> F[Candidate record IDs<br/>high-recall retrieval]
+    F --> G[Deterministic validator<br/>exact field match in Python]
+    G --> H[Ordered seal sequence]
+    E --> I[Exact-match scorer]
+    H --> I[Exact-match scorer]
+    I --> J[JSON result artifact<br/>results/*.json]
+    J --> K[README + docs report]
+```
+
+Runtime shape:
+
+- `latent-planning check-model` verifies the local MLX snapshot.
+- `latent-planning run-pilot` loads one model instance and runs both conditions over the same generated tasks.
+- The baseline uses one call per task.
+- The managed condition uses one call per section, then hands off exact bookkeeping to deterministic code.
+- Results are persisted as JSON so runs can be compared later.
+
 ## Why MLX
 
 MLX is the right backend on this machine:
@@ -69,4 +96,20 @@ If both conditions fail, the likely interpretations are:
 - the scaffold is poorly chosen
 - the hypothesis does not hold on this task family
 
-The next step after this pilot is to move from structured retrieval into more open-ended tasks such as multi-file code repair, recursive planning, or tool-mediated long-horizon workflows.
+## Next Steps
+
+- Add run-to-run comparison tooling so new results can be benchmarked against the first pilot instead of inspected manually.
+- Stress the current scaffold with harder settings: more sections, more distractors, longer notes, and noisier field names.
+- Replace fixed sectioning with recursive splitting so the manager chooses where to zoom in next.
+- Add ablations to separate which part of the gain comes from decomposition versus deterministic validation.
+- Expand beyond retrieval-heavy tasks into multi-hop reasoning and real code-edit workflows.
+
+## Things To Test Next
+
+- Variable-depth planning: let the model decide whether to answer directly, inspect sections, or recurse into subsections.
+- No-validator mode: require the model to return structured JSON all the way through and measure how much accuracy drops.
+- Different decomposition languages: candidate IDs, free-form plans, tool-call style actions, or recursive loop/code execution.
+- Context-length scaling: hold the task constant while increasing report length until both methods fail.
+- Realistic schema drift: rename fields, reorder records, or add irrelevant prose so the scaffold cannot overfit the template.
+- Cross-model comparison: run the same harness against a stronger MLX model and measure whether better weights reduce the value of scaffolding.
+- Codebase tasks: adapt the benchmark to multi-file bug localization where each chunk is a file and the final answer is a patch target set.
