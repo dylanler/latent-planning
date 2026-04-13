@@ -22,6 +22,9 @@ class RunRow:
     managed_exact_match: bool
     managed_latency_seconds: float
     managed_model_calls: int
+    recursive_exact_match: bool | None
+    recursive_latency_seconds: float | None
+    recursive_model_calls: int | None
 
 
 def load_rows(paths: Iterable[Path]) -> list[RunRow]:
@@ -44,6 +47,9 @@ def load_rows(paths: Iterable[Path]) -> list[RunRow]:
                     managed_exact_match=run["managed"]["exact_match"],
                     managed_latency_seconds=run["managed"]["latency_seconds"],
                     managed_model_calls=run["managed"]["model_calls"],
+                    recursive_exact_match=run.get("recursive", {}).get("exact_match"),
+                    recursive_latency_seconds=run.get("recursive", {}).get("latency_seconds"),
+                    recursive_model_calls=run.get("recursive", {}).get("model_calls"),
                 )
             )
     return rows
@@ -57,6 +63,7 @@ def group_rows(rows: list[RunRow], key: str) -> dict[int, list[RunRow]]:
 
 
 def summarize_group(rows: list[RunRow]) -> dict[str, float]:
+    recursive_rows = [row for row in rows if row.recursive_exact_match is not None]
     return {
         "n": len(rows),
         "baseline_accuracy": statistics.mean(row.baseline_exact_match for row in rows),
@@ -64,6 +71,8 @@ def summarize_group(rows: list[RunRow]) -> dict[str, float]:
         "baseline_latency": statistics.mean(row.baseline_latency_seconds for row in rows),
         "managed_latency": statistics.mean(row.managed_latency_seconds for row in rows),
         "avg_report_characters": statistics.mean(row.report_characters for row in rows),
+        "recursive_accuracy": statistics.mean(row.recursive_exact_match for row in recursive_rows) if recursive_rows else None,
+        "recursive_latency": statistics.mean(row.recursive_latency_seconds for row in recursive_rows) if recursive_rows else None,
     }
 
 
@@ -106,6 +115,7 @@ def render_sweep_section(
     grouped = group_rows(rows, key)
     x_values = list(grouped.keys())
     summaries = [summarize_group(grouped[value]) for value in x_values]
+    has_recursive = any(summary["recursive_accuracy"] is not None for summary in summaries)
 
     table_rows = [
         [
@@ -114,33 +124,55 @@ def render_sweep_section(
             format_float(summary["avg_report_characters"], 0),
             format_float(summary["baseline_accuracy"]),
             format_float(summary["managed_accuracy"]),
+            *([format_float(summary["recursive_accuracy"])] if has_recursive and summary["recursive_accuracy"] is not None else (["-"] if has_recursive else [])),
             format_float(summary["baseline_latency"]),
             format_float(summary["managed_latency"]),
+            *([format_float(summary["recursive_latency"])] if has_recursive and summary["recursive_latency"] is not None else (["-"] if has_recursive else [])),
         ]
         for value, summary in zip(x_values, summaries)
     ]
 
+    accuracy_series = [
+        ("Baseline", [summary["baseline_accuracy"] for summary in summaries]),
+        ("Managed", [summary["managed_accuracy"] for summary in summaries]),
+    ]
+    if has_recursive:
+        accuracy_series.append(
+            ("Recursive", [summary["recursive_accuracy"] or 0.0 for summary in summaries])
+        )
     accuracy_chart = render_xychart(
         f"{title} Accuracy",
         x_label,
         x_values,
-        [
-            ("Baseline", [summary["baseline_accuracy"] for summary in summaries]),
-            ("Managed", [summary["managed_accuracy"] for summary in summaries]),
-        ],
+        accuracy_series,
     )
+    latency_series = [
+        ("Baseline", [summary["baseline_latency"] for summary in summaries]),
+        ("Managed", [summary["managed_latency"] for summary in summaries]),
+    ]
+    if has_recursive:
+        latency_series.append(
+            ("Recursive", [summary["recursive_latency"] or 0.0 for summary in summaries])
+        )
     latency_chart = render_xychart(
         f"{title} Latency",
         x_label,
         x_values,
-        [
-            ("Baseline", [summary["baseline_latency"] for summary in summaries]),
-            ("Managed", [summary["managed_latency"] for summary in summaries]),
-        ],
+        latency_series,
     )
 
     table = render_table(
-        ["Setting", "Runs", "Avg report chars", "Baseline acc", "Managed acc", "Baseline latency (s)", "Managed latency (s)"],
+        [
+            "Setting",
+            "Runs",
+            "Avg report chars",
+            "Baseline acc",
+            "Managed acc",
+            *([] if not has_recursive else ["Recursive acc"]),
+            "Baseline latency (s)",
+            "Managed latency (s)",
+            *([] if not has_recursive else ["Recursive latency (s)"]),
+        ],
         table_rows,
     )
 
@@ -156,9 +188,15 @@ def build_report(paths: Iterable[Path]) -> str:
     for row in rows:
         by_label[row.label].append(row)
 
+    overall_summaries = {
+        label: summarize_group(label_rows)
+        for label, label_rows in sorted(by_label.items())
+    }
+    overall_has_recursive = any(
+        summary["recursive_accuracy"] is not None for summary in overall_summaries.values()
+    )
     overall_rows = []
-    for label, label_rows in sorted(by_label.items()):
-        summary = summarize_group(label_rows)
+    for label, summary in overall_summaries.items():
         overall_rows.append(
             [
                 label,
@@ -166,8 +204,10 @@ def build_report(paths: Iterable[Path]) -> str:
                 format_float(summary["avg_report_characters"], 0),
                 format_float(summary["baseline_accuracy"]),
                 format_float(summary["managed_accuracy"]),
+                *([format_float(summary["recursive_accuracy"])] if overall_has_recursive and summary["recursive_accuracy"] is not None else (["-"] if overall_has_recursive else [])),
                 format_float(summary["baseline_latency"]),
                 format_float(summary["managed_latency"]),
+                *([format_float(summary["recursive_latency"])] if overall_has_recursive and summary["recursive_latency"] is not None else (["-"] if overall_has_recursive else [])),
             ]
         )
 
@@ -176,7 +216,17 @@ def build_report(paths: Iterable[Path]) -> str:
         "This report aggregates local MLX runs for the Gemma decomposition pilot.",
         "## Experiment Summary",
         render_table(
-            ["Experiment", "Runs", "Avg report chars", "Baseline acc", "Managed acc", "Baseline latency (s)", "Managed latency (s)"],
+            [
+                "Experiment",
+                "Runs",
+                "Avg report chars",
+                "Baseline acc",
+                "Managed acc",
+                *([] if not overall_has_recursive else ["Recursive acc"]),
+                "Baseline latency (s)",
+                "Managed latency (s)",
+                *([] if not overall_has_recursive else ["Recursive latency (s)"]),
+            ],
             overall_rows,
         ),
     ]
@@ -211,13 +261,36 @@ def build_report(paths: Iterable[Path]) -> str:
                 lambda value: f"{value}x",
             )
         )
+    if "recursive-context-sweep" in by_label:
+        sections.append(
+            render_sweep_section(
+                "Recursive Context Sweep",
+                by_label["recursive-context-sweep"],
+                "note_repeats",
+                "Note repeats",
+                lambda value: f"{value}x",
+            )
+        )
 
     managed_wins = sum(row.managed_exact_match and not row.baseline_exact_match for row in rows)
+    recursive_rescues = sum(
+        bool(row.recursive_exact_match) and not row.managed_exact_match and not row.baseline_exact_match
+        for row in rows
+    )
     baseline_wins = sum(row.baseline_exact_match and not row.managed_exact_match for row in rows)
-    both_fail = sum((not row.managed_exact_match) and (not row.baseline_exact_match) for row in rows)
-    both_pass = sum(row.managed_exact_match and row.baseline_exact_match for row in rows)
+    any_nonbaseline_pass = sum(
+        row.managed_exact_match or bool(row.recursive_exact_match)
+        for row in rows
+    )
+    all_fail = sum(
+        (not row.baseline_exact_match)
+        and (not row.managed_exact_match)
+        and (not bool(row.recursive_exact_match))
+        for row in rows
+    )
     distractor_rows = by_label.get("distractor-sweep", [])
     context_rows = by_label.get("context-sweep", [])
+    recursive_context_rows = by_label.get("recursive-context-sweep", [])
     distractor_summaries = {
         value: summarize_group(group)
         for value, group in group_rows(distractor_rows, "distractors_per_section").items()
@@ -226,9 +299,13 @@ def build_report(paths: Iterable[Path]) -> str:
         value: summarize_group(group)
         for value, group in group_rows(context_rows, "note_repeats").items()
     }
+    recursive_context_summaries = {
+        value: summarize_group(group)
+        for value, group in group_rows(recursive_context_rows, "note_repeats").items()
+    }
 
     key_findings = [
-        f"- Managed-only wins: `{managed_wins}` runs. Baseline-only wins: `{baseline_wins}` runs.",
+        f"- Flat managed wins over baseline: `{managed_wins}` runs. Recursive-only rescues beyond flat managed: `{recursive_rescues}` runs. Baseline-only wins: `{baseline_wins}` runs.",
     ]
     if distractor_summaries:
         hardest_distractor = max(distractor_summaries)
@@ -255,6 +332,19 @@ def build_report(paths: Iterable[Path]) -> str:
         key_findings.append(
             "- The strongest failure mode is raw context inflation: by `5x` repeated notes, both methods collapsed to `0.00` exact-match."
         )
+    if recursive_context_summaries:
+        key_findings.append(
+            "- Recursive manager accuracy under context growth: "
+            + ", ".join(
+                f"`{value}x` notes -> `{format_float(recursive_context_summaries[value]['recursive_accuracy'])}`"
+                for value in sorted(recursive_context_summaries)
+            )
+            + "."
+        )
+        if 5 in recursive_context_summaries:
+            key_findings.append(
+                f"- At `5x` notes, recursive chunking recovered `{format_float(recursive_context_summaries[5]['recursive_accuracy'])}` accuracy versus flat managed `{format_float(recursive_context_summaries[5]['managed_accuracy'])}`."
+            )
 
     sections.append(
         "\n".join(
@@ -263,10 +353,11 @@ def build_report(paths: Iterable[Path]) -> str:
                 render_table(
                     ["Outcome", "Count"],
                     [
-                        ["Managed only", str(managed_wins)],
+                        ["Flat managed beats baseline", str(managed_wins)],
+                        ["Recursive rescues flat-managed failures", str(recursive_rescues)],
                         ["Baseline only", str(baseline_wins)],
-                        ["Both pass", str(both_pass)],
-                        ["Both fail", str(both_fail)],
+                        ["Any non-baseline method succeeds", str(any_nonbaseline_pass)],
+                        ["All methods fail", str(all_fail)],
                     ],
                 ),
                 "## Key Findings",
@@ -276,7 +367,8 @@ def build_report(paths: Iterable[Path]) -> str:
                     "Across these local runs, the managed scaffold consistently outperformed the single-shot baseline on exact-match accuracy, "
                     "while paying a latency and call-count premium. The evidence supports the narrow version of the hypothesis: "
                     "for this model and task family, better management of model calls unlocks capabilities that are mostly absent in one-shot prompting. "
-                    "The main limit is not the decomposition idea itself but context scaling: once each chunk becomes too long, local retrieval recall collapses and the scaffold stops helping."
+                    "Flat section-by-section management still breaks under severe context inflation, but recursive routing over compact summaries recovers most of that lost accuracy. "
+                    "The main open problem is therefore not whether decomposition helps, but how to make the decomposition policy cheaper and more general."
                 ),
             ]
         )

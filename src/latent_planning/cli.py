@@ -77,6 +77,29 @@ def build_parser() -> argparse.ArgumentParser:
         help="Generation budget for each managed chunk pass.",
     )
     run.add_argument(
+        "--include-recursive-manager",
+        action="store_true",
+        help="Also evaluate a recursive within-section manager.",
+    )
+    run.add_argument(
+        "--recursive-chunk-max-tokens",
+        type=int,
+        default=80,
+        help="Generation budget for each recursive manager call.",
+    )
+    run.add_argument(
+        "--recursive-leaf-records",
+        type=int,
+        default=4,
+        help="Maximum records per recursive leaf chunk.",
+    )
+    run.add_argument(
+        "--recursive-branching-factor",
+        type=int,
+        default=3,
+        help="How many child groups to create at each recursive split.",
+    )
+    run.add_argument(
         "--baseline-max-tokens",
         type=int,
         default=160,
@@ -132,6 +155,10 @@ def handle_run_pilot(args: argparse.Namespace) -> int:
         output_path=output,
         baseline_max_tokens=args.baseline_max_tokens,
         chunk_max_tokens=args.chunk_max_tokens,
+        recursive_chunk_max_tokens=args.recursive_chunk_max_tokens,
+        include_recursive_manager=args.include_recursive_manager,
+        recursive_leaf_records=args.recursive_leaf_records,
+        recursive_branching_factor=args.recursive_branching_factor,
     )
     print(json.dumps(summary, indent=2))
     return 0

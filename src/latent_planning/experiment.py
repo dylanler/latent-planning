@@ -61,6 +61,7 @@ class Task:
     note_repeats: int
     criteria: tuple[str, str, str]
     section_texts: list[str]
+    section_records: list[list[Record]]
     records_by_id: dict[str, Record]
     expected_record_ids: list[str]
     expected_answer: str
@@ -133,6 +134,7 @@ def expand_note(rng: random.Random, note_repeats: int) -> str:
 def generate_task(seed: int, *, sections: int, distractors_per_section: int, note_repeats: int) -> Task:
     rng = random.Random(seed)
     section_texts: list[str] = []
+    section_records: list[list[Record]] = []
     records_by_id: dict[str, Record] = {}
     expected_record_ids: list[str] = []
     expected_pairs: list[tuple[int, str]] = []
@@ -174,6 +176,7 @@ def generate_task(seed: int, *, sections: int, distractors_per_section: int, not
             records.append(record)
 
         rng.shuffle(records)
+        section_records.append(records.copy())
         section_body = "\n\n".join(record.render() for record in records)
         section_texts.append(f"=== SECTION {section_index} ===\n{section_body}")
         for record in records:
@@ -187,6 +190,7 @@ def generate_task(seed: int, *, sections: int, distractors_per_section: int, not
         note_repeats=note_repeats,
         criteria=criteria,
         section_texts=section_texts,
+        section_records=section_records,
         records_by_id=records_by_id,
         expected_record_ids=expected_record_ids,
         expected_answer=expected_answer,
@@ -232,6 +236,42 @@ def build_chunk_prompt(task: Task, section_text: str) -> str:
     )
 
 
+def render_records(records: list[Record]) -> str:
+    return "\n\n".join(record.render() for record in records)
+
+
+def render_record_summaries(records: list[Record]) -> str:
+    return "\n".join(
+        f"{record.record_id} | Project={record.project} | Stage={record.stage} | Marker={record.marker} | Phase={record.phase}"
+        for record in records
+    )
+
+
+def build_recursive_group_prompt(task: Task, groups: list[list[Record]], *, depth: int) -> str:
+    project, stage, marker = task.criteria
+    group_blocks = []
+    for index, group_records in enumerate(groups, start=1):
+        group_blocks.append(f"[Group {index}]\n{render_record_summaries(group_records)}")
+    groups_text = "\n\n".join(group_blocks)
+    return textwrap.dedent(
+        f"""\
+        Inspect these groups of records at recursion depth {depth}.
+
+        Return a plain comma-separated list of group numbers that might contain at least one record satisfying all three exact conditions:
+        - Project={project}
+        - Stage={stage}
+        - Marker={marker}
+
+        Be permissive: if you are unsure, include the group number.
+        If no group is even plausible, return NONE.
+        Return only group numbers or NONE.
+
+        Groups:
+        {groups_text}
+        """
+    )
+
+
 def normalize_baseline_answer(raw_output: str) -> str:
     match = re.search(r"ANSWER=([A-Z0-9-]+)", raw_output)
     return match.group(1) if match else raw_output.strip()
@@ -239,6 +279,22 @@ def normalize_baseline_answer(raw_output: str) -> str:
 
 def extract_candidate_ids(raw_output: str) -> list[str]:
     return list(dict.fromkeys(re.findall(r"(?:T\d+|D\d+_\d+)", raw_output)))
+
+
+def extract_group_indices(raw_output: str, group_count: int) -> list[int]:
+    indices = []
+    for token in re.findall(r"\b\d+\b", raw_output):
+        value = int(token)
+        if 1 <= value <= group_count and value not in indices:
+            indices.append(value)
+    return indices
+
+
+def split_records(records: list[Record], group_count: int) -> list[list[Record]]:
+    if len(records) <= group_count:
+        return [[record] for record in records]
+    chunk_size = (len(records) + group_count - 1) // group_count
+    return [records[index : index + chunk_size] for index in range(0, len(records), chunk_size)]
 
 
 def validate_candidates(task: Task, candidate_ids: Iterable[str]) -> list[Record]:
@@ -287,6 +343,92 @@ def run_managed(task: Task, model: MLXPromptModel, *, max_tokens: int) -> Condit
     )
 
 
+def recursive_section_search(
+    task: Task,
+    model: MLXPromptModel,
+    records: list[Record],
+    *,
+    max_tokens: int,
+    leaf_records: int,
+    branching_factor: int,
+    depth: int = 0,
+) -> tuple[list[str], str, float, int]:
+    if len(records) <= leaf_records:
+        prompt = build_chunk_prompt(task, render_records(records))
+        raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
+        return extract_candidate_ids(raw_output), raw_output, latency_seconds, 1
+
+    groups = split_records(records, branching_factor)
+    prompt = build_recursive_group_prompt(task, groups, depth=depth)
+    raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
+    selected_groups = extract_group_indices(raw_output, len(groups))
+    if not selected_groups:
+        selected_groups = list(range(1, len(groups) + 1))
+    total_latency = latency_seconds
+    total_calls = 1
+    child_outputs: list[str] = []
+    candidate_ids: list[str] = []
+
+    for group_index in selected_groups:
+        child_ids, child_output, child_latency, child_calls = recursive_section_search(
+            task,
+            model,
+            groups[group_index - 1],
+            max_tokens=max_tokens,
+            leaf_records=leaf_records,
+            branching_factor=branching_factor,
+            depth=depth + 1,
+        )
+        candidate_ids.extend(child_ids)
+        child_outputs.append(f"[Depth {depth + 1} Group {group_index}]\n{child_output}")
+        total_latency += child_latency
+        total_calls += child_calls
+
+    combined_output = raw_output
+    if child_outputs:
+        combined_output = raw_output + "\n" + "\n".join(child_outputs)
+    return candidate_ids, combined_output, total_latency, total_calls
+
+
+def run_recursive_managed(
+    task: Task,
+    model: MLXPromptModel,
+    *,
+    max_tokens: int,
+    leaf_records: int,
+    branching_factor: int,
+) -> ConditionResult:
+    raw_outputs: list[str] = []
+    candidate_ids: list[str] = []
+    total_latency = 0.0
+    total_calls = 0
+
+    for section_records in task.section_records:
+        section_ids, section_output, section_latency, section_calls = recursive_section_search(
+            task,
+            model,
+            section_records,
+            max_tokens=max_tokens,
+            leaf_records=leaf_records,
+            branching_factor=branching_factor,
+        )
+        raw_outputs.append(section_output)
+        candidate_ids.extend(section_ids)
+        total_latency += section_latency
+        total_calls += section_calls
+
+    validated_records = validate_candidates(task, candidate_ids)
+    answer = "-".join(record.seal for record in validated_records)
+    return ConditionResult(
+        answer=answer,
+        exact_match=answer == task.expected_answer,
+        latency_seconds=total_latency,
+        model_calls=total_calls,
+        raw_output="\n---\n".join(raw_outputs),
+        candidate_record_ids=[record.record_id for record in validated_records],
+    )
+
+
 def summarize_condition(results: list[ConditionResult]) -> dict[str, float]:
     return {
         "accuracy": sum(result.exact_match for result in results) / len(results),
@@ -306,11 +448,16 @@ def run_pilot(
     output_path: Path,
     baseline_max_tokens: int,
     chunk_max_tokens: int,
+    recursive_chunk_max_tokens: int,
+    include_recursive_manager: bool,
+    recursive_leaf_records: int,
+    recursive_branching_factor: int,
 ) -> dict[str, object]:
     model = MLXPromptModel(model_path_or_repo)
     runs: list[dict[str, object]] = []
     baseline_results: list[ConditionResult] = []
     managed_results: list[ConditionResult] = []
+    recursive_results: list[ConditionResult] = []
 
     for distractor_count in distractors_per_section:
         for seed in seeds:
@@ -322,8 +469,19 @@ def run_pilot(
             )
             baseline = run_baseline(task, model, max_tokens=baseline_max_tokens)
             managed = run_managed(task, model, max_tokens=chunk_max_tokens)
+            recursive = None
+            if include_recursive_manager:
+                recursive = run_recursive_managed(
+                    task,
+                    model,
+                    max_tokens=recursive_chunk_max_tokens,
+                    leaf_records=recursive_leaf_records,
+                    branching_factor=recursive_branching_factor,
+                )
             baseline_results.append(baseline)
             managed_results.append(managed)
+            if recursive:
+                recursive_results.append(recursive)
             runs.append(
                 {
                     "label": label,
@@ -337,6 +495,7 @@ def run_pilot(
                     "expected_record_ids": task.expected_record_ids,
                     "baseline": asdict(baseline),
                     "managed": asdict(managed),
+                    **({"recursive": asdict(recursive)} if recursive else {}),
                 }
             )
 
@@ -354,6 +513,7 @@ def run_pilot(
         "note_repeats": note_repeats,
         "baseline": summarize_condition(baseline_results),
         "managed": summarize_condition(managed_results),
+        **({"recursive": summarize_condition(recursive_results)} if recursive_results else {}),
         "runs": runs,
     }
 

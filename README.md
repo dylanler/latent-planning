@@ -20,9 +20,13 @@ flowchart TD
     A[MLX Gemma 4 E2B 4-bit<br/>local Apple Silicon model] --> B[Task generator<br/>synthetic long report with sections]
     B --> C[Baseline path<br/>single full-report prompt]
     B --> D[Managed path<br/>one prompt per section]
+    B --> R[Recursive manager<br/>group routing plus leaf search]
     C --> E[Direct answer parser<br/>ANSWER=...]
     D --> F[Candidate record IDs<br/>high-recall retrieval]
+    R --> RS[Compact group summaries<br/>recursive routing]
+    RS --> RL[Leaf chunk search<br/>full records]
     F --> G[Deterministic validator<br/>exact field match in Python]
+    RL --> G
     G --> H[Ordered seal sequence]
     E --> I[Exact-match scorer]
     H --> I[Exact-match scorer]
@@ -36,6 +40,7 @@ Runtime shape:
 - `latent-planning run-pilot` loads one model instance and runs both conditions over the same generated tasks.
 - The baseline uses one call per task.
 - The managed condition uses one call per section, then hands off exact bookkeeping to deterministic code.
+- The recursive manager first routes over compact field summaries, then searches only the selected leaf chunks with full records.
 - Results are persisted as JSON so runs can be compared later.
 
 ## Why MLX
@@ -58,6 +63,12 @@ Run the pilot and write a JSON report:
 
 ```bash
 uv run latent-planning run-pilot
+```
+
+Run the recursive manager variant:
+
+```bash
+uv run latent-planning run-pilot --include-recursive-manager
 ```
 
 Aggregate multiple result files into a markdown evaluation report:
@@ -84,20 +95,28 @@ Across the expanded local evaluation set:
 | `section-sweep` | 15 | 14488 | 0.00 | 0.93 | 2.01 | 3.44 |
 | `context-sweep` | 15 | 28013 | 0.00 | 0.47 | 3.01 | 4.10 |
 
+Recursive manager comparison on the same context-scaling family:
+
+| Experiment | Runs | Avg report chars | Baseline acc | Flat managed acc | Recursive acc | Baseline latency (s) | Flat managed latency (s) | Recursive latency (s) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `recursive-context-sweep` | 15 | 28013 | 0.00 | 0.47 | 0.80 | 3.22 | 4.60 | 10.51 |
+
 Outcome breakdown over all expanded runs:
 
 | Outcome | Count |
 | --- | --- |
-| Managed only | 36 |
+| Flat managed beats baseline | 43 |
+| Recursive rescues flat-managed failures | 5 |
 | Baseline only | 0 |
-| Both pass | 0 |
-| Both fail | 14 |
+| Any non-baseline method succeeds | 48 |
+| All methods fail | 17 |
 
 High-level read:
 
 - the baseline never won a run
 - the managed scaffold stayed strong under extra distractors and section count
-- the managed scaffold eventually collapsed when raw context got too long
+- the flat managed scaffold eventually collapsed when raw context got too long
+- recursive chunking recovered most of that lost accuracy, but at a large latency and call-count cost
 
 ### Managed Accuracy vs Distractors
 
@@ -121,6 +140,18 @@ xychart-beta
     line "Managed" [0.80, 0.60, 0.00]
 ```
 
+### Flat vs Recursive Under Context Growth
+
+```mermaid
+xychart-beta
+    title "Flat vs Recursive Context Accuracy"
+    x-axis "Note repeats" [1, 3, 5]
+    y-axis "Accuracy" 0 --> 1.0
+    line "Baseline" [0.00, 0.00, 0.00]
+    line "Managed" [0.80, 0.60, 0.00]
+    line "Recursive" [0.80, 0.80, 0.80]
+```
+
 ## Experiment Plan
 
 The written plan lives in [docs/mgh_experiment_plan.md](/Users/dylan/learning-projects/latent-planning/docs/mgh_experiment_plan.md).
@@ -132,7 +163,9 @@ The broader evaluation supports a narrow version of the hypothesis:
 
 - the model already contains enough local competence to solve the subproblems
 - the failure mode is at least partly in how we allocate attention and calls, not only in model weights
-- decomposition helps much more than one-shot prompting on this task family, but it is not enough to fully defeat large context growth
+- decomposition helps much more than one-shot prompting on this task family
+- flat decomposition alone is still brittle under heavy context inflation
+- recursive decomposition with a routing stage materially improves robustness under long context, which is the strongest evidence in the repo for the hypothesis so far
 
 If both conditions fail, the likely interpretations are:
 
