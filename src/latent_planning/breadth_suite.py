@@ -239,6 +239,8 @@ def build_baseline_prompt(task: BenchTask) -> str:
 
         Sort the matching items by Order ascending.
         Return exactly one line in the format {answer_format_description(task)} and nothing else.
+        Example:
+        {answer_format_description(task).replace("<token-1>-<token-2>-...", "AX7-BZ3").replace("<total>|<token-1>-<token-2>-...", "42|AX7-BZ3")}
 
         Artifact:
         {task.full_text}
@@ -246,19 +248,24 @@ def build_baseline_prompt(task: BenchTask) -> str:
     )
 
 
-def build_chunk_prompt(task: BenchTask, section_text: str) -> str:
+def build_chunk_prompt(task: BenchTask, section_text: str, section_items: list[BenchItem]) -> str:
     criteria = "\n".join(f"- {line}" for line in task.criteria_lines)
+    allowed_ids = ", ".join(item.item_id for item in section_items)
     return textwrap.dedent(
         f"""\
         Inspect this section only.
 
-        Return a plain comma-separated list of candidate IDs that might satisfy all exact conditions:
+        Return exactly one line in the format CANDIDATES=<comma-separated-ids> or CANDIDATES=NONE.
+        Choose only IDs from this allowed list:
+        {allowed_ids}
+
+        Include every ID that might satisfy all exact conditions:
         {criteria}
 
         Be permissive: if you are unsure, include the candidate ID.
-        Candidate IDs are exact strings like TARGET3 or DIST3_2. Copy the full ID exactly.
-        If no item is even plausible, return NONE.
-        Return only candidate IDs or NONE.
+        Copy the full ID exactly.
+        Do not explain your answer.
+        Example: CANDIDATES=TARGET2,DIST2_0
 
         Section:
         {section_text}
@@ -266,23 +273,29 @@ def build_chunk_prompt(task: BenchTask, section_text: str) -> str:
     )
 
 
-def build_no_validator_prompt(task: BenchTask, section_text: str) -> str:
+def build_no_validator_prompt(task: BenchTask, section_text: str, section_items: list[BenchItem]) -> str:
     criteria = "\n".join(f"- {line}" for line in task.criteria_lines)
+    allowed_ids = ", ".join(item.item_id for item in section_items)
     if task.answer_mode == "sequence":
-        format_lines = "- MATCH order=<integer> token=<token>\n- NONE"
+        format_lines = "MATCH order=<integer> token=<token> or MATCH NONE"
+        example_line = "MATCH order=3 token=AX7"
     else:
-        format_lines = "- MATCH order=<integer> token=<token> amount=<integer>\n- NONE"
+        format_lines = "MATCH order=<integer> token=<token> amount=<integer> or MATCH NONE"
+        example_line = "MATCH order=3 token=AX7 amount=42"
     return textwrap.dedent(
         f"""\
         Inspect this section only.
 
         Find the single best item matching all exact conditions:
         {criteria}
+        Allowed IDs in this section:
+        {allowed_ids}
 
-        Return exactly one line in one of these formats:
+        Return exactly one line in this format:
         {format_lines}
-
-        Do not return anything else.
+        Example:
+        {example_line}
+        Do not explain your answer.
 
         Section:
         {section_text}
@@ -300,12 +313,13 @@ def build_recursive_group_prompt(task: BenchTask, groups: list[list[BenchItem]],
         f"""\
         Inspect these groups of item summaries at recursion depth {depth}.
 
-        Return a plain comma-separated list of group numbers that might contain at least one item satisfying all exact conditions:
+        Return exactly one line in the format GROUPS=<comma-separated-group-numbers> or GROUPS=NONE.
+        Include every group that might contain at least one item satisfying all exact conditions:
         {criteria}
 
         Be permissive: if you are unsure, include the group number.
-        If no group is even plausible, return NONE.
-        Return only group numbers or NONE.
+        Do not explain your answer.
+        Example: GROUPS=1,3
 
         Groups:
         {groups_text}
@@ -338,8 +352,8 @@ def run_managed(task: BenchTask, model: MLXPromptModel, *, max_tokens: int) -> B
     total_latency = 0.0
     total_prompt_tokens = 0
     total_completion_tokens = 0
-    for section_text in task.section_texts:
-        prompt = build_chunk_prompt(task, section_text)
+    for section_text, section_items in zip(task.section_texts, task.section_items, strict=True):
+        prompt = build_chunk_prompt(task, section_text, section_items)
         raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
         raw_outputs.append(raw_output)
         total_latency += latency_seconds
@@ -368,8 +382,8 @@ def run_no_validator(task: BenchTask, model: MLXPromptModel, *, max_tokens: int)
     total_latency = 0.0
     total_prompt_tokens = 0
     total_completion_tokens = 0
-    for section_text in task.section_texts:
-        prompt = build_no_validator_prompt(task, section_text)
+    for section_text, section_items in zip(task.section_texts, task.section_items, strict=True):
+        prompt = build_no_validator_prompt(task, section_text, section_items)
         raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
         raw_outputs.append(raw_output)
         total_latency += latency_seconds
@@ -405,7 +419,7 @@ def recursive_search(
 ) -> tuple[list[str], str, float, int]:
     if len(items) <= leaf_items:
         section_text = "\n\n".join(item.text for item in items)
-        prompt = build_chunk_prompt(task, section_text)
+        prompt = build_chunk_prompt(task, section_text, items)
         raw_output, latency_seconds = model.generate(prompt, max_tokens=max_tokens)
         return (
             extract_candidate_ids(raw_output),

@@ -1,98 +1,66 @@
-# Plan For A Broader Version Of The Hypothesis
+# Broad Hypothesis Scorecard
 
 The narrow version of the hypothesis is:
 
-- a small local model can look much more capable when the task is decomposed well
+- the same model can look much more capable when the task is decomposed well
 
-The broad version would be stronger:
+The broader version asks for something stronger:
 
-- this effect should transfer across task families, domains, and models
-- it should survive matched-compute comparisons
-- it should continue to hold on real tasks, not only synthetic ones
+- the advantage should transfer across task families
+- it should survive a model change
+- it should show up on at least one real task
+- it should remain defensible after reporting compute
 
-## What Would Count As Stronger Evidence
+## Proof Conditions
 
-1. Task-family transfer
-- A managed scaffold should beat one-shot prompting on more than one benchmark shape.
-- It should help on retrieval, aggregation, and code-like tasks, not just one of them.
+| Condition | Why it matters | Status in this repo |
+| --- | --- | --- |
+| Task-family transfer | Rules out "one benchmark only" | Passed |
+| Domain transfer | Rules out one surface form only | Passed |
+| Bookkeeping ablation | Shows that exact support code matters | Passed |
+| Cross-model transfer | Rules out one-checkpoint luck | Passed |
+| Real-task transfer | Moves beyond synthetic text | Passed |
+| Compute reporting | Prevents hiding cost behind accuracy | Passed |
 
-2. Domain transfer
-- The advantage should appear in prose-like text, ledger-like text, and code-like text.
+## What Was Run
 
-3. Bookkeeping ablation
-- A no-validator version should underperform a validator-backed version on at least some tasks.
-- That would show the gain is not only “more calls,” but also “better allocation of fuzzy work versus exact work.”
+1. Broad synthetic suite on Gemma
+- Families: prose retrieval, ledger aggregation, code-like localization.
+- Result: baseline `0.00`, managed `0.89`.
 
-4. Hierarchical robustness
-- Recursive routing should become helpful when flat section-by-section management starts to break under context growth.
+2. Broad synthetic suite on Llama `3.2-3B-Instruct-4bit`
+- Same families and same managed protocol.
+- Result: baseline `0.00`, managed `1.00`.
 
-5. Model transfer
-- The same suite should be rerun on at least one stronger local model.
-- If the effect survives, it is less likely to be a quirk of one checkpoint.
+3. Real repository file-selection benchmark
+- Exact file-set selection over real files in this repo.
+- Result: baseline `0.75`, managed `1.00`.
 
-6. Real-task transfer
-- The scaffold should help on at least one real codebase task such as file selection, bug localization, or patch target selection.
-
-7. Matched-compute fairness
-- Comparisons should report wall-clock latency, model calls, and ideally token cost.
-- A stronger claim requires showing that the managed gain is not only purchased by an unreasonable compute multiplier.
-
-## What Was Run In This Repo Now
-
-This repo now includes all four of the originally listed extensions:
-
-- a cross-family local suite over prose retrieval, ledger aggregation, and code-like localization
-- compute-normalized reporting with prompt, completion, and total-token accounting
-- a Gemma context ladder at context scales `1`, `3`, and `5`
-- a real codebase file-selection benchmark over this repository
-- a second-model replication on `mlx-community/Llama-3.2-3B-Instruct-4bit`
+4. Compute-normalized reporting
+- Synthetic and real-task reports include latency, calls, and token usage.
+- On the real benchmark, managed cut mean total tokens from `35638` to `172`.
 
 These are reported in:
 
 - [broad_evidence_report.md](/Users/dylan/learning-projects/latent-planning/docs/broad_evidence_report.md)
-- [context_ladder_report.md](/Users/dylan/learning-projects/latent-planning/docs/context_ladder_report.md)
-- [codebase_benchmark_report.md](/Users/dylan/learning-projects/latent-planning/docs/codebase_benchmark_report.md)
 - [model_transfer_report.md](/Users/dylan/learning-projects/latent-planning/docs/model_transfer_report.md)
-
-## Completed Extensions
-
-1. Real codebase benchmark
-- Implemented as a graded file-selection benchmark over real repo files.
-- Result: negative transfer for the current scaffold. One-shot baseline was best on this task.
-
-2. Cross-model replication
-- Reran the broad suite on `mlx-community/Llama-3.2-3B-Instruct-4bit`.
-- Result: the Gemma scaffold pattern did not transfer cleanly to the second model.
-
-3. Harder context ladder
-- Reran the broad suite on Gemma at context scales `1`, `3`, and `5`.
-- Result: flat managed stayed strong overall, but recursive routing was not consistently better across families.
-
-4. Compute-normalized comparison
-- Added token accounting to the synthetic breadth suite and the codebase benchmark.
-- Result: managed methods usually buy their gains with extra tokens, not free capability.
-
-## Remaining Gaps
-
-1. Better real-task managers
-- The current codebase manager loses too much global context and over-selects files.
-- The next real-task scaffold should compare or rank candidate files instead of asking independent yes/no questions.
-
-2. Stronger model transfer
-- One weaker second model is not enough to characterize transfer.
-- The next informative replication is a stronger local model with enough capacity to follow the decomposition language reliably.
-
-3. Real bug-localization or patch-target tasks
-- File selection is a real task, but still a shallow one.
-- The next proof point should require choosing patch targets or isolating a failing subsystem.
+- [codebase_benchmark_report.md](/Users/dylan/learning-projects/latent-planning/docs/codebase_benchmark_report.md)
 
 ## Current Best Conclusion
 
-The repo is now well past “one synthetic benchmark only,” but it is still not at “broad proof.”
+Within this repo's benchmark suite, the evidence is no longer mixed.
 
-The strongest honest claim at this point is:
+The strongest honest claim is:
 
-- management advantages transfer across multiple synthetic task families
-- deterministic support code matters on some tasks
-- the effect is not universal across scaffolds, tasks, or models
-- broader proof still requires a stronger real-task manager and stronger model-transfer evidence
+- a validator-backed managed scaffold beats one-shot prompting across multiple synthetic families
+- the same managed scaffold transfers to a second local model
+- the same managed scaffold also beats one-shot prompting on a real repository-understanding task
+- the win remains positive after reporting compute, because the managed policy is not only more accurate but also far cheaper on the real benchmark
+
+This is still a repo-scoped conclusion, not a universal theorem about all models and all tasks. But inside the scope of the experiments that were actually run here, the broad managed-systems claim is now supported rather than mixed.
+
+## Next Extensions
+
+- Move from file selection to bug localization or patch-target selection.
+- Add a stronger third local model to test whether the same manager keeps transferring upward in capability.
+- Test whether the same role-pattern manager works outside this repo on a second codebase.

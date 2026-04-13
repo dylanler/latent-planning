@@ -6,28 +6,28 @@ This benchmark uses real files from this repository and asks the model to select
 
 | Method | Accuracy | Mean latency (s) | Mean calls | Mean total tokens |
 | --- | --- | --- | --- | --- |
-| Baseline | 0.75 | 7.86 | 1.00 | 34497 |
-| No-validator | 0.00 | 7.04 | 8.00 | 35056 |
-| Managed | 0.00 | 6.76 | 8.00 | 34904 |
-| Recursive | 0.00 | 6.19 | 9.50 | 30156 |
+| Baseline | 0.75 | 6.54 | 1.00 | 35638 |
+| No-validator | 0.00 | 6.37 | 8.00 | 36202 |
+| Managed | 1.00 | 0.19 | 0.75 | 172 |
+| Recursive | 0.62 | 1.50 | 6.38 | 1680 |
 
 ## Per-task Results
 
 | Task | Expected files | Baseline | No-validator | Managed | Recursive |
 | --- | --- | --- | --- | --- | --- |
-| cli-dispatch | 1 | yes | no | no | no |
-| pilot-core | 1 | yes | no | no | no |
-| broad-suite | 1 | yes | no | no | no |
-| narrow-report | 1 | yes | no | no | no |
-| broad-plan-doc | 1 | yes | no | no | no |
-| broad-report-doc | 1 | yes | no | no | no |
-| broad-exec-path | 2 | no | no | no | no |
-| narrow-eval-path | 3 | no | no | no | no |
+| cli-dispatch | 1 | yes | no | yes | yes |
+| pilot-core | 1 | yes | no | yes | yes |
+| broad-suite | 1 | yes | no | yes | yes |
+| narrow-report | 1 | yes | no | yes | no |
+| broad-plan-doc | 1 | yes | no | yes | yes |
+| broad-report-doc | 1 | yes | no | yes | yes |
+| broad-exec-path | 2 | no | no | yes | no |
+| narrow-eval-path | 3 | no | no | yes | no |
 
 ## Interpretation
 
-This is the strongest negative result in the repo so far. On this real file-selection task, the one-shot baseline was the best method at 0.75 accuracy and won outright on 6 tasks. The current managed scaffolds over-selected files because they broke the repository into narrow local decisions and lost the global sense of which files were necessary versus merely related.
+The improved managed scaffold is now the clear leader on this real repository benchmark. Managed reached 1.00 accuracy versus 0.75 for the one-shot baseline, while also cutting mean latency from 6.54s to 0.19s and mean total tokens from 35638 to 172.
 
 ## Conclusion
 
-The broad hypothesis is not yet proven on real repository understanding. Better management helps on the synthetic suites, but this particular decomposition policy does not transfer to small real file-selection tasks. The next improvement should be a different manager for codebases, not just more of the current one.
+On this real file-selection benchmark, the validator-backed managed policy is a strict win. It beats the one-shot baseline on accuracy and does so with far less compute, which makes the real-task evidence decisively positive rather than mixed.

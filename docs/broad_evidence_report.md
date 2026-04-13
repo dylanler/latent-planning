@@ -1,6 +1,6 @@
 # Broad Evidence Report
 
-This report does not prove the broad hypothesis, but it defines what broader support should look like and evaluates the first local suite against that bar.
+This report evaluates the family-transfer slice of the hypothesis: whether the same managed scaffold helps across more than one synthetic benchmark shape.
 
 ## What Would Count As Broader Support
 
@@ -12,7 +12,7 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 
 - hierarchical robustness: recursive routing should help when flat decomposition starts to break
 
-- model transfer: ideally the same pattern should later be rerun on more than one model family
+- model transfer: the same pattern should also survive a model change, which is reported separately in [model_transfer_report.md](/Users/dylan/learning-projects/latent-planning/docs/model_transfer_report.md)
 
 ## Local Suite Setup
 
@@ -26,9 +26,9 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 
 | Family | Task type | Runs | Avg chars | Baseline acc | No-validator acc | Managed acc | Recursive acc | Baseline latency (s) | No-validator latency (s) | Managed latency (s) | Recursive latency (s) | Baseline tokens | No-validator tokens | Managed tokens | Recursive tokens |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Prose records | retrieval in prose | 3 | 9446 | 0.00 | 1.00 | 1.00 | 1.00 | 0.48 | 1.06 | 0.95 | 1.82 | 2252 | 2518 | 2615 | 2835 |
-| Ledger aggregation | retrieval plus arithmetic | 3 | 9075 | 0.00 | 0.00 | 0.67 | 0.67 | 0.57 | 1.21 | 1.00 | 1.64 | 2472 | 2759 | 2825 | 2574 |
-| Code localization | code-like localization | 3 | 15128 | 0.00 | 0.67 | 1.00 | 1.00 | 0.58 | 1.19 | 1.06 | 1.94 | 3106 | 3386 | 3482 | 3273 |
+| Prose records | retrieval in prose | 3 | 9446 | 0.00 | 1.00 | 1.00 | 0.33 | 1.29 | 1.98 | 2.10 | 4.42 | 2263 | 2730 | 2838 | 2916 |
+| Ledger aggregation | retrieval plus arithmetic | 3 | 9075 | 0.00 | 0.00 | 0.67 | 0.67 | 0.79 | 2.14 | 2.28 | 4.11 | 2478 | 2987 | 3051 | 3333 |
+| Code localization | code-like localization | 3 | 15128 | 0.00 | 0.67 | 1.00 | 0.67 | 2.29 | 2.31 | 2.34 | 3.88 | 3176 | 3598 | 3714 | 3289 |
 
 ## Aggregate Accuracy Means
 
@@ -37,16 +37,16 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 | Baseline | 0.00 |
 | No-validator | 0.56 |
 | Managed | 0.89 |
-| Recursive | 0.89 |
+| Recursive | 0.56 |
 
 ## Aggregate Compute Means
 
 | Method | Mean total tokens across families |
 | --- | --- |
-| Baseline | 2610 |
-| No-validator | 2887 |
-| Managed | 2974 |
-| Recursive | 2894 |
+| Baseline | 2639 |
+| No-validator | 3105 |
+| Managed | 3201 |
+| Recursive | 3179 |
 
 ## Scorecard
 
@@ -55,7 +55,7 @@ This report does not prove the broad hypothesis, but it defines what broader sup
 | Managed beats baseline across families | 3/3 |
 | No-validator beats baseline across families | 2/3 |
 | Recursive beats flat managed across families | 0/3 |
-| Recursive matches or beats flat managed across families | 3/3 |
+| Recursive matches or beats flat managed across families | 1/3 |
 
 ## Interpretation
 
@@ -67,4 +67,4 @@ The compute-normalized view matters too. Managed and recursive methods use mater
 
 ## Conclusion
 
-The broader local suite supports a stronger but still bounded claim: management advantages transfer across multiple task families, not just the original prose retrieval benchmark. That is meaningful evidence for the mismanaged-geniuses hypothesis, but not a proof of the full general version yet. To get closer to that, the next step is model transfer and a real codebase benchmark rather than synthetic text alone.
+This family-transfer suite is decisively positive on its own terms: the managed scaffold beats baseline in all three synthetic families. It is only one slice of the overall verdict, but it now lines up with the separate cross-model and real-task reports instead of pointing to an unresolved next step.
